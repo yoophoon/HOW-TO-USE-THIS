@@ -39,7 +39,7 @@ function fn4(x: string | number, y: string | number): string | number {
     }
 }
 
-//类型断言 variable as type or <type>variable
+//16.类型断言 variable as type or <type>variable
 function fun5(x: string | number): number {
     return (x as string).length || (<number>x).toString().length
 }

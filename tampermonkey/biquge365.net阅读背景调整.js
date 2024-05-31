@@ -90,7 +90,10 @@ function setUserCSS(userCSS) {
         border-left: 2px solid #666666;
         color: #cc9966;
         padding-left: 10px;
-        margin: 5px 0px;}
+        margin: 5px 0px;
+        text-overflow:ellipsis;
+        overflow:hidden;
+        white-space:nowrap;}
     `)
 
     styleEl.sheet.insertRule(`.chapterInfo:hover {
@@ -123,7 +126,8 @@ function setUserCSS(userCSS) {
         margin-top: 0;
         padding-top: 0;
         margin: 0 auto;
-        overflow: scroll;}
+        overflow: scroll;
+        scrollbar-width:none;}
     `)
     styleEl.sheet.insertRule(`#contentPanel::-webkit-scrollbar{
         display:none;

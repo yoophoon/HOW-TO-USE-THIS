@@ -40,7 +40,7 @@ function fn4(x, y) {
         return 'args type should be equal';
     }
 }
-//类型断言 variable as type or <type>variable
+//16.类型断言 variable as type or <type>variable
 function fun5(x) {
     return x.length || x.toString().length;
 }

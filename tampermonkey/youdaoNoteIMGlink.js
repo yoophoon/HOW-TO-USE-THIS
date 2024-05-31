@@ -86,5 +86,5 @@ async function getShareContent(shareKey, entryID) {
                 }
             })
         })
-    return shareContent
+    return Promise.resolve(shareContent)
 }

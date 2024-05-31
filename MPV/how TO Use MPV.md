@@ -10,7 +10,13 @@
 2. 编写配置文件
 3. 自定义快捷键
 4. 配置插件
-    ### 自动加载脚本
-    下面两个路劲会自动加载  
-    `~~\portable_config\scripts\`  
-    `~~\portable_config\script-opts\`  
+### 自动加载脚本
+下面两个路劲会自动加载  
+`~~\portable_config\scripts\`  
+`~~\portable_config\script-opts\`  
+### 创建播放列表
+#### windows
+```powershell
+Get-ChildItem -Name > playlist.txt
+mpv --playlist=playlist.txt
+```
