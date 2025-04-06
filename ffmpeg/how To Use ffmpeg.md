@@ -6,8 +6,8 @@ format copy|mp3
 从视频文件分离音频文件
 ```powershell
 foreach ($file in Get-ChildItem -Name -Include *.flv) { 
-    $newName=$file.SubString(0,$file.Length-4)+'.mp3'
-    ./ffmpeg.exe -i $file -vn -c:a mp3 $newName
+    $newName=$file.SubString(11,$file.Length-11)+'.aac'
+    ./ffmpeg.exe -i $file -vn -c:a copy $newName
 }
 ```
 重命名

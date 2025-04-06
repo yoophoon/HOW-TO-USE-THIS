@@ -9,8 +9,10 @@ npm config set cache node_cache_dir
 ```
 2. 设置镜像源
 ```BASH
-//设置镜像源 淘宝的
+//设置镜像源 淘宝的  该地址已停止使用
 npm config set registry https://registry.npm.taobao.org
+//淘宝镜像新地址
+npm config set registry https://registry.npmmirror.com
 //查看镜像源
 npm config get registry
 ```

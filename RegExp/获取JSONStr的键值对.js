@@ -1,0 +1,3 @@
+// '[{url: "https://baidu.com/ruyishangcheng/image/1723537187175_1a16a57d-f70c-426c-9a3f-232f27ed90c7.jpg?Expires=1723604891", mainPic: "https://baidu.com/ruyishangcheng/image/1723537187175_1a16a57d-f70c-426c-9a3f-232f27ed90c7.jpg?Expires=1723604891" }]'.match(/(?<URL>url): "http[s]?\:\/\/.*?\/(?<URLPATHNAME>.*?)[\?"].*?(mainPic): "http[s]?\:\/\/.*?\/(.*?)[\?"]/).groups
+console.dir('[{url: "https://baidu.com/ruyishangcheng/image/1723537187175_1a16a57d-f70c-426c-9a3f-232f27ed90c7.jpg?Expires=1723604891", mainPic: "https://baidu.com/ruyishangcheng/image/1723537187175_1a16a57d-f70c-426c-9a3f-232f27ed90c7.jpg?Expires=1723604891" }]'.match(/(?<URL>url): "http[s]?\:\/\/.*?\/(?<URLPATHNAME>.*?)[\?"].*?(mainPic): "http[s]?\:\/\/.*?\/(.*?)[\?"]/))
+
