@@ -8,6 +8,7 @@ node_modules
 package-lock.json
 
 # vim相关
+linux/vim/plugged/*
 swap
 undodir
 PC/msys2/*.png
