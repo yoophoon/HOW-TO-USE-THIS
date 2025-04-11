@@ -1,8 +1,13 @@
-工作交接.md
 test.md
 .vscode
+
+# nodejs相关
 test.js
-.gitignore
 package.json
 node_modules
 package-lock.json
+
+# vim相关
+swap
+undodir
+PC/msys2/*.png
