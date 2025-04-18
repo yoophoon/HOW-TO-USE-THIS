@@ -1,5 +1,6 @@
 # VIM
 入门操作  vimtutor
+[vim-galore-zh_cn](https://github.com/wsdjeg/vim-galore-zh_cn)
 推荐书籍  https://iccf-holland.org/vim_books.html 
 ## 约定
 1. 命令组合采用`-`连接，如 切换窗口: CTRL-w
@@ -159,7 +160,71 @@ msys2的 vimruntime-> /usr/share/vim/vim91/
 <C-[S]-r> redo undo   | :help Ctrl+R    形式上似乎是 C-S-r的格式，但C-r也生效，可以认为C-S-r=C-r
 
 ## 宏
-## 窗口
-## bufer
-## tab
+## 窗口 help split
+窗口的概念是相对于用户可见的部分
+### 窗口拆分
+s / C-w,[C-]s             split，将当前窗口竖向平分
+vs / C-w,[C-]v            vertical，将当前窗口横向平分
+### 窗口移动
+C-w,{motion}  如h，j，k，l  将光标移动至左、下、上、右方窗口
+## tab  help tabpage
+tabpage(标签页)类似于浏览器tab的概念，所有的window概念都是相对与当前用户可视的tabpage
+:tabnew / :tabe           新建标签页，可跟文件名即在新标签页打开指定文件的buffer
+:tabn / :tabp             前往下一个标签页/上一个标签页
+:tabm                     移动当前标签页
+
+## buffer 缓冲区
+:ls / :buffers / :ls!     列出所有缓冲区
+
+## 寄存器 register
+"                         双引号引用具名寄存器
+
+## 范围 command ranges (:help 10.3)
+
+## 标记 mark
+m                         设置mark，可用mark标识符  [a-z] 当前文件生效  [A-Z]全局生效 [0-9]vim记录改动位置
+' / g' / ` / g`           跳转至指定mark标识符位置  motion跳转  [   修改或复制的第一行或第一个字符
+                                                                ]   修改或复制的末尾行或末尾字符
+                                                                <   可视模式选取的第一行或第一个字符
+                                                                >                 末尾行或末尾字符
+                                                                '   上次跳转的光标位置
+                                                                "   上次关闭的缓冲区光标位置
+                                                                ^   上次插入字符之后的光标位置
+                                                                .   上次修改文本之后的光标位置
+                                                                (   句子开头
+                                                                )   句子结尾
+                                                                {   段落开头
+                                                                }   段落结尾
+## 补全 completion help i_CTRL-x
+i_C-x         插入模式  选择补全模式
+i_C-n         下一个匹配模式补全
+i_C-p         上一个匹配模式补全
+
+
+## 自动命令
+i_C-h         删除光标前一个字符
+i_C-j         向光标上方插入新行
+i_C-k         digraph 相关  help diagraph
+i_C-l         当 insertmode 启用时，切换到正常模式(启用insertmode设置会将vim的默认模式设置为insert) 正常模式是插入
+符号
+
+℅   ©   B <BS>   k     âj  á        kj
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

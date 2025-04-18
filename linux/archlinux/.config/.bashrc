@@ -14,6 +14,10 @@ alias startproxy='export http_proxy=http://127.0.0.1:7890; export https_proxy=ht
 alias endproxy='unset http_proxy;unset https_proxy'
 
 
+export LESS="-n"  # less命令的环境变量，查阅man less获取更多信息
+set -u    # 不允许引用未定义变量  unset 报错处理
+#set -e    # 报错中断执行，这个设置应该放在脚本的第二行  exit 退出处理
+
 # 后台任务运行结束直接打印结果
 # set -o notify
 #

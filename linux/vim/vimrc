@@ -23,7 +23,7 @@ set guifont=Hack_Nerd_Font_Mono:h10
 set encoding=utf-8
 set fileencoding=utf-8
 set backspace=2
-"colorscheme onedarkpro
+colorscheme habamax "$VIMRUNTIME/color/*.vim  设置色彩主题就是运行其对应的vim脚本
 "winpos 100 100
 "set lines=50 columns=winwidth(0)/2
 set wildmenu        "开启自动补全增强功能
@@ -69,6 +69,14 @@ set guicursor+=r:hor25-CursorReplace
 
 set wrapscan        "是否在文件内循环搜索 默认开启
 set ic              "启用忽略大小写  ignore case  选项默认关闭即 set noic
+
+
+"set equalalways       "设置拆分窗口是否相等，默认开始，set noea
+"作用于equalalways选项,hor不改变窗口高度ver不改变窗口宽度both宽高由vim决定
+"set eadirection "hor" 
+
+
+
 "交换文件相关选项
 if !isdirectory($HOME . '/.vim/swap')
     call mkdir($HOME . '/.vim/swap',"p")
@@ -104,8 +112,8 @@ nnoremap N Nzzzv
 nnoremap <C-tab> :bn<CR>
 nnoremap <C-s-tab> :bp<CR>
 
-" 设置黑色主题
-"set guioptions+=d
+" 图形界面选项(guioptions) 
+set guioptions+=d
 
 
 "下面是对跨平台的兼容性设置

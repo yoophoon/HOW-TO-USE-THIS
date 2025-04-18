@@ -1,0 +1,49 @@
+#!/bin/bash
+# uname - 打印系统信息
+# 不带选项则默认输出 uname -s
+
+echo -n 内核名称：
+# -s,--kernel-name
+# 打印内核名称
+uname -s
+
+
+echo -n 网络节点主机名称：
+# -n,--nodename
+# 打印网络节点主机名称
+uname -n
+
+echo -n 发布信息：
+# -r,--kernel-release
+# 打印内核发布信息
+uname -r
+
+echo -n 内核版本：
+# -v,--kernel-version
+# 打印内核版本
+uname -v
+
+echo -n 机器硬件名称：
+# -m,--machine
+# 打印机器硬件名称
+uname -m
+
+echo -n 处理器型号：
+# -p,--processor
+# 打印处理器型号（非便携式）
+uname -p
+
+echo -n 硬件平台：
+# -i,--hardware-platform
+# 打印硬件平台
+uname -i
+
+echo -n 操作系统：
+# -o,--operating-system
+# 打印操作系统
+uname -o
+
+echo -n 系统信息总览：
+# -a,--all
+# 按顺序打印上面全部信息，除非unknown
+uname -a

@@ -76,11 +76,19 @@ git clone --no-checkout https://git.oschina.NET/NextApp/platform.git anyFolder
 git reset --hard HEAD
 ```
 
-### 11. git代理设置
+
+### 11. 克隆项目
+`git clone` 仓库地址
+
+## git的一些设置
+### git代理设置
 1. 设置代理
 git config --global http.proxy http://127.0.0.1:8080
 2. 取消代理
 git config --global --unset http.proxy
 
-### 11. 克隆项目
-`git clone` 仓库地址
+### 取消换行符检查
+git config --global core.autocrlf false
+
+### 区分大小写
+git config --global core.ignorecase false
