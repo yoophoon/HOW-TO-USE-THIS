@@ -1,8 +1,9 @@
 "使用下方命令即可使用其他路劲下的vimrc配置文件
-"vim ~/.bashrc
-"alias mvim = 'vim -u ~/howToUseThis/linux/vim/.vimrc'
-"source ~/.bashrc
-"windows下在快捷方式引用地址加上对应的参数就好
+" linux启动vim会自动加载/etc/vimrc $HOME/.vimrc $HOME/.vim/vimrc $HOME/.config/vim/vimrc
+" linux:  ln -s /path/to/this/directory /path/to/load/directory
+" windows启动vim会自动加载$VIM\vimrc $HOME\_vimrc $HOME\_vimfiles\vimrc $VIM\_vimrc
+" windows:mklink /D x:\path\to\this\directory x:\path\to\load\directory
+" vim自动加载配置文件位置可通过 :version 获取
 "
 "vim --startuptime startuptime.log  #打印启动用时日志
 "对某个行为进行分析
@@ -10,20 +11,42 @@
 ":profile func *
 ":profile file *
 ":profile stop 或 退出vim
-
 "help option-list   "查看帮助选项列表
+
+" 图形界面选项(guioptions) 
+set guioptions+=d         "黑色主题版本
+set guioptions-=m         "菜单栏
+set guioptions-=M         "系统菜单栏
+set guioptions-=t         "可拖动工具条
+set guioptions-=T         "工具条
+set guioptions-=L         "左方滚动条
+set guioptions-=l         "垂直拆分窗口左方滚动条
+set guioptions-=R         "右方滚动条
+set guioptions-=r         "垂直拆分窗口右方滚动条
+set guioptions-=e         "取消GUI tabline 以终端tabline的形式显示tabline
+"字体设置
+set guifont=Fira_Code:h12:cANSI:qDRAFT
+
+"=================================================================================
 "编辑器设置
 set nocompatible    "设置不兼容VI
-set textwidth=0     "设置单行长度
+"设置单行长度被插入的最大文本宽度，更长的文本会被空白字符截断以适应宽度
+"设为0将会禁用文本最大宽度限制  help textwidth
+set textwidth=80
+"set wrapmargin=10  "设置窗口右方10个字符的margin并换行
+set colorcolumn=80  "高亮指定行
+set formatoptions+=t  "默认就是tcq
+"set columns=80      "设置初始窗口宽度，可变尺寸窗口会自动修改该值
 set showcmd         "在状态栏显示最后执行的命令
 syntax on           "语法高亮
 filetype on         "检测文件类型
+filetype plugin on  "为特定的文件添加对应的插件
 set autoread       "文件改动后自动读取
-set guifont=Hack_Nerd_Font_Mono:h10
 set encoding=utf-8
 set fileencoding=utf-8
 set backspace=2
 colorscheme habamax "$VIMRUNTIME/color/*.vim  设置色彩主题就是运行其对应的vim脚本
+set conceallevel=0  "保留高亮语法关键字
 "winpos 100 100
 "set lines=50 columns=winwidth(0)/2
 set wildmenu        "开启自动补全增强功能
@@ -41,7 +64,9 @@ set smartindent     "智能对齐
 set expandtab       "设置tab扩展为空格
 set softtabstop=2   "软设置如果tab字符扩展为空格则第一次输入tab为设置的空格数第二次输入为一个tab符否则输入tab符
 "显示字符
-"set list
+set list
+set listchars+=space:۰  "空格显示为۰
+set listchars+=tab:├\ → "tab显示为→
 "set listchars=tab
 ">~,space=.
 set shiftwidth=2    "设置自动缩进
@@ -57,7 +82,7 @@ set laststatus=2    "状态栏显示策略
 "set statusline=%(%0.100F%m%)%=%(%#ColorColum#\|%)%=%P\ @\ %L,%c/%v%=%S       "被airline设置代替
 set statusline=%#StatuslineNC#%-20.30F%m%#ColorColumn#%(\ >\ %#StatuslineNC#%)%=%-(%P\ @\ %-20.30L,%c%S%) 
 
-set nowrap          "取消自动换行
+set wrap          "取消自动换行
 set display+=lastline   "长文本行的显示内容
 set linebreak       "单词软换行
 set scrolloff=999   "光标移动到buffer的顶部和底部时保留的行数
@@ -67,16 +92,29 @@ set guicursor+=i:ver25-CursorInsert
 set guicursor+=r:hor25-CursorReplace
 "set spell spelllang=en,cjk          "拼写检查
 
+set langmenu=en_US.utf-8
+let $LANG='en'
+
 set wrapscan        "是否在文件内循环搜索 默认开启
 set ic              "启用忽略大小写  ignore case  选项默认关闭即 set noic
-
-
 "set equalalways       "设置拆分窗口是否相等，默认开始，set noea
 "作用于equalalways选项,hor不改变窗口高度ver不改变窗口宽度both宽高由vim决定
 "set eadirection "hor" 
 
+" 插件设置
+"packloadall        "加载所有'packpath'的包
+":helptags ALL      "生成所有文档的tags文件
+" NETRW
+if has("win32")
+  source $HOME\vimfiles\pluginsRC\netrw
+else
+  source $HOME/.vim/pluginsRC/netrw
+endif
 
-
+set helpfile=$VIMRUNTIME/doc/help.cnx
+set helplang=cn
+" helptoc
+"
 "交换文件相关选项
 if !isdirectory($HOME . '/.vim/swap')
     call mkdir($HOME . '/.vim/swap',"p")
@@ -109,11 +147,9 @@ nmap <Space> :
 nnoremap n nzzzv
 nnoremap N Nzzzv
 "切换buffer
-nnoremap <C-tab> :bn<CR>
-nnoremap <C-s-tab> :bp<CR>
+"nnoremap <C-tab> :bn<CR>
+"nnoremap <C-s-tab> :bp<CR>
 
-" 图形界面选项(guioptions) 
-set guioptions+=d
 
 
 "下面是对跨平台的兼容性设置
@@ -122,36 +158,40 @@ set guioptions+=d
 "New-Item -Path 'c:\temp\New Folder' -ItemType Directory            #创建文件夹
 "New-Item -Path 'c:\temp\New Folder\newFile.txt' -ItemType File     #创建文件
 "Remove-Item ItemName [-Force]                                      #删除文件或文件夹
-"if has('win32')
-"    "echomsg "windows兼容设置启用"
-"    "windows平台将终端设置为powershell
-"    set shell=C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
-"    " GVIM的设置
-"    " 切换GVIM的菜单、工具栏及滚动条的显示 快捷键F2
-"    set guioptions-=b
-"    set guioptions-=m
-"    set guioptions-=T
-"    set guioptions-=r
-"    set guioptions-=L
-"    map <silent> <F2> :if &guioptions =~# 'T' <Bar>
-"        \set guioptions-=b <Bar>
-"        \set guioptions-=T <Bar>
-"        \set guioptions-=m <Bar>
-"        \set guioptions-=r <Bar>
-"        \set guioptions-=L <Bar>
-"    \else <Bar>
-"        \set guioptions+=b <Bar>
-"        \set guioptions+=T <Bar>
-"        \set guioptions+=m <Bar>
-"        \set guioptions+=r <Bar>
-"        \set guioptions+=L <Bar>
-"    \endif<CR>
-"else
-"    "echomsg "arch兼容设置启用"
-"    let g:fcitx5state=system("fcitx5-remote")
-"    " 退出插入模式时禁用输入法，并保存状态
-"    autocmd InsertLeave * :silent let fcitx5state=system("fcitx5-remote")[0] | silent !fcitx5-remote -c 
-"    " 2 表示之前状态打开了输入法，则进入插入模式时启动输入法
-"    autocmd InsertEnter * :silent if fcitx5state == 2 | call system("fcitx5-remote -o") | endif 
-"endif
+if has('win32')
+    "echomsg "windows兼容设置启用"
+    "windows平台将终端设置为powershell
+    set shell=C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+    " GVIM的设置
+    " 切换GVIM的菜单、工具栏及滚动条的显示 快捷键F2
+    set guioptions-=b
+    set guioptions-=m
+    set guioptions-=T
+    set guioptions-=r
+    set guioptions-=L
+    map <silent> <F2> :if &guioptions =~# 'T' <Bar>
+        \set guioptions-=b <Bar>
+        \set guioptions-=T <Bar>
+        \set guioptions-=m <Bar>
+        \set guioptions-=r <Bar>
+        \set guioptions-=L <Bar>
+    \else <Bar>
+        \set guioptions+=b <Bar>
+        \set guioptions+=T <Bar>
+        \set guioptions+=m <Bar>
+        \set guioptions+=r <Bar>
+        \set guioptions+=L <Bar>
+    \endif<CR>
+    "设置firacode 不显示连字的问题
+    set renderoptions=type:directx  " [firacode](https://github.com/tonsky/FiraCode/issues/462)
+    "let g:netrw_ftp_cmd= 'c:\Windows\System32\ftp -s:C:\Users\MyUserName\MACHINE'
+    "
+else
+    ""echomsg "arch兼容设置启用"
+    "let g:fcitx5state=system("fcitx5-remote")
+    "" 退出插入模式时禁用输入法，并保存状态
+    "autocmd InsertLeave * :silent let fcitx5state=system("fcitx5-remote")[0] | silent !fcitx5-remote -c 
+    "" 2 表示之前状态打开了输入法，则进入插入模式时启动输入法
+    "autocmd InsertEnter * :silent if fcitx5state == 2 | call system("fcitx5-remote -o") | endif 
+endif
 

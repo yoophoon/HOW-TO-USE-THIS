@@ -1,0 +1,38 @@
+/usr/share/vim
+├── vim91
+│   ├── autoload          "vim自动加载脚本
+│   ├── bugreport.vim     "bug提交
+│   ├── colors            "主题相关
+│   ├── compiler          "编译器相关
+│   ├── defaults.vim
+│   ├── delmenu.vim
+│   ├── doc
+│   │   ├── *.txt         "help相关文档
+│   │   └── tags          "用于help的tag跳转
+│   ├── evim.vim
+│   ├── filetype.vim      "文件类型相关
+│   ├── ftoff.vim
+│   ├── ftplugin          "文件类型插件
+│   ├── indent            "缩进相关目录，不同的文件
+│   ├── indent.vim        "缩进vim脚本
+│   ├── indoff.vim
+│   ├── keymap            "键位映射相关
+│   ├── lang              "自然语言相关
+│   ├── LICENSE           "软件许可证
+│   ├── macros            "宏文件目录
+│   ├── menu.vim          "菜单脚本
+│   ├── mswin.vim
+│   ├── optwin.vim
+│   ├── pack              "软件自带的包
+│   ├── plugin            "软件加载的插件
+│   ├── print             "打印相关
+│   ├── README.txt
+│   ├── scripts.vim
+│   ├── spell             "拼写检查
+│   ├── synmenu.vim
+│   ├── syntax            "文件语法高亮相关，如help的高亮语法
+│   ├── tools             "工具目录
+│   ├── tutor             "入门教程文件夹
+│   └── vimrc_example.vim
+└── vimfiles
+    └── archlinux.vim

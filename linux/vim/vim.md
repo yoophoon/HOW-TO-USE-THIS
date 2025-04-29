@@ -205,10 +205,15 @@ i_C-p         上一个匹配模式补全
 i_C-h         删除光标前一个字符
 i_C-j         向光标上方插入新行
 i_C-k         digraph 相关  help diagraph
-i_C-l         当 insertmode 启用时，切换到正常模式(启用insertmode设置会将vim的默认模式设置为insert) 正常模式是插入
-符号
+i_C-l         当insertmode启用时，切换到正常模式(启用insertmode设置会将vim的默
+              认模式设置为insert) 正常模式是插入符号
 
-℅   ©   B <BS>   k     âj  á        kj
+## 保存当前工作
+:mkexrc       将当前vim的配置保存到当前目录的.exrc文件中
+:mkvimrc      将当前vim的配置保存到当前目录的.vimrc文件中
+:mksession    将当前的工作保存到当前目录的Session.vim文件中
+> 上面3个命令都可以指定保存的文件，看个人喜好使用默认文件名或者自定义文件名
+
 
 
 

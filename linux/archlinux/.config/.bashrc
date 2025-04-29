@@ -15,7 +15,9 @@ alias endproxy='unset http_proxy;unset https_proxy'
 
 
 export LESS="-n"  # less命令的环境变量，查阅man less获取更多信息
-set -u    # 不允许引用未定义变量  unset 报错处理
+# 这个选项会让有些命令无法正常运行，如 nvm ls-remote 会抛出未绑定变量名
+# 在调试时启用该选项有用
+#set -u    # 不允许引用未定义变量  unset 报错处理
 #set -e    # 报错中断执行，这个设置应该放在脚本的第二行  exit 退出处理
 
 # 后台任务运行结束直接打印结果
@@ -225,6 +227,9 @@ PROMPT_COMMAND='PS1="${FORMATTED_PS1}$(get_win_dir)${COLOR_BRANCH}$(git_branch)$
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# nvm use会自动加载$HOME/.bashrc指定的node版本
+# .bashrc的内容为node版本号 如 22.12.0
+nvm use > /dev/null
 
 
 #                ##     ##  ######  ##    ##  ######   #######                  

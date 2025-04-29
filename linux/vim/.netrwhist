@@ -1,3 +1,12 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =1
-let g:netrw_dirhist_1='/home/yoophoon/learnLinux'
+let g:netrw_dirhistcnt =0
+let g:netrw_dirhist_0='/mnt/d/Github/how-to-use-this/linux/vim/doc'
+let g:netrw_dirhist_9='/mnt/d/Github/how-to-use-this/linux/vim'
+let g:netrw_dirhist_8='/mnt/d/Github/how-to-use-this/linux/vim/doc'
+let g:netrw_dirhist_7='/mnt/d/Github/how-to-use-this/linux/vim'
+let g:netrw_dirhist_6='/mnt/d/Github/how-to-use-this/linux/vim/pluginDOC'
+let g:netrw_dirhist_5='/mnt/d/Github/vi-files/book_examples'
+let g:netrw_dirhist_4='/mnt/d/Github/how-to-use-this/linux/vim/doc'
+let g:netrw_dirhist_3='/mnt/d/Github/how-to-use-this/linux/vim'
+let g:netrw_dirhist_2='/mnt/d/Github/how-to-use-this/linux/vim/doc'
+let g:netrw_dirhist_1='/home/yoophoon/.vim/doc'

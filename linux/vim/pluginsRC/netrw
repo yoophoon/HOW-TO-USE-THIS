@@ -1,0 +1,60 @@
+"NETRW 基础变量
+let g:netrw_preview=1 "预览窗口打开形式 0: 水平分割 1:垂直分割
+
+"                                                                             
+"                           NETRW 浏览窗口变量                                
+"                                                                             
+"设置 `o` 键是在上方分割窗口还是下方分割窗口
+"0: 上方分割窗口
+"1: 下方分割窗口
+let g:netrw_alto=1    
+"设置 `v` 键是在左方分割窗口还是在右方分割窗口
+"0: 右方分割窗口
+"1: 左方分割窗口
+let g:netrw_altv=1
+"设置浏览窗口的顶部信息
+"1: 显示    0: 隐藏
+let g:netrw_banner=1
+"设置顶部信息路径分割符的样式，非零值显示反斜杠`\`，零值则显示斜杆`/`
+"这个选项可以用来设置跨平台路径格式的显示
+if has("win32")
+  let g:netrw_bannerbackslash=1
+else
+  let g:netrw_bannerbackslash=0
+endif
+"设置回车键打开文件的方式
+"0: 使用当前窗口打开文件
+"1: 优先水平分割窗口
+"2: 优先竖向分割窗口
+"3: 在新标签页打开文件
+"4: -
+let g:netrw_browse_split=3  "需要在当前标签页打开文件使用`o`/`v`
+"设置浏览窗口列表样式
+"0: 短格式（一个文件一行）
+"1: 长格式（一个文件一行附带文件大小、文件时间戳）
+"2: 宽格式（一行包含多个文件）
+"3: 目录树（类似tree命令的样式）
+"可以通过 `i` 键调整|NERT-i|，这里设置默认行为
+let g:netrw_liststyle=3
+"设置长格式文件列表文件大小显示样式
+"`"b"`真实字节数量
+"`"h"`人类可读的1000进制单位，如5k，4m，3g
+"`"H"`人类可读的1024进制单位，如5k，4m，3g
+let g:netrw_sizestyle="H"
+"设置<TAB>按键用于控制`Lexplore`窗口的收缩
+"这个功能需要终端识别<C-tab>  |netrw-c-tab|
+let g:netrw_usetab=1
+"设置收缩状态的浏览窗口的最小宽度
+let g:netrw_wiw=1
+"设置特殊的高亮
+let g:netrw_special_syntax=1
+"设置浏览窗口的宽度
+"值小于零则设置窗口的行数或列数
+"值等于零则根据vim的设置进行窗口尺寸设置
+"值大于零则采用当前浏览窗口的百分比
+let g:netrw_winsize=-25
+
+
+
+
+" vim:ft=vim

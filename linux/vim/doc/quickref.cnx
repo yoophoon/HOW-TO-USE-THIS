@@ -1,0 +1,1512 @@
+*quickref.cnx*  For Vim version 9.1.  最后修订: 2025 Feb 08
+
+
+		  VIM REFERENCE MANUAL    by Bram Moolenaar
+
+			    Quick reference guide
+
+							 *quickref* *Contents*
+ tag	  subject			 tag	  subject	~
+|Q_ct|	帮助文件列表(contents table)	|Q_re|	重复命令(Repeating commands)
+|Q_lr|	移动：左右方向(left-right)	|Q_km|	按键映射(Key mapping)
+|Q_ud|	移动：上下方向(up-down)		|Q_ab|	缩写(Abbreviations)
+|Q_tm|	移动: 文本对象(text-model)	|Q_op|	选项(Options)
+|Q_pa|	移动: 模式搜索(Pattern searches)|Q_ur|	撤销重做(Undo/Redo commands)
+|Q_ma|	移动: 标记(Marks)		|Q_et|	外部命令(External commands)
+|Q_vm|	移动: 特殊移动(Various motion)	|Q_qf|	快速修复(Quickfix commands)
+|Q_ta|	移动: 使用标签(Using tags)	|Q_vc|	特殊命令(Various commands)
+|Q_sc|	滚动(scrolling)			|Q_ce|	Ex模式Ex: Command-line editing
+|Q_in|	插入: 插入文本(Inserting text)	|Q_ra|	Ex模式Ex: Ranges
+|Q_ai|	插入: 键(alphabetical index)	|Q_ex|	Ex模式Ex: Special characters
+|Q_ss|	插入: 特殊键(Special keys)	|Q_st|	开始使用(Starting Vim)
+|Q_di|	插入: 二合字(Digraphs)		|Q_ed|	编辑文件(Editing a file)
+|Q_si|	插入: 特殊插入(Special inserts)	|Q_fl|	使用参数列表(Using the argument list)
+						filelist
+|Q_de|	修改: 删除文本(Deleting text)	|Q_wq|	写入并退出(Writing and quitting)
+|Q_cm|	修改: 复制移动(Copying&moving)	|Q_ac|	自动命令(Automatic commands)
+|Q_ch|	修改: 变更文本(Changing text)	|Q_wi|	多窗口命令(Multi-window commands)
+|Q_co|	修改: 复杂修改(Complex)		|Q_bu|	缓冲区列表命令(Buffer list commands)
+|Q_vi|	可视模式(Visual mode)		|Q_sy|	语法高亮(Syntax highlighting)
+|Q_to|	文本对象(Text objects)		|Q_gu|	GUI命令(GUI commands)
+					|Q_fo|	折叠(Folding)
+
+------------------------------------------------------------------------------
+N被用来表示一个可选的可以在命令前面指定的数字
+------------------------------------------------------------------------------
+*Q_lr*		左右移动
+
+|h|	N  h		向左移动(查看: CTRL-H, <BS>, 或 <Left> 按键)
+|l|	N  l		向右移动(查看: <Space> 或 <Right> 按键)
+|0|	   0		移动到当前行的第一个字符(查看: <Home> 按键)
+|^|	   ^		移动到当前行的第一个非空字符
+|$|	N  $		移动到当前行的最后一个字符(或到下方N-1行)(查看: <End> 按键)
+|g0|	   g0		移动到屏幕显示行的第一个字符(与"0"不同，当折行时)
+|g^|	   g^		移动到屏幕显示行的第一个非空字符(与"^"不同，当折行时)
+|g$|	N  g$		移动到屏幕显示行的最后一个字符(与"$"不同，当折行时)
+|gm|	   gm		移动到屏幕显示行的中心(屏幕中间并非当前行内容的中心)
+|gM|	   gM		移动当当前行内容的中心
+|bar|	N  |		移动到第N列(默认：1，制表符宽度按其实际占用计算)
+|f|	N  f{char}	移动到右边第N个出现的{char}字符
+|F|	N  F{char}	移动到左边第N个出现的{char}字符
+|t|	N  t{char}	移动到右边第N个出现的{char}之前的字符
+|T|	N  T{char}	移动到左边第N个出现的{char}之后的字符
+|;|	N  ;		重复最近"f", "F", "t", 或 "T"命令 N 次
+|,|	N  ,		反向重符最近"f", "F", "t", 或 "T"命令 N 次
+------------------------------------------------------------------------------
+*Q_ud*		上下移动
+
+|k|	N  k		向上移动N行(查看: CTRL-P 及 <Up>)
+|j|	N  j		向下移动N行(查看: CTRL-J, CTRL-N, <NL>, 及 <Down>)
+|-|	N  -		向上移动N行并将光标放置在第一个非空白字符上
+|+|	N  +		向下移动N行并将光标放置在第一个非空白字符上
+			   (查看:CTRL-M及<CR>)
+|_|	N  _		向下移动N-1行并将光标放置在第一个非空白字符上
+|G|	N  G		移动到第N行(默认：末尾行)并将光标放置第一个非空白字符上
+|gg|	N  gg		移动到第N行(默认：第一行)并将光标放置第一个非空白字符上
+|N%|	N  %		移动到剩余内容的百分之N处，N必须指定，否则将视为|%|命令
+|gk|	N  gk		向上移动N屏幕显示行(当折行时与"k"命令不同)
+|gj|	N  gj		向下移动N屏幕显示行(当折行时与"j"命令不同)
+------------------------------------------------------------------------------
+*Q_tm*		文本对象移动
+
+|w|	N  w		N个单词之后
+|W|	N  W		N个空白字符分隔的|WORD|之后
+|e|	N  e		向后移动到第N个单词尾部
+|E|	N  E		向后移动到第N个空白字符分隔的|WORD|尾部
+|b|	N  b		N个单词之前
+|B|	N  B		N个空白字符分隔的|WORD|之前
+|ge|	N  ge		向前移动到第N个单词尾部
+|gE|	N  gE		向前移动到第N个空白字符分隔的|WORD|尾部
+>
+  这里更多的是针对文本对象，如`w`包括对象的为空白符而e则不包括对象的尾空白符、
+  `e`不包括对象的首空白符而`ge`则包括对象的首空白符。
+<
+
+|)|	N  )		N个句子之后
+|(|	N  (		N个句子之前
+|}|	N  }		N个段落之后
+|{|	N  {		N个段落之前
+|]]|	N  ]]		N个章节之后并将光标放置在章节的开始处
+|[[|	N  [[		N个章节之前并将光标放置在章节的开始处
+|][|	N  ][		N个章节之后并将光标放置在章节的结束处
+|[]|	N  []		N个章节之前并将光标放置在章节的结束处
+>
+  句子应该是以"."作为分隔符，段落应该是以空白行作为分隔符，章节的分隔符不清处
+<
+|[(|	N  [(		向后移动到第N个左圆括号
+|[{|	N  [{		向后移动到第N个左花括号
+|[m|	N  [m		向后移动到第N个方法的开始(适用于 Java)
+|[M|	N  [M		向后移动到第N个方法的结束(适用于 Java)
+|])|	N  ])		向前移动到第N个右圆括号
+|]}|	N  ]}		向后移动到第N个右花括号
+|]m|	N  ]m		向前移动到第N个方法的开始(适用于 Java)
+|]M|	N  ]M		向前移动到第N个方法的结束(适用于 Java)
+|[#|	N  [#		向后移动到第N个"#if"或者"#else"
+|]#|	N  ]#		向前移动到第N个"#else"或"#endif"
+|[star|	N  [*		向后移动到第N个注释开始符号"/*"
+|]star|	N  ]*		向前移动到第N个注释结束符号"*/"
+------------------------------------------------------------------------------
+*Q_pa*		模式搜索
+
+|/|	N  /{pattern}[/[offset]]<CR>
+			向前搜索第N个出现的{pattern}
+|?|	N  ?{pattern}[?[offset]]<CR>
+			向后搜索第N个出现的{pattern}
+|/<CR>|	N  /<CR>	向前重复上次搜索
+|?<CR>|	N  ?<CR>	向后重复上次搜索
+|n|	N  n		重复上次搜索
+|N|	N  N		反方向重复上次搜索
+|star|	N  *		向前搜索光标位置的标识符
+|#|	N  #		向后搜索光标位置的标识符
+|gstar|	N  g*		与"*"类似但会查找部分匹配的结果
+|g#|	N  g#		与"#"类似但会查找部分匹配的结果
+|gd|	   gd		跳转到光标位置的标识符的局部声明
+|gD|	   gD		跳转到光标位置的标识符的全局声明
+
+|pattern|		搜索模式中的特殊字符
+
+>
+  vim为了满足不同用户对正则表达式的喜好，设置了|magic|和|nomagic|两种正则模式，
+  magic模式存在字面字符和特殊字符，字面字符想要特殊意义或特殊字符想要字面意义
+  都需要"\"进行转义
+  nomagic模式更倾向于表达字符的字面量意义，字符的特殊意义大多需要借助"\"
+<
+			含义		      magic   nomagic	~
+		matches any single character	.	\.
+		       matches start of line	^	^
+			       matches <EOL>	$	$
+		       matches start of word	\<	\<
+			 matches end of word	\>	\>
+	matches a single char from the range	[a-z]	\[a-z]
+      matches a single char not in the range	[^a-z]	\[^a-z]
+		  matches an identifier char	\i	\i
+		   idem but excluding digits	\I	\I
+		 matches a keyword character	\k	\k
+		   idem but excluding digits	\K	\K
+	       matches a file name character	\f	\f
+		   idem but excluding digits	\F	\F
+	       matches a printable character	\p	\p
+		   idem but excluding digits	\P	\P
+	     matches a white space character	\s	\s
+	 matches a non-white space character	\S	\S
+
+			       matches <Esc>	\e	\e
+			       matches <Tab>	\t	\t
+				matches <CR>	\r	\r
+				matches <BS>	\b	\b
+
+     matches 0 or more of the preceding atom	*	\*
+     matches 1 or more of the preceding atom	\+	\+
+	matches 0 or 1 of the preceding atom	\=	\=
+	matches 2 to 5 of the preceding atom	\{2,5}  \{2,5}
+		  separates two alternatives	\|	\|
+		group a pattern into an atom	\(\)	\(\)
+
+|search-offset|		搜索命令之后允许的偏移(这是跟在pattern后方的表达式)
+
+    [num]	[num] 向后偏移行并停留在行首
+    +[num]	[num] lines downwards, in column 1
+    -[num]	[num] lines upwards, in column 1
+    e[+num]	[num] characters to the right of the end of the match
+    e[-num]	[num] characters to the left of the end of the match
+    s[+num]	[num] characters to the right of the start of the match
+    s[-num]	[num] characters to the left of the start of the match
+    b[+num]	[num] identical to s[+num] above (mnemonic: begin)
+    b[-num]	[num] identical to s[-num] above (mnemonic: begin)
+    ;{search-command}	execute {search-command} next
+------------------------------------------------------------------------------
+*Q_ma*		标记和移动Marks and motions
+
+|m|        m{a-zA-Z}	使用{a-zA-Z}标记当前位置
+|`a|       `{a-z}	跳转到当前文件的{a-z}标记([a-z]标记符类似于局部标记)
+|`A|       `{A-Z}	跳转到任意文件的{A-Z}标记([A-Z]标记符类似于全局标记)
+|`0|       `{0-9}	跳转到Vim之前退出位置([0-9]标记为vim内部记录退出历史)
+|``|       ``		跳转到上一次跳转的位置(这个命令不会改变跳转列表)
+|`quote|   `"		跳转到上次文件编辑的位置
+|`[|       `[		跳转到上次操作或放置文本的开始位置
+|`]|       `]		跳转到上次操作或放置文本的结束位置
+|`<|       `<		跳转到上次可视区域的开始位置
+|`>|       `>		跳转到上次可视区域的结束位置
+|`.|       `.		跳转到当前文件最近修改的位置
+|'|        '{a-zA-Z0-9[]'"<>.}
+			与"`"类似，但会移动光标到对应行的第一个非空白字符位置
+|:marks|  :marks	打印激活的标签
+|CTRL-O|  N  CTRL-O	跳转至跳转列表中的第N个之前的位置
+|CTRL-I|  N  CTRL-I	跳转至跳转列表中的第N个之后的位置
+|:ju|     :ju[mps]	打印跳转列表
+------------------------------------------------------------------------------
+*Q_vm*		特殊移动
+
+|%|	   %		在当前行查找下一个圆括号、方括号、注释或者"#if"/"#else"
+			/"#endif"并跳转到匹配的位置
+|H|	N  H		跳转到当前窗口的第N行的第一个非空字符处，这个跳转好像会
+			受'scrolloff'的影响，无法跳转到'scrolloff'区域
+|M|	   M		跳转到当前窗口的中间行的第一个非空白字符处
+|L|	N  L		跳转到当前窗口的底部第N行的第一个非空白字符处
+>
+  'H'/'M'/'L'三个移动命令均相对于窗口位置且均受scrolloff影响
+<
+|go|	N  go			跳转到当前缓冲区的第N个字节
+|:go|	:[range]go[to] [off]	跳转到当前缓冲取的第N个字节
+------------------------------------------------------------------------------
+*Q_ta*		使用标签Using tags
+
+|:ta|      :ta[g][!] {tag}	跳转到标签{tag}
+|:ta|      :[count]ta[g][!]	跳转到标签列表中的第[count]个新标签
+|CTRL-]|      CTRL-]		跳转到光标位置的标签，除非被修改过
+|:ts|      :ts[elect][!] [tag]	列出匹配的标签并选择一个进行跳转
+|:tjump|   :tj[ump][!] [tag]	跳转到标签[tag]或者如果有多个匹配则从列表中选择
+|:ltag|    :lt[ag][!] [tag]	跳转到标签[tag]并添加匹配标签到局部列表
+
+|:tags|    :tags		打印标签列表
+|CTRL-T|   N  CTRL-T		往回跳转标签列表中的第N个旧标签
+|:po|      :[count]po[p][!]	往回跳转标签列表中的第[count]个旧标签
+|:tnext|   :[count]tn[ext][!]	跳转到后续第[count]个匹配的标签
+|:tp|      :[count]tp[revious][!] 跳转到之前第[count]个匹配的标签
+|:tr|      :[count]tr[ewind][!]	跳转第[count]个匹配的标签
+|:tl|      :tl[ast][!]		跳转最后一个匹配的标签
+
+|:ptag|    :pt[ag] {tag}	打开预览窗口显示标签{tag}(内容)
+|CTRL-W_}|    CTRL-W }		与CTRL-]类似但会在预览窗口显示标签(内容)
+|:pts|     :pts[elect]		与":tselect"类似但会在预览窗口显示标签(内容)
+|:ptjump|  :ptj[ump]		与":tjump"类似但会在预览窗口显示标签(内容)
+|:pclose|  :pc[lose]		关闭标签预览窗口
+|CTRL-W_z|    CTRL-W z		关闭标签预览窗口
+------------------------------------------------------------------------------
+*Q_sc*		滚动
+
+|CTRL-E|	N  CTRL-E	将窗口向下移动N行(默认移动1行)这个移动并不会改变
+				光标位置除非到了|scrolloff|区域
+|CTRL-D|	N  CTRL-D	将光标向以移动N行(默认移动窗口的1/2)
+|CTRL-F|	N  CTRL-F	将窗口向下移动N页
+|CTRL-Y|	N  CTRL-Y	将窗口向上移动N行(默认移动1行)
+|CTRL-U|	N  CTRL-U	将窗口向上移动N行(默认移动窗口的1/2)
+|CTRL-B|	N  CTRL-B	将窗口向上移动N页
+|z<CR>|		   z<CR> or zt	重绘，将当前行移动到窗口的顶部
+|z.|		   z.	 or zz	重绘，将当前行移动到窗口的中间
+|z-|		   z-	 or zb	重绘，将当前行移动到窗口的底部
+>
+  与窗口相关的操作均受|scrolloff|影响
+<
+这些命令仅在'wrap'选项关闭时有效:
+|zh|		N  zh		将屏幕向右滚动N个字符
+|zl|		N  zl		将屏幕向左滚动N个字符
+|zH|		N  zH		将屏幕向右滚动半个屏幕宽度
+|zL|		N  zL		将屏幕向左滚动半个屏幕宽度
+------------------------------------------------------------------------------
+*Q_in*		插入文本
+
+|a|	N  a	光标之后添加文本(N次)
+|A|	N  A	光标行尾添加文本(N次)
+|i|	N  i	光标之前添加文本(N次)(查看：<Insert>)
+|I|	N  I	光标行首个非空白字符前添加文本(N次)
+|gI|	N  gI	在第一列插入文本(N次)
+|o|	N  o	在当前行下方新增一行并添加文本(N次)
+|O|	N  O	在当前行上方新增一行并添加文本(N次)
+|:startinsert|  :star[tinsert][!]  进入插入模式，后缀[!]为添加文本
+>
+  可能存在问题，实测`:star!`命令是在行尾进入插入模式相当于`A`命令'
+<
+|:startreplace| :startr[eplace][!]  进入替换模式，后缀[!]为行尾处替换
+
+可视块模式:
+|v_b_I|	   I	在所有选择的内容前插入相同的文本
+|v_b_A|	   A	在所有选择的内容后插入相同的文本
+------------------------------------------------------------------------------
+*Q_ai*		插入模式键
+
+|insert-index|	按字母表顺序排列的插入模式命令索引
+
+离开插入模式:
+|i_<Esc>|	<Esc>		  结束插入模式并回到普通模式
+|i_CTRL-C|	CTRL-C		  和<Esc>类似，但不适用缩写
+|i_CTRL-O|	CTRL-O {command}  执行命令{command}并返回插入模式
+
+移动
+|i_<Up>|	cursor keys	  使用方向键移动光标位置
+|i_<S-Left>|	shift-left/right  左右移动一个单词
+|i_<S-Up>|	shift-up/down	  前后移动一个屏幕
+|i_<End>|	<End>		  移动光标到行尾
+|i_<Home>|	<Home>		  移动光标到行首
+------------------------------------------------------------------------------
+*Q_ss*		插入模式特殊键Special keys in Insert mode
+
+|i_CTRL-V|	CTRL-V {char}..	  插入字符字面量或键入数值比特值
+				  终端可能会覆盖这个命令(粘贴)
+				  这里的本意是在插入模式按下|CTRL-v|之后键入特
+				  殊键或特殊键的ascii值时以其字面量的形式插入文
+				  本而不触发其特定行为，如：
+				  `i_CTRL-v`+`<CR>`最终键入的是`^M`而非换行，特
+				  殊键的字面量可以查询ASCII码表(脱字符表示法)
+|i_<NL>|	<NL> or <CR> or CTRL-M or CTRL-J
+				  开始新行
+|i_CTRL-E|	CTRL-E		  按照光标下方位置的内容插入文字
+|i_CTRL-Y|	CTRL-Y		  按照光标上方位置的内容插入文字
+
+|i_CTRL-A|	CTRL-A		  插入上次插入的文本
+|i_CTRL-@|	CTRL-@		  插入上次插入的文本并退出插入模式
+|i_CTRL-R|	CTRL-R {register} 插入指定寄存器中的内容
+
+|i_CTRL-N|	CTRL-N		  在光标前插入标识符的下个匹配
+|i_CTRL-P|	CTRL-P		  在光标前插入标识符的上个匹配
+|i_CTRL-X|	CTRL-X ...	  显示光标前单词的补全选项
+
+|i_<BS>|	<BS> or CTRL-H	  删除光标前的字符
+|i_<Del>|	<Del>		  删除光标后的字符
+|i_CTRL-W|	CTRL-W		  删除光标前的单词
+|i_CTRL-U|	CTRL-U		  删除当前行所有输入的字符
+				  这个命令更多的是用于新增内容的处理
+				  而非处理修订内容，因为如果光标后面存在字符时
+				  这个命令并不会处理，可以理解为删除当前行光标
+				  之前的内容
+|i_CTRL-T|	CTRL-T		  在当前行前面插入一个制表符宽度的缩进
+|i_CTRL-D|	CTRL-D		  在当前行前面取消一个制表符宽度的缩进
+|i_0_CTRL-D|	0 CTRL-D	  删除当前行的所有缩进
+|i_^_CTRL-D|	^ CTRL-D	  删除当前行的缩进并保留下一行的缩进
+------------------------------------------------------------------------------
+*Q_di*		合成符
+
+|:dig|	   :dig[raphs]		显示当前合成符列表
+|:dig|	   :dig[raphs] {char1}{char2} {number} ...
+				向列表中添加合成符
+
+插入模式或命令行模式:
+|i_CTRL-K|	CTRL-K {char1} {char2}
+				  输入合成符
+|i_digraph|	{char1} <BS> {char2}
+				  输入合成符如果'digraph'选项启用
+------------------------------------------------------------------------------
+*Q_si*		特殊插入
+
+|:r|	   :r [file]	   在光标下方插入[file]文件的内容
+|:r!|	   :r! {command}   在光标下方插入{command}命令的标准输出
+------------------------------------------------------------------------------
+*Q_de*		删除文本
+
+|x|	N  x		删除光标之后的N个字符(默认1个字符即光标位置的字符)
+|<Del>|	N  <Del>	删除光标之后的N个字符
+|X|	N  X		删除光标之前的N个字符
+|d|	N  d{motion}	删除{motion}移动范围内的字符
+|v_d|	   {visual}d	删除高亮(选中)的字符
+			原文是说高亮的字符，但可视模式字符被高亮即意味着被选中
+|dd|	N  dd		删除N行
+|D|	N  D		删除当前行光标之后的内容及后续的N-1行
+|J|	N  J		合并N-1行(删除<EOL>)
+|v_J|	   {visual}J	合并高亮的行(概念类似于|v_d|)
+|gJ|	N  gJ		类似"J"，但不会合并空格
+|v_gJ|	   {visual}gJ	类似"{visual}J"，但不会合并空格
+|:d|	:[range]d [x]	删除[range]行内容到寄存器[x]
+------------------------------------------------------------------------------
+*Q_cm*		复制和移动文本
+
+|quote|	  "{char}	将寄存器{char}用于下次删除、复制或粘贴
+|:reg|	  :reg		显示所有寄存器的内容
+|:reg|	  :reg {arg}	显示{arg}提到的寄存器的内容
+|y|	  N  y{motion}	复制{motion}移动范围的文本到寄存器
+			vim的|d|,|y|,|p|命令在没有指定寄存器的时候都是操作无名
+			寄存器(unnamed register)(")(无名寄存器之前的内容会被顺
+			序放到编号寄存器)(numbered register)(0-9)
+|v_y|	     {visual}y	复制高亮文本到寄存器
+|yy|	  N  yy		复制N行到寄存器
+|Y|	  N  Y		复制N行到寄存器
+|p|	  N  p		复制寄存器的内容到光标之后(N次)
+|P|	  N  P		复制寄存器的内容到光标之前(N次)
+|]p|	  N  ]p		类似|p|但会调整当前行的缩进
+|[p|	  N  [p		类似|P|但会调整当前行的缩进
+|gp|	  N  gp		类似|p|但会将光标放置在复制文本之后
+|gP|	  N  gP		类似|P|但会将光标放置在复制文本之后
+>
+  |gp|&|gP|这两个命令会将光标放在复制文本之外，默认是光标在复制文本的最后一个字
+  符上。有个特殊情况，如果光标本身就在行尾，那这两个命令是无法将光标放置在复制
+  文本之后的，因为vim的光标无法超出行尾字符。
+<
+------------------------------------------------------------------------------
+*Q_ch*		修改文本
+
+|r|	  N  r{char}	使用{char}字符替换N个字符
+|gr|	  N  gr{char}	替换N个字符而不影响布局
+|R|	  N  R		进入替换模式(重复输入文本N次)
+|gR|	  N  gR		进入虚拟替换模式(与替换模式类似但不会影响布局)
+|v_b_r|	     {visual}r{char}
+			在可视块模式中使用{char}替换选中文本的每个字符
+
+	(change = delete text and enter Insert mode)
+		(修改=删除文本并进入插入模式)
+|c|	  N  c{motion}	修改{motion}移动范围的文本
+|v_c|	     {visual}c	修改高亮的文本
+|cc|	  N  cc		修改N行
+|S|	  N  S		修改N行
+|C|	  N  C		修改光标至行尾的内容(及后续N-1行)
+|s|	  N  s		修改N个字符
+|v_b_c|	     {visual}c	在可视块模式中用输入的文本修改所有选中的文本
+|v_b_C|	     {visual}C	在可视块模式中用输入的文本修改所有选中文本至行尾
+
+|~|	  N  ~		切换光标后面N个字符的大小写并向前移动光标
+|v_~|	     {visual}~	切换高亮文本的大小写
+|v_u|	     {visual}u	将高亮文本切换至小写
+|v_U|	     {visual}U	将高亮文本切换至大写
+|g~|	     g~{motion} 切换{motion}移动范围文本的大小写
+|gu|	     gu{motion} 将{motion}移动范围文本切换至小写
+|gU|	     gU{motion} 将{motion}移动范围文本切换至大写
+|v_g?|	     {visual}g? 将高亮的文本进行|rot13|编码
+|g?|	     g?{motion} 将{motion}移动范围的文本进行|rot13|编码
+
+|CTRL-A|  N  CTRL-A	将光标当前或之后的数字添加N(默认增加1)
+|CTRL-X|  N  CTRL-X	将光标当前或之后的数字减少N(默认减少1)
+
+|<|	  N  <{motion}	将{motion}移动范围的行向左移动|shiftwidth|
+|<<|	  N  <<		将N行向左移动一个|shiftwidth|
+|>|	  N  >{motion}	将{motion}移动范围的行向右移动|shiftwidth|
+|>>|	  N  >>		将N行向右移动一个|shiftwidth|
+|gq|	  N  gq{motion}	将{motion}移动范围的行格式化为'textwidth'长度
+|:ce|	  :[range]ce[nter] [width]
+			将[range]范围的行居中(居中对齐)
+|:le|	  :[range]le[ft] [indent]
+			将[range]范围的行左对齐(并设置缩进[indent])
+|:ri|	  :[range]ri[ght] [width]
+			将[range]范围的行右对齐
+>
+  对齐设置接受[range]范围，其一般形式为 start,endCommand
+  [range]范围可以是一个数字指定某一行，如:430d
+		 是一堆通过`,`或`;`分割的行号，分割前为开始行号后为结束行号
+			:x,yd	  删除x到y行
+		 省略范围默认命令作用范围为当前行
+			`:write`和`:global`特殊，默认作用范围为1,$(1行至尾行)
+		一些特殊的范围语法糖：
+			.	  当前行
+			%	  1,$
+			x,[+-]y	  指定开始行并相对开始行的范围
+<
+------------------------------------------------------------------------------
+*Q_co*		复杂修改
+
+|!|	   N  !{motion}{command}<CR>
+			filter the lines that are moved over through {command}
+			将移动范围的行传递给{command}(这里的filter为传值的意思)
+			这里的表达式更为通用，常用的方式为:!{command}直接调用
+			命令|:[range]! {command}<CR>|，下面提到了
+|!!|	   N  !!{command}<CR>
+			filter N lines through {command}
+			将N行传递给命令{command}
+|v_!|	      {visual}!{command}<CR>
+			filter the highlighted lines through {command}
+			将高亮的行传递{command}命令
+|:range!|  :[range]! {command}<CR>
+			filter [range] lines through {command}
+			将[range]范围的行内容传递给{command}
+|=|	   N  ={motion}
+			filter the lines that are moved over through 'equalprg'
+			将{motion}移动范围的行内容传递给'equalprg'指定的外部程
+			序，这里一般用作内容格式化
+|==|	   N  ==	将N行内容传递给'equalprg'
+			filter N lines through 'equalprg'
+|v_=|	      {visual}=
+			将高亮的行内容传递个'equalprg'指定的外部程序
+			filter the highlighted lines through 'equalprg'
+|:s|	   :[range]s[ubstitute]/{pattern}/{string}/[g][c]
+			用{string}特换[range]范围行内容{pattern}模式匹配的文本
+			   选项[g]，替换行内所有匹配项
+			   选项[c]，确认每次替换
+|:s|	   :[range]s[ubstitute] [g][c]
+			新指定范围和选项重复上次":s"命令
+|&|	      &		在当前行不带选项重复上次":s"命令
+|:ret|	   :[range]ret[ab][!] [tabstop]
+			为'tabstop'设置新值并并自动调整空白符
+------------------------------------------------------------------------------
+*Q_vi*		可视模式
+
+|visual-index|	可视模式命令列表
+
+|v|        v		开始高亮字符  }	 移动光标并使用操作命令影响高亮文本
+|V|        V		开始逐行高亮	
+|CTRL-V|   CTRL-V	开始逐块高亮
+|v_o|      o		将光标切换至高亮开始的位置
+			(实测为在高亮开始和结束位置切换)
+|gv|       gv		在上一个可视区域开始高亮操作
+|v_v|      v		高亮字符或停止高亮
+|v_V|      V		逐行高亮或停止高亮
+|v_CTRL-V| CTRL-V	逐块高亮或停止高亮
+>
+  可视模式的高亮可能翻译为选择比较好，个人认为高亮操作实际是生成一个特殊的文本
+  对象
+<
+------------------------------------------------------------------------------
+*Q_to*		文本对象(用于可视模式或操作命令之后)
+
+|v_aw|	   N  aw	选择"一个单词"
+|v_iw|	   N  iw	选择 "光标所在单词"
+|v_aW|	   N  aW	选择 "一个|WORD|(仅以空白符分割的文本对象)"
+|v_iW|	   N  iW	选择 "光标所在的|WORD|"
+|v_as|	   N  as	选择 "一个句子"
+|v_is|	   N  is	选择 "光标所在的句子"
+|v_ap|	   N  ap	选择 "一个段落"
+|v_ip|	   N  ip	选择 "光标所在的段落"
+|v_ab|	   N  ab	选择 "一个块" (从 "[(" 到 "])")
+|v_ib|	   N  ib	选择 "光标所在的块" (从 "[(" 到 "])")
+|v_aB|	   N  aB	选择 "一个块" (从 "[{" 到 "]}")
+|v_iB|	   N  iB	选择 "光标所在的块" (从 "[{" 到 "]}")
+|v_a>|	   N  a>	选择 "一个<>块"
+|v_i>|	   N  i>	选择 "光标所在的<>块"
+|v_at|	   N  at	选择 "一个标签块" (从 <aaa> 到 </aaa>)
+|v_it|	   N  it	选择 "光标所在的标签块" (从 <aaa> 到 </aaa>)
+|v_a'|	   N  a'	选择 "一个单引号字符串"
+|v_i'|	   N  i'	选择 "光标所在的单引号字符串"
+|v_aquote| N  a"	选择 "一个双引号字符串"
+|v_iquote| N  i"	选择 "光标所在的双引号字符串"
+|v_a`|	   N  a`	选择 "一个反引号字符串"
+|v_i`|	   N  i`	选择 "光标所在的反引号字符串"
+>
+  总结下:ab  ()
+	 aB  {}
+	 as  .
+	 ap  段落，不清楚划分的依据
+	 a>  <>
+	 at  <tag></tag>
+	 a'  ''
+	 a"  ""
+	 a`  ``
+  这些在vim中都属于文本对象
+<
+------------------------------------------------------------------------------
+*Q_re*		重复命令Repeating commands
+
+|.|	   N  .		重复上次修改(用N指定替换次数)
+|q|	      q{a-z}	用寄存器{a-z}记录键入的字符
+|q|	      q{A-Z}	记录键入的字符并追加到指定寄存器{a-z}
+|q|	      q		停止记录
+|@|	   N  @{a-z}	执行寄存器{a-z}的内容(N次)
+|@@|	   N  @@	   重复上次@{a-z}(N次)
+|:@|	   :@{a-z}	将寄存器{a-z}的内容作为Ex命令执行
+|:@@|	   :@@		重复上次:@{a-z}
+|:g|	   :[range]g[lobal]/{pattern}/[cmd]
+			在[range]范围内{pattern}模式匹配的地方执行[cmd]命令
+			默认命令是":p"，如":g/TODO/d"或者":g/TODO/:p"，前者接收
+			的是普通模式的"d"命令，":g"的作用范围是匹配到的行，所以
+			"d"命令后面无需跟{motion}，而后者的":p"则为正常的Ex命令
+				:p[rint]  将指定范围的内容打印出来
+|:g|	   :[range]g[lobal]!/{pattern}/[cmd]
+			在[range]范围内{pattern}模式不匹配的地方执行[cmd]命令
+			默认命令依然是":p"				|:v|
+|:so|	   :so[urce] {file}
+			从{file}文件中读取Ex命令
+|:so|	   :so[urce]! {file}
+			从{file}文件中读取Vim命令
+>
+  这里出现个很有意思的东西，Ex command(扩展命令)和Vim command(Vim命令)
+  扩展命令：更多的是对编辑器的操作或对文件的操作
+	如":set nu"显示编辑器行号，":s/{pattern}/string/g"文件内容替换
+  Vim命令：更多的是编辑操作，如普通模式的命令
+  这只是一种粗浅的理解
+<
+|:sl|	   :sl[eep] [sec]
+			[sec]秒内不做任何事情(休眠)
+|gs|	   N  gs	休眠N秒
+------------------------------------------------------------------------------
+*Q_km*		键位映射
+
+|:map|       :ma[p] {lhs} {rhs}	  在普通模式和可视模式将{lhs}映射为{rhs}
+				  lhs:left-hand side	输入键，即按下的键
+				  rhs:right-hand side	执行键，即触发的键
+|:map!|      :ma[p]! {lhs} {rhs}  在插入模式和命令行模式将{lhs}映射为{rhs}
+|:noremap|   :no[remap][!] {lhs} {rhs}
+				  和":map"命令一样但不会在对{rhs}进行映射
+|:unmap|     :unm[ap] {lhs}	  取消普通模式和可视模式对{lhs}的映射
+|:unmap!|    :unm[ap]! {lhs}	  取消插入模式和命令行模式对{lhs}的映射
+|:map_l|     :ma[p] [lhs]	  列出普通模式和可视模式对{lhs}的映射
+|:map_l!|    :ma[p]! [lhs]	  列出插入模式和命令行模式对{lhs}的映射
+|:cmap|      :cmap/:cunmap/:cnoremap
+				  类似 ":map!"/":unmap!"/":noremap!"但仅用于
+				  命令行模式
+|:imap|      :imap/:iunmap/:inoremap
+				  类似 ":map!"/":unmap!"/":noremap!"但仅用于
+				  插入模式
+|:nmap|      :nmap/:nunmap/:nnoremap
+				  类似 ":map"/":unmap"/":noremap"但仅用于
+				  普通模式
+|:vmap|      :vmap/:vunmap/:vnoremap
+				  类似 ":map"/":unmap"/":noremap"但仅用于
+				  可视模式
+|:omap|      :omap/:ounmap/:onoremap
+				  类似 ":map"/":unmap"/":noremap"但只有操作命令
+				  待定生效，如":omap w e"，则输入"dw"等同于输入
+				  "de"，因为操作命令dw被映射为de了
+				  这里有个新概念 操作符待定模式，粗浅的理解就是
+				  在普通模式输入了一个操作命令但这个命令不能单
+				  独执行，还需要比如{motion}等附加命令才能形成
+				  一条完整的命令
+|:mapc|      :mapc[lear]	  移除普通模式和可视模式的按键映射
+|:mapc|      :mapc[lear]!	  移除插入模式和命令行模式的按键映射
+|:imapc|     :imapc[lear]	  移除插入模式的按键映射
+|:vmapc|     :vmapc[lear]	  移除可视模式的按键映射
+|:omapc|     :omapc[lear]	  移除操作符待定模式的按键映射
+|:nmapc|     :nmapc[lear]	  移除普通模式的按键映射
+|:cmapc|     :cmapc[lear]	  移除命令行模式的按键映射
+|:mkexrc|    :mk[exrc][!] [file]  将当前的按键映射、缩写、设置写入[file]文件
+				  (默认写入".exrc"文件，使用 ! 进行覆写)
+|:mkvimrc|   :mkv[imrc][!] [file]
+				  与":mkexrc"命令一样但默认写入的文件是".vimrc"
+|:mksession| :mks[ession][!] [file]
+				  类似 ":mkvimrc"
+				  但会保存当前的文件、窗口等以便后续继续使用当前
+				  工作(session一般翻译为会话，但这里意译为工作)
+------------------------------------------------------------------------------
+*Q_ab*		缩写
+
+|:abbreviate|	:ab[breviate] {lhs} {rhs}  将{rhs}缩写为{lhs}
+|:abbreviate|	:ab[breviate] {lhs}	   显示{lhs}的缩写内容(缩写形式及完整形式)
+|:abbreviate|	:ab[breviate]		   显示所有的缩写
+|:unabbreviate|	:una[bbreviate] {lhs}	   移除{lhs}对应的缩写
+|:noreabbrev|	:norea[bbrev] [lhs] [rhs]  类似 ":ab", 但不会重新映射 [rhs]
+|:iabbrev|	:iab/:iunab/:inoreab	   类似 ":ab", 但只用于插入模式
+|:cabbrev|	:cab/:cunab/:cnoreab	   类似 ":ab", 但只用于命令行模式
+|:abclear|	:abc[lear]		   移除所有的缩写
+|:cabclear|	:cabc[lear]		   移除所有命令行模式的缩写
+|:iabclear|	:iabc[lear]		   移除所有插入模式的缩写
+------------------------------------------------------------------------------
+*Q_op*		选项
+
+|:set|		:se[t]			  显示所有修改过的选项
+|:set|		:se[t] all		  显示所有非终端功能相关选项
+					  show all non-termcap options
+|:set|		:se[t] termcap		  显示所有终端功能相关选项
+					  show all termcap options
+|:set|		:se[t] {option}		  设置布尔值选项，显示字符串或数字选项
+					  (如果是布尔值选项则启用这个选项，否则
+					  显示其值)
+|:set|		:se[t] no{option}	  重设布尔值选项(关闭这个选项)
+|:set|		:se[t] inv{option}	  反转布尔值选项
+|:set|		:se[t] {option}={value}	  将字符串/数值选项设置为{value}
+|:set|		:se[t] {option}+={value}  将{balue}追加到字符串选项或将{value}
+					  与数值选项当前值相加
+|:set|		:se[t] {option}-={value}  将{value}从字符串选项中移除或将数值选
+					  项减去{value}值
+|:set|		:se[t] {option}?	  显示{option}选项的值
+|:set|		:se[t] {option}&	  重设选项为它的默认值
+
+|:setlocal|	:setl[ocal]		  类似 ":set" 但只是设置局部选项
+|:setglobal|	:setg[lobal]		  类似 ":set" 但只是设置全局选项
+>
+  关于局部选项：只影响当前窗口或当前缓冲区
+  关于全局选项：影响全部的窗口及全部缓冲区
+<
+
+|:fix|		:fix[del]		  根据't_kb'的值设置't_kD'的值
+					  根据退格键的值设置删除键的值
+|:options|	:opt[ions]		  打开一个新窗口查看并设置选项，按功能
+					  分组，以行解释并链接到帮助文档
+
+Short explanation of each option:		*option-list*
+'aleph'		  'al'	    ASCII code of the letter Aleph (Hebrew)
+'allowrevins'	  'ari'     allow CTRL-_ in Insert and Command-line mode
+'altkeymap'	  'akm'	    obsolete option for Farsi
+'ambiwidth'	  'ambw'    what to do with Unicode chars of ambiguous width
+'antialias'	  'anti'    Mac OS X: use smooth, antialiased fonts
+'arabic'	  'arab'    for Arabic as a default second language
+'arabicshape'	  'arshape' do shaping for Arabic characters
+'autochdir'	  'acd'     change directory to the file in the current window
+'autoindent'	  'ai'	    take indent for new line from previous line
+'autoread'	  'ar'	    autom. read file when changed outside of Vim
+'autoshelldir'	  'asd'     change directory to the shell's current directory
+'autowrite'	  'aw'	    automatically write file if changed
+'autowriteall'	  'awa'     as 'autowrite', but works with more commands
+'background'	  'bg'	    "dark" or "light", used for highlight colors
+'backspace'	  'bs'	    how backspace works at start of line
+'backup'	  'bk'	    keep backup file after overwriting a file
+'backupcopy'	  'bkc'     make backup as a copy, don't rename the file
+'backupdir'	  'bdir'    list of directories for the backup file
+'backupext'	  'bex'     extension used for the backup file
+'backupskip'	  'bsk'     no backup for files that match these patterns
+'balloondelay'	  'bdlay'   delay in mS before a balloon may pop up
+'ballooneval'	  'beval'     switch on balloon evaluation in the GUI
+'balloonevalterm' 'bevalterm' switch on balloon evaluation in the terminal
+'balloonexpr'	  'bexpr'   expression to show in balloon
+'belloff'	  'bo'	    do not ring the bell for these reasons
+'binary'	  'bin'     read/write/edit file in binary mode
+'bioskey'	  'biosk'   MS-DOS: use bios calls for input characters
+'bomb'			    prepend a Byte Order Mark to the file
+'breakat'	  'brk'     characters that may cause a line break
+'breakindent'	  'bri'     wrapped line repeats indent
+'breakindentopt'  'briopt'  settings for 'breakindent'
+'browsedir'	  'bsdir'   which directory to start browsing in
+'bufhidden'	  'bh'	    what to do when buffer is no longer in window
+'buflisted'	  'bl'	    whether the buffer shows up in the buffer list
+'buftype'	  'bt'	    special type of buffer
+'casemap'	  'cmp'     specifies how case of letters is changed
+'cdhome'	  'cdh'	    change directory to the home directory by ":cd"
+'cdpath'	  'cd'	    list of directories searched with ":cd"
+'cedit'			    key used to open the command-line window
+'charconvert'	  'ccv'     expression for character encoding conversion
+'cindent'	  'cin'     do C program indenting
+'cinkeys'	  'cink'    keys that trigger indent when 'cindent' is set
+'cinoptions'	  'cino'    how to do indenting when 'cindent' is set
+'cinscopedecls'	  'cinsd'   words that are recognized by 'cino-g'
+'cinwords'	  'cinw'    words where 'si' and 'cin' add an indent
+'clipboard'	  'cb'	    use the clipboard as the unnamed register
+'cmdheight'	  'ch'	    number of lines to use for the command-line
+'cmdwinheight'	  'cwh'     height of the command-line window
+'colorcolumn'	  'cc'	    columns to highlight
+'columns'	  'co'	    number of columns in the display
+'comments'	  'com'     patterns that can start a comment line
+'commentstring'   'cms'     template for comments; used for fold marker
+'compatible'	  'cp'	    behave Vi-compatible as much as possible
+'complete'	  'cpt'     specify how Insert mode completion works
+'completefunc'	  'cfu'     function to be used for Insert mode completion
+'completeopt'	  'cot'     options for Insert mode completion
+'completepopup'	  'cpp'     options for the Insert mode completion info popup
+'completeslash'	  'csl'	    like 'shellslash' for completion
+'concealcursor'	  'cocu'    whether concealable text is hidden in cursor line
+'conceallevel'	  'cole'    whether concealable text is shown or hidden
+'confirm'	  'cf'	    ask what to do about unsaved/read-only files
+'conskey'	  'consk'   get keys directly from console (MS-DOS only)
+'copyindent'	  'ci'	    make 'autoindent' use existing indent structure
+'cpoptions'	  'cpo'     flags for Vi-compatible behavior
+'cryptmethod'	  'cm'	    type of encryption to use for file writing
+'cscopepathcomp'  'cspc'    how many components of the path to show
+'cscopeprg'       'csprg'   command to execute cscope
+'cscopequickfix'  'csqf'    use quickfix window for cscope results
+'cscoperelative'  'csre'    Use cscope.out path basename as prefix
+'cscopetag'       'cst'     use cscope for tag commands
+'cscopetagorder'  'csto'    determines ":cstag" search order
+'cscopeverbose'   'csverb'  give messages when adding a cscope database
+'cursorbind'	  'crb'     move cursor in window as it moves in other windows
+'cursorcolumn'	  'cuc'	    highlight the screen column of the cursor
+'cursorline'	  'cul'	    highlight the screen line of the cursor
+'cursorlineopt'	  'culopt'  settings for 'cursorline'
+'debug'			    set to "msg" to see all error messages
+'define'	  'def'     pattern to be used to find a macro definition
+'delcombine'	  'deco'    delete combining characters on their own
+'dictionary'	  'dict'    list of file names used for keyword completion
+'diff'			    use diff mode for the current window
+'diffexpr'	  'dex'     expression used to obtain a diff file
+'diffopt'	  'dip'     options for using diff mode
+'digraph'	  'dg'	    enable the entering of digraphs in Insert mode
+'directory'	  'dir'     list of directory names for the swap file
+'display'	  'dy'	    list of flags for how to display text
+'eadirection'	  'ead'     in which direction 'equalalways' works
+'edcompatible'	  'ed'	    toggle flags of ":substitute" command
+'emoji'		  'emo'	    emoji characters are considered full width
+'encoding'	  'enc'     encoding used internally
+'endoffile'	  'eof'     write CTRL-Z at end of the file
+'endofline'	  'eol'     write <EOL> for last line in file
+'equalalways'	  'ea'	    windows are automatically made the same size
+'equalprg'	  'ep'	    external program to use for "=" command
+'errorbells'	  'eb'	    ring the bell for error messages
+'errorfile'	  'ef'	    name of the errorfile for the QuickFix mode
+'errorformat'	  'efm'     description of the lines in the error file
+'esckeys'	  'ek'	    recognize function keys in Insert mode
+'eventignore'	  'ei'	    autocommand events that are ignored
+'eventignorewin'  'eiw'     autocommand events that are ignored in a window
+'expandtab'	  'et'	    use spaces when <Tab> is inserted
+'exrc'		  'ex'	    read .vimrc and .exrc in the current directory
+'fileencoding'	  'fenc'    file encoding for multibyte text
+'fileencodings'   'fencs'   automatically detected character encodings
+'fileformat'	  'ff'	    file format used for file I/O
+'fileformats'	  'ffs'     automatically detected values for 'fileformat'
+'fileignorecase'  'fic'     ignore case when using file names
+'filetype'	  'ft'	    type of file, used for autocommands
+'fillchars'	  'fcs'     characters to use for displaying special items
+'findfunc'	  'ffu'     function to be called for the |:find| command
+'fixendofline'	  'fixeol'  make sure last line in file has <EOL>
+'fkmap'		  'fk'	    obsolete option for Farsi
+'foldclose'	  'fcl'     close a fold when the cursor leaves it
+'foldcolumn'	  'fdc'     width of the column used to indicate folds
+'foldenable'	  'fen'     set to display all folds open
+'foldexpr'	  'fde'     expression used when 'foldmethod' is "expr"
+'foldignore'	  'fdi'     ignore lines when 'foldmethod' is "indent"
+'foldlevel'	  'fdl'     close folds with a level higher than this
+'foldlevelstart'  'fdls'    'foldlevel' when starting to edit a file
+'foldmarker'	  'fmr'     markers used when 'foldmethod' is "marker"
+'foldmethod'	  'fdm'     folding type
+'foldminlines'	  'fml'     minimum number of lines for a fold to be closed
+'foldnestmax'	  'fdn'     maximum fold depth
+'foldopen'	  'fdo'     for which commands a fold will be opened
+'foldtext'	  'fdt'     expression used to display for a closed fold
+'formatexpr'	  'fex'     expression used with "gq" command
+'formatlistpat'   'flp'     pattern used to recognize a list header
+'formatoptions'   'fo'	    how automatic formatting is to be done
+'formatprg'	  'fp'	    name of external program used with "gq" command
+'fsync'		  'fs'	    whether to invoke fsync() after file write
+'gdefault'	  'gd'	    the ":substitute" flag 'g' is default on
+'grepformat'	  'gfm'     format of 'grepprg' output
+'grepprg'	  'gp'	    program to use for ":grep"
+'guicursor'	  'gcr'     GUI: settings for cursor shape and blinking
+'guifont'	  'gfn'     GUI: Name(s) of font(s) to be used
+'guifontset'	  'gfs'     GUI: Names of multibyte fonts to be used
+'guifontwide'	  'gfw'     list of font names for double-wide characters
+'guiheadroom'	  'ghr'     GUI: pixels room for window decorations
+'guiligatures'	  'gli'	    GTK GUI: ASCII characters that can form shapes
+'guioptions'	  'go'	    GUI: Which components and options are used
+'guipty'		    GUI: try to use a pseudo-tty for ":!" commands
+'guitablabel'	  'gtl'     GUI: custom label for a tab page
+'guitabtooltip'   'gtt'     GUI: custom tooltip for a tab page
+'helpfile'	  'hf'	    full path name of the main help file
+'helpheight'	  'hh'	    minimum height of a new help window
+'helplang'	  'hlg'     preferred help languages
+'hidden'	  'hid'     don't unload buffer when it is |abandon|ed
+'highlight'	  'hl'	    sets highlighting mode for various occasions
+'history'	  'hi'	    number of command-lines that are remembered
+'hkmap'		  'hk'	    Hebrew keyboard mapping
+'hkmapp'	  'hkp'     phonetic Hebrew keyboard mapping
+'hlsearch'	  'hls'     highlight matches with last search pattern
+'icon'			    let Vim set the text of the window icon
+'iconstring'		    string to use for the Vim icon text
+'ignorecase'	  'ic'	    ignore case in search patterns
+'imactivatefunc'  'imaf'    function to enable/disable the X input method
+'imactivatekey'   'imak'    key that activates the X input method
+'imcmdline'	  'imc'     use IM when starting to edit a command line
+'imdisable'	  'imd'     do not use the IM in any mode
+'iminsert'	  'imi'     use :lmap or IM in Insert mode
+'imsearch'	  'ims'     use :lmap or IM when typing a search pattern
+'imstatusfunc'    'imsf'    function to obtain X input method status
+'imstyle'	  'imst'    specifies the input style of the input method
+'include'	  'inc'     pattern to be used to find an include file
+'includeexpr'	  'inex'    expression used to process an include line
+'incsearch'	  'is'	    highlight match while typing search pattern
+'indentexpr'	  'inde'    expression used to obtain the indent of a line
+'indentkeys'	  'indk'    keys that trigger indenting with 'indentexpr'
+'infercase'	  'inf'     adjust case of match for keyword completion
+'insertmode'	  'im'	    start the edit of a file in Insert mode
+'isfname'	  'isf'     characters included in file names and pathnames
+'isident'	  'isi'     characters included in identifiers
+'iskeyword'	  'isk'     characters included in keywords
+'isprint'	  'isp'     printable characters
+'joinspaces'	  'js'	    two spaces after a period with a join command
+'jumpoptions'	  'jop'     specifies how jumping is done
+'key'			    encryption key
+'keymap'	  'kmp'     name of a keyboard mapping
+'keymodel'	  'km'	    enable starting/stopping selection with keys
+'keyprotocol'	  'kpc'	    what keyboard protocol to use for what terminal
+'keywordprg'	  'kp'	    program to use for the "K" command
+'langmap'	  'lmap'    alphabetic characters for other language mode
+'langmenu'	  'lm'	    language to be used for the menus
+'langnoremap'	  'lnr'	    do not apply 'langmap' to mapped characters
+'langremap'	  'lrm'	    do apply 'langmap' to mapped characters
+'laststatus'	  'ls'	    tells when last window has status lines
+'lazyredraw'	  'lz'	    don't redraw while executing macros
+'linebreak'	  'lbr'     wrap long lines at a blank
+'lines'			    number of lines in the display
+'linespace'	  'lsp'     number of pixel lines to use between characters
+'lisp'			    automatic indenting for Lisp
+'lispoptions'	  'lop'     changes how Lisp indenting is done
+'lispwords'	  'lw'	    words that change how lisp indenting works
+'list'			    show <Tab> and <EOL>
+'listchars'	  'lcs'     characters for displaying in list mode
+'loadplugins'	  'lpl'     load plugin scripts when starting up
+'luadll'		    name of the Lua dynamic library
+'macatsui'		    Mac GUI: use ATSUI text drawing
+'magic'			    changes special characters in search patterns
+'makeef'	  'mef'     name of the errorfile for ":make"
+'makeencoding'	  'menc'    encoding of external make/grep commands
+'makeprg'	  'mp'	    program to use for the ":make" command
+'matchpairs'	  'mps'     pairs of characters that "%" can match
+'matchtime'	  'mat'     tenths of a second to show matching paren
+'maxcombine'	  'mco'     maximum nr of combining characters displayed
+'maxfuncdepth'	  'mfd'     maximum recursive depth for user functions
+'maxmapdepth'	  'mmd'     maximum recursive depth for mapping
+'maxmem'	  'mm'	    maximum memory (in Kbyte) used for one buffer
+'maxmempattern'   'mmp'     maximum memory (in Kbyte) used for pattern search
+'maxmemtot'	  'mmt'     maximum memory (in Kbyte) used for all buffers
+'menuitems'	  'mis'     maximum number of items in a menu
+'mkspellmem'	  'msm'     memory used before |:mkspell| compresses the tree
+'modeline'	  'ml'	    recognize modelines at start or end of file
+'modelineexpr'	  'mle'	    allow setting expression options from a modeline
+'modelines'	  'mls'     number of lines checked for modelines
+'modifiable'	  'ma'	    changes to the text are not possible
+'modified'	  'mod'     buffer has been modified
+'more'			    pause listings when the whole screen is filled
+'mouse'			    enable the use of mouse clicks
+'mousefocus'	  'mousef'  keyboard focus follows the mouse
+'mousehide'	  'mh'	    hide mouse pointer while typing
+'mousemodel'	  'mousem'  changes meaning of mouse buttons
+'mousemoveevent'  'mousemev'  report mouse moves with <MouseMove>
+'mouseshape'	  'mouses'  shape of the mouse pointer in different modes
+'mousetime'	  'mouset'  max time between mouse double-click
+'mzquantum'	  'mzq'     the interval between polls for MzScheme threads
+'mzschemedll'		    name of the MzScheme dynamic library
+'mzschemegcdll'		    name of the MzScheme dynamic library for GC
+'nrformats'	  'nf'	    number formats recognized for CTRL-A command
+'number'	  'nu'	    print the line number in front of each line
+'numberwidth'	  'nuw'     number of columns used for the line number
+'omnifunc'	  'ofu'     function for filetype-specific completion
+'opendevice'	  'odev'    allow reading/writing devices on MS-Windows
+'operatorfunc'	  'opfunc'  function to be called for |g@| operator
+'osfiletype'	  'oft'     no longer supported
+'packpath'	  'pp'      list of directories used for packages
+'paragraphs'	  'para'    nroff macros that separate paragraphs
+'paste'			    allow pasting text
+'pastetoggle'	  'pt'	    key code that causes 'paste' to toggle
+'patchexpr'	  'pex'     expression used to patch a file
+'patchmode'	  'pm'	    keep the oldest version of a file
+'path'		  'pa'	    list of directories searched with "gf" et.al.
+'perldll'		    name of the Perl dynamic library
+'preserveindent'  'pi'	    preserve the indent structure when reindenting
+'previewheight'   'pvh'     height of the preview window
+'previewpopup'    'pvp'     use popup window for preview
+'previewwindow'   'pvw'     identifies the preview window
+'printdevice'	  'pdev'    name of the printer to be used for :hardcopy
+'printencoding'   'penc'    encoding to be used for printing
+'printexpr'	  'pexpr'   expression used to print PostScript for :hardcopy
+'printfont'	  'pfn'     name of the font to be used for :hardcopy
+'printheader'	  'pheader' format of the header used for :hardcopy
+'printmbcharset'  'pmbcs'   CJK character set to be used for :hardcopy
+'printmbfont'	  'pmbfn'   font names to be used for CJK output of :hardcopy
+'printoptions'	  'popt'    controls the format of :hardcopy output
+'prompt'	  'prompt'  enable prompt in Ex mode
+'pumheight'	  'ph'	    maximum height of the popup menu
+'pumwidth'	  'pw'	    minimum width of the popup menu
+'pythondll'		    name of the Python 2 dynamic library
+'pythonhome'		    name of the Python 2 home directory
+'pythonthreedll'	    name of the Python 3 dynamic library
+'pythonthreehome'	    name of the Python 3 home directory
+'pyxversion'	  'pyx'	    Python version used for pyx* commands
+'quickfixtextfunc' 'qftf'   function for the text in the quickfix window
+'quoteescape'	  'qe'	    escape characters used in a string
+'readonly'	  'ro'	    disallow writing the buffer
+'redrawtime'	  'rdt'     timeout for 'hlsearch' and |:match| highlighting
+'regexpengine'	  're'	    default regexp engine to use
+'relativenumber'  'rnu'	    show relative line number in front of each line
+'remap'			    allow mappings to work recursively
+'renderoptions'	  'rop'	    options for text rendering on Windows
+'report'		    threshold for reporting nr. of lines changed
+'restorescreen'   'rs'	    Win32: restore screen when exiting
+'revins'	  'ri'	    inserting characters will work backwards
+'rightleft'	  'rl'	    window is right-to-left oriented
+'rightleftcmd'	  'rlc'     commands for which editing works right-to-left
+'rubydll'		    name of the Ruby dynamic library
+'ruler'		  'ru'	    show cursor line and column in the status line
+'rulerformat'	  'ruf'     custom format for the ruler
+'runtimepath'	  'rtp'     list of directories used for runtime files
+'scroll'	  'scr'     lines to scroll with CTRL-U and CTRL-D
+'scrollbind'	  'scb'     scroll in window as other windows scroll
+'scrollfocus'	  'scf'     scroll wheel applies to window under pointer
+'scrolljump'	  'sj'	    minimum number of lines to scroll
+'scrolloff'	  'so'	    minimum nr. of lines above and below cursor
+'scrollopt'	  'sbo'     how 'scrollbind' should behave
+'sections'	  'sect'    nroff macros that separate sections
+'secure'		    secure mode for reading .vimrc in current dir
+'selection'	  'sel'     what type of selection to use
+'selectmode'	  'slm'     when to use Select mode instead of Visual mode
+'sessionoptions'  'ssop'    options for |:mksession|
+'shell'		  'sh'	    name of shell to use for external commands
+'shellcmdflag'	  'shcf'    flag to shell to execute one command
+'shellpipe'	  'sp'	    string to put output of ":make" in error file
+'shellquote'	  'shq'     quote character(s) for around shell command
+'shellredir'	  'srr'     string to put output of filter in a temp file
+'shellslash'	  'ssl'     use forward slash for shell file names
+'shelltemp'	  'stmp'    whether to use a temp file for shell commands
+'shelltype'	  'st'	    Amiga: influences how to use a shell
+'shellxescape'	  'sxe'     characters to escape when 'shellxquote' is (
+'shellxquote'	  'sxq'     like 'shellquote', but include redirection
+'shiftround'	  'sr'	    round indent to multiple of shiftwidth
+'shiftwidth'	  'sw'	    number of spaces to use for (auto)indent step
+'shortmess'	  'shm'     list of flags, reduce length of messages
+'shortname'	  'sn'	    Filenames assumed to be 8.3 chars
+'showbreak'	  'sbr'     string to use at the start of wrapped lines
+'showcmd'	  'sc'	    show (partial) command somewhere
+'showcmdloc'	  'sloc'    where to show (partial) command
+'showfulltag'	  'sft'     show full tag pattern when completing tag
+'showmatch'	  'sm'	    briefly jump to matching bracket if insert one
+'showmode'	  'smd'     message on status line to show current mode
+'showtabline'	  'stal'    tells when the tab pages line is displayed
+'sidescroll'	  'ss'	    minimum number of columns to scroll horizontal
+'sidescrolloff'   'siso'    min. nr. of columns to left and right of cursor
+'signcolumn'	  'scl'	    when to display the sign column
+'smartcase'	  'scs'     no ignore case when pattern has uppercase
+'smartindent'	  'si'	    smart autoindenting for C programs
+'smarttab'	  'sta'     use 'shiftwidth' when inserting <Tab>
+'smoothscroll'	  'sms'     scroll by screen lines when 'wrap' is set
+'softtabstop'	  'sts'     number of spaces that <Tab> uses while editing
+'spell'			    enable spell checking
+'spellcapcheck'   'spc'     pattern to locate end of a sentence
+'spellfile'	  'spf'     files where |zg| and |zw| store words
+'spelllang'	  'spl'     language(s) to do spell checking for
+'spelloptions'	  'spo'     options for spell checking
+'spellsuggest'	  'sps'     method(s) used to suggest spelling corrections
+'splitbelow'	  'sb'	    new window from split is below the current one
+'splitkeep'	  'spk'     determines scroll behavior for split windows
+'splitright'	  'spr'     new window is put right of the current one
+'startofline'	  'sol'     commands move cursor to first non-blank in line
+'statusline'	  'stl'     custom format for the status line
+'suffixes'	  'su'	    suffixes that are ignored with multiple match
+'suffixesadd'	  'sua'     suffixes added when searching for a file
+'swapfile'	  'swf'     whether to use a swapfile for a buffer
+'swapsync'	  'sws'     how to sync the swap file
+'switchbuf'	  'swb'     sets behavior when switching to another buffer
+'synmaxcol'	  'smc'     maximum column to find syntax items
+'syntax'	  'syn'     syntax to be loaded for current buffer
+'tabclose'	  'tcl'     which tab page to focus when closing a tab
+'tabline'	  'tal'     custom format for the console tab pages line
+'tabpagemax'	  'tpm'     maximum number of tab pages for |-p| and "tab all"
+'tabstop'	  'ts'	    number of spaces that <Tab> in file uses
+'tagbsearch'	  'tbs'     use binary searching in tags files
+'tagcase'	  'tc'      how to handle case when searching in tags files
+'tagfunc'	  'tfu'	    function to get list of tag matches
+'taglength'	  'tl'	    number of significant characters for a tag
+'tagrelative'	  'tr'	    file names in tag file are relative
+'tags'		  'tag'     list of file names used by the tag command
+'tagstack'	  'tgst'    push tags onto the tag stack
+'tcldll'		    name of the Tcl dynamic library
+'term'			    name of the terminal
+'termbidi'	  'tbidi'   terminal takes care of bi-directionality
+'termencoding'	  'tenc'    character encoding used by the terminal
+'termguicolors'	  'tgc'     use GUI colors for the terminal
+'termwinkey'	  'twk'	    key that precedes a Vim command in a terminal
+'termwinscroll'   'twsl'    max number of scrollback lines in a terminal window
+'termwinsize'	  'tws'	    size of a terminal window
+'termwintype'	  'twt'	    MS-Windows: type of pty to use for terminal window
+'terse'			    shorten some messages
+'textauto'	  'ta'	    obsolete, use 'fileformats'
+'textmode'	  'tx'	    obsolete, use 'fileformat'
+'textwidth'	  'tw'	    maximum width of text that is being inserted
+'thesaurus'	  'tsr'     list of thesaurus files for keyword completion
+'thesaurusfunc'	  'tsrfu'   function to be used for thesaurus completion
+'tildeop'	  'top'     tilde command "~" behaves like an operator
+'timeout'	  'to'	    time out on mappings and key codes
+'timeoutlen'	  'tm'	    time out time in milliseconds
+'title'			    let Vim set the title of the window
+'titlelen'		    percentage of 'columns' used for window title
+'titleold'		    old title, restored when exiting
+'titlestring'		    string to use for the Vim window title
+'toolbar'	  'tb'	    GUI: which items to show in the toolbar
+'toolbariconsize' 'tbis'    size of the toolbar icons (for GTK 2 only)
+'ttimeout'		    time out on mappings
+'ttimeoutlen'	  'ttm'     time out time for key codes in milliseconds
+'ttybuiltin'	  'tbi'     use built-in termcap before external termcap
+'ttyfast'	  'tf'	    indicates a fast terminal connection
+'ttymouse'	  'ttym'    type of mouse codes generated
+'ttyscroll'	  'tsl'     maximum number of lines for a scroll
+'ttytype'	  'tty'     alias for 'term'
+'undodir'	  'udir'    where to store undo files
+'undofile'	  'udf'	    save undo information in a file
+'undolevels'	  'ul'	    maximum number of changes that can be undone
+'undoreload'	  'ur'	    max nr of lines to save for undo on a buffer reload
+'updatecount'	  'uc'	    after this many characters flush swap file
+'updatetime'	  'ut'	    after this many milliseconds flush swap file
+'varsofttabstop'  'vsts'    a list of number of spaces when typing <Tab>
+'vartabstop'	  'vts'	    a list of number of spaces for <Tab>s
+'verbose'	  'vbs'     give informative messages
+'verbosefile'	  'vfile'   file to write messages in
+'viewdir'	  'vdir'    directory where to store files with :mkview
+'viewoptions'	  'vop'     specifies what to save for :mkview
+'viminfo'	  'vi'	    use .viminfo file upon startup and exiting
+'viminfofile'	  'vif'	    file name used for the viminfo file
+'virtualedit'	  've'	    when to use virtual editing
+'visualbell'	  'vb'	    use visual bell instead of beeping
+'warn'			    warn for shell command when buffer was changed
+'weirdinvert'	  'wiv'	    for terminals that have weird inversion method
+'whichwrap'	  'ww'	    allow specified keys to cross line boundaries
+'wildchar'	  'wc'	    command-line character for wildcard expansion
+'wildcharm'	  'wcm'     like 'wildchar' but also works when mapped
+'wildignore'	  'wig'     files matching these patterns are not completed
+'wildignorecase'  'wic'     ignore case when completing file names
+'wildmenu'	  'wmnu'    use menu for command line completion
+'wildmode'	  'wim'     mode for 'wildchar' command-line expansion
+'wildoptions'	  'wop'     specifies how command line completion is done
+'winaltkeys'	  'wak'     when the windows system handles ALT keys
+'wincolor'	  'wcr'	    window-local highlighting
+'window'	  'wi'	    nr of lines to scroll for CTRL-F and CTRL-B
+'winfixbuf'	  'wfb'     keep window focused on a single buffer
+'winfixheight'	  'wfh'     keep window height when opening/closing windows
+'winfixwidth'	  'wfw'     keep window width when opening/closing windows
+'winheight'	  'wh'	    minimum number of lines for the current window
+'winminheight'	  'wmh'     minimum number of lines for any window
+'winminwidth'	  'wmw'     minimal number of columns for any window
+'winptydll'		    name of the winpty dynamic library
+'winwidth'	  'wiw'     minimal number of columns for current window
+'wrap'			    long lines wrap and continue on the next line
+'wrapmargin'	  'wm'	    chars from the right where wrapping starts
+'wrapscan'	  'ws'	    searches wrap around the end of the file
+'write'			    writing to a file is allowed
+'writeany'	  'wa'	    write to file with no need for "!" override
+'writebackup'	  'wb'	    make a backup before overwriting a file
+'writedelay'	  'wd'	    delay this many msec for each char (for debug)
+'xtermcodes'		    request terminal codes from an xterm
+------------------------------------------------------------------------------
+*Q_ur*		撤销/重做命令
+
+|u|       N  u		撤销上次修改
+|CTRL-R|  N  CTRL-R	重做前N次的撤销修改
+|U|          U		恢复上次修改的行
+------------------------------------------------------------------------------
+*Q_et*		外部命令
+
+|:shell|	:sh[ell]	运行一个shell(如果是终端vim则会直接回到终端，
+				gvim则是启动一个终端)
+|:!|		:!{command}	用shell执行{command}命令
+|K|		   K		用'keywordprg'程序查找光标位置的关键字(默认man)
+------------------------------------------------------------------------------
+*Q_qf*		快速修复命令(出于历史原因该系列命令通常为"c"开头即"code","clang")
+
+|:cc|		:cc [nr]	display error [nr] (default is the same again)
+|:cnext|	:cn		display the next error
+|:cprevious|	:cp		display the previous error
+|:clist|	:cl		list all errors
+|:cfile|	:cf		read errors from the file 'errorfile'
+|:cgetbuffer|	:cgetb		like :cbuffer but don't jump to the first error
+|:cgetfile|	:cg		like :cfile but don't jump to the first error
+|:cgetexpr|	:cgete		like :cexpr but don't jump to the first error
+|:caddfile|	:caddf		add errors from the error file to the current
+				   quickfix list
+|:caddexpr|	:cad		add errors from an expression to the current
+				   quickfix list
+|:cbuffer|	:cb		read errors from text in a buffer
+|:cexpr|	:cex		read errors from an expression
+|:cquit|	:cq		quit without writing and return error code (to
+				   the compiler)
+|:make|		:make [args]	start make, read errors, and jump to first
+				   error
+|:grep|		:gr[ep] [args]	execute 'grepprg' to find matches and jump to
+				   the first one
+------------------------------------------------------------------------------
+*Q_vc*		其他命令Various commands
+
+|CTRL-L|	   CTRL-L	清理并重绘屏幕
+|CTRL-G|	   CTRL-G	显示当前文件名及光标位置
+|ga|		   ga		以十进制、十六进制及八进制的形式显示光标位置字
+				符的ascii码值
+|g8|		   g8		以十六进制的形式显示光标位置字符的字节序列
+				适用于utf-8编码
+|g_CTRL-G|	   g CTRL-G	显示光标列、行及字符位置
+|CTRL-C|	   CTRL-C	搜索期间：打断搜索
+|dos-CTRL-Break|   CTRL-Break	MS-Windows: 搜索期间：打断搜索
+|<Del>|		   <Del>	当键入按键时：删除后方字符
+|:version|	:ve[rsion]	显示版本信息
+|:mode|		:mode N		设置屏幕模式为N(废弃)(vim已经不支持设置屏幕模式)
+|:normal|	:norm[al][!] {commands}
+				执行普通模式命令
+|Q|		   Q		切换到"Ex"模式
+
+|:redir|	:redir >{file}		重定向信息至{file}文件
+|:silent|	:silent[!] {command}	静默执行{command}命令
+|:confirm|	:confirm {command}	退出未保存修改或写入只读文件时确认提示
+|:browse|	:browse {command}	使用文件选择对话框打开/读取/写入文件
+------------------------------------------------------------------------------
+*Q_ce*		命令行模式编辑
+
+|c_<Esc>|	<Esc>		   放弃命令行(如果'wildchar'是<Esc>则需键入两次)
+
+|c_CTRL-V|	CTRL-V {char}	   插入{char}字符字面意义
+|c_CTRL-V|	CTRL-V {number}    输入字符的数字值(最多三位数)
+|c_CTRL-K|	CTRL-K {char1} {char2}
+				   输入二合字(查阅|Q_di|)
+|c_CTRL-R|	CTRL-R {register}  插入寄存器的内容
+
+|c_<Left>|	<Left>/<Right>	   向左/右移动光标一个字符
+|c_<S-Left>|	<S-Left>/<S-Right> 向左/右移动光标一个单词
+|c_CTRL-B|	CTRL-B/CTRL-E	   将光标移动至命令行的开头/结尾
+
+|c_<BS>|	<BS>		   删除光标前面的字符
+|c_<Del>|	<Del>		   删除光标位置的字符
+|c_CTRL-W|	CTRL-W		   删除光标之前的单词
+|c_CTRL-U|	CTRL-U		   移除所有的字符
+
+|c_<Up>|	<Up>/<Down>	   在当前命令行调用之前的命令
+|c_<S-Up>|	<S-Up>/<S-Down>	   从命令历史中调用之前的命令
+|c_CTRL-G|	CTRL-G		   当'incsearch'被激活时跳转至下个匹配
+|c_CTRL-T|	CTRL-T		   当'incsearch'被激活时跳转至上个匹配
+|:history|	:his[tory]	   显示命令行历史
+
+命令行上下文敏感补全:
+
+|c_wildchar|	'wildchar'  (默认: <Tab>)
+				完成光标之前模式的补全，如果存在多个匹配则保留
+				并显示第一个，继续键入'wildchar'则显示下一个
+|c_CTRL-D|	CTRL-D		列出匹配光标之前模式的所有名字
+|c_CTRL-A|	CTRL-A		插入匹配光标之前模式的所有名字
+|c_CTRL-L|	CTRL-L		插入匹配模式的名字中最长相同的部分
+|c_CTRL-N|	CTRL-N		'wildchar'之后有多个匹配则跳转到下一个匹配
+|c_CTRL-P|	CTRL-P		'wildchar'之后有多个匹配则跳转到前一个匹配
+------------------------------------------------------------------------------
+*Q_ra*		Ex范围(扩展模式的范围)
+
+|:range|	,		分割两个行号
+|:range|	;		同上，将光标先移动到第一个行号位置然后再读取后
+				面的行号
+
+|:range|	{number}	绝对行号
+|:range|	.		当前行
+|:range|	$		当前文件的最后一行
+|:range|	%		等同于 1,$ (整个文件)
+|:range|	*		等同于 '<,'> (可视区域)
+|:range|	't		跳转至标记 t 的位置
+|:range|	/{pattern}[/]	下一个{pattern}模式匹配的行
+|:range|	?{pattern}[?]	上一个{pattern}模式匹配的行
+
+|:range|	+[num]		将正在处理行加上下方[num]行范围(默认:1)
+|:range|	-[num]		将正在处理行加上上方[num]行范围(默认:1)
+------------------------------------------------------------------------------
+*Q_ex*		特殊 Ex 字符
+
+|:bar|      |		分隔两个命令(不适用于":global"及":!"命令)
+|:quote|    "		注释begins comment
+
+|:_%|       %		当前文件名字(只适用于文件名作为参数的命令)
+|:_#|       #[num]	备用文件名[num](只适用于文件名作为参数的命令)
+			alternate file name(备用文件名):概念不清楚是怎么回事
+			help :_#
+	注意：后续七个命令是字面意义键入并不是特殊按键！
+|:<abuf>|   <abuf>	缓冲区编号，用于自动命令(只适用于文件名作为参数的命令)
+|:<afile>|  <afile>	文件名，用于自动命令(只适用于文件名作为参数的命令)
+|:<amatch>| <amatch>	模式匹配的内容，用于自动命令(只适用于文件名作为参数的命令)
+|:<cword>|  <cword>	光标位置的单词(只适用于文件名作为参数的命令)
+|:<cWORD>|  <cWORD>	光标位置的单词(只适用于文件名作为参数的命令)(查阅|WORD|)
+|:<cfile>|  <cfile>	光标位置的文件名(只适用于文件名作为参数的命令)
+|:<sfile>|  <sfile>	使用":source"命令引用的文件名(只适用于文件名作为参数的命令)
+
+		用于 "%", "#", "<cfile>", "<sfile>" 或 "<afile>"之后
+		|::p|	    :p		完整路径
+		|::h|	    :h		头部(移除文件名)
+		|::t|	    :t		尾部(仅用文件名)
+		|::r|	    :r		根部(移除扩展名)
+		|::e|	    :e		扩展名
+		|::s|	    :s/{pat}/{repl}/	用{repl}替换{pat}
+						{repl}:replacement
+						{pat}:pattern
+------------------------------------------------------------------------------
+*Q_st*		启用Vim
+
+|-vim|	   vim [options]		开始编辑一个空buffer
+|-file|	   vim [options] {file} ..	开始编辑一个或多个文件
+|--|	   vim [options] -		从标准输入读取文件
+|-tag|	   vim [options] -t {tag}	编辑关联{tag}的文件
+|-qf|	   vim [options] -q [fname]	在快速修复模式编辑文件并显示第一个错误
+
+		常用的Vim参数(查阅|startup-options|获取完整列表)
+
+|-gui|	-g		    启用GUI(也允许其他选项)
+
+|-+|	+[num]		    将光标放置于[num]行(默认最后一行)
+|-+c|	+{command}	    在加载完文件之后执行{command}命令
+|-+/|	+/{pat} {file} ..   将光标放置在第一个{pat}出现的位置
+|-v|	-v		    Vi模式，以普通模式启用ex
+|-e|	-e		    Ex模式，以Ex模式医用vim
+|-R|	-R		    只读模式，附带 -n 选项
+|-m|	-m		    禁止修改(重置'write'选项)
+>
+  -R和-m的区别，前者为只读模式，但仍可以编辑并强制保存，编辑过程中会出现警告信息
+  后者则是修改了'write'选项，可以正常编辑但不可以写入文件，强制写入都会报错，
+  可以通过启用'write'选项让当前buffer可以写入文件
+<
+|-d|	-d		    比较模式 |diff|
+|-b|	-b		    二进制模式
+|-l|	-l		    lisp模式
+|-A|	-A		    阿拉伯语模式(启用'arabic'选项)
+|-F|	-F		    波斯语模式(启用'fkmap' 和 'rightleft'选项)
+|-H|	-H		    希伯来语模式(启用'hkmap' 和 'rightleft'选项)
+|-V|	-V		    详细,提供更多信息
+|-C|	-C		    兼容,启用'compatible'选项
+|-N|	-N		    不兼容,禁用'compatible'选项
+|-r|	-r		    列出交换文件
+|-r|	-r {file} ..	    恢复中断的编辑会话，这个和 -S 选项有点类似
+			    但前者为被动的而后者依据":mksession"命令生成的文件
+|-n|	-n		    不创建交换文件
+|-o|	-o [num]	    打开[num]个窗口(默认一个文件一个窗口)
+|-f|	-f		    GUI前台进程，不创建子进程
+			    Amiga:不打开新窗口启用Vim(比如用于mail)
+			    GUI: foreground process, don't fork
+			    Amiga: do not restart Vim to open a window (for
+				e.g., mail)
+|-s|	-s {scriptin}	    首先重{scriptin}文件读取命令
+|-w|	-w {scriptout}	    将键入的字符写入{scriptout}文件(追加)
+|-W|	-W {scriptout}	    将键入的字符写入{scriptout}文件(覆盖)
+|-T|	-T {terminal}	    设置终端的名字
+|-d|	-d {device}	    Amiga：打开{device}设备作为控制台
+|-u|	-u {vimrc}	    读取{vimrc}初始化文件而非其他初始化文件
+|-U|	-U {gvimrc}	    同上，用于启用GUI的设置
+|-i|	-i {viminfo}	    从{viminfo}文件读取信息而非其他文件
+|---|	--		    结束选项设置，后续参数均为文件名
+|--help|    --help	    显示参数列表并退出
+|--version| --version	    显示版本信息并退出
+|--|	-		    从标准输入读取文件，如"cat myfile.txt|vim -"
+------------------------------------------------------------------------------
+*Q_ed*		编辑文件
+
+	   不带 ! : 如果当前缓冲区已有修改则命令执行失败
+	     带 ! : 抛弃当前缓冲区的所有修改
+|:edit_f|  :e[dit][!] {file}	编辑{file}文件
+|:edit|    :e[dit][!]		重载当前文件
+|:enew|    :ene[w][!]		编辑一个新的无名缓冲区
+|:find|    :fin[d][!] {file}	在'path'路径中查找{file}文件并编辑
+
+|CTRL-^|   N  CTRL-^		编辑备用文件N(等同于":e #N")
+|gf|          gf  or ]f		编辑名字处于光标位置的文件
+|:pwd|     :pwd			打印当前目录名
+|:cd|      :cd [path]		修改当前目录为 [path]
+|:cd-|     :cd -		返回到之前的目录，这个与|NETRW|的"-"命令很像
+				但后者为返回上层目录
+				back to previous current directory
+|:file|    :f[ile]		打印当前文件名及光标位置
+|:file|    :f[ile] {name}	设置当前文件名为{name}
+|:files|   :files		显示备用文件名
+------------------------------------------------------------------------------
+*Q_fl*		使用参数列表				|argument-list|
+
+|:args|	   :ar[gs]		打印参数列表，当前文件以"[]"包裹
+|:all|	   :all  or :sall	为参数列表中的每个文件都打开一个窗口
+|:wn|	   :wn[ext][!]		将当前缓冲区写入对应文件并编辑下个文件
+|:wn|	   :wn[ext][!] {file}	将当前缓冲区写入{file}文件并编辑下个文件，除非
+				{file}文件已经存在；可以使用后缀"!"覆写存在的文件
+|:wN|	   :wN[ext][!] [file]	将当前缓冲区写入对应文件并编辑上个文件
+
+	     在当前窗口		  在新窗口  ~
+|:argument|  :argu[ment] N	  :sar[gument] N	编辑文件 N 
+|:next|      :n[ext]		  :sn[ext]		编辑下个文件
+|:next_f|    :n[ext] {arglist}	  :sn[ext] {arglist}	定义新的参数列表
+							   并编辑第一个文件
+|:Next|      :N[ext]		  :sN[ext]		编辑上个文件
+|:first|     :fir[st]		  :sfir[st]		编辑第一个文件
+|:last|      :la[st]		  :sla[st]		编辑最后一个文件
+------------------------------------------------------------------------------
+*Q_wq*		写入和退出
+
+|:w|	  :[range]w[rite][!]		写入当前文件
+|:w_f|	  :[range]w[rite] {file}	写入到{file}文件，除非文件已经存在
+|:w_f|	  :[range]w[rite]! {file}	写入到{file}文件，覆写已经存在文件
+|:w_a|	  :[range]w[rite][!] >>		追加到当前文件
+|:w_a|	  :[range]w[rite][!] >> {file}	追加到{file}文件
+|:w_c|	  :[range]w[rite] !{cmd}	用[range]范围行作为标准输入执行{cmd}命令
+|:up|	  :[range]up[date][!]		如果被修改则写入当前文件
+|:wall|	  :wa[ll][!]			写入所有修改的缓冲区
+
+|:q|	  :q[uit]		退出当前缓冲区，除非已对缓冲区做出修改
+				当没有其他非帮助缓冲区时退出Vim
+|:q|	  :q[uit]!		强制退出当前缓冲区，放弃所有的修改。
+				当没有其他非帮助缓冲区时退出Vim
+|:qa|	  :qa[ll]		退出Vim，除非已对缓冲区做出修改
+|:qa|	  :qa[ll]!		强制退出Vim，放弃所有的修改
+|:cq|	  :cq			不写入退出并返回错误代码
+
+|:wq|	  :wq[!]		写入当前文件并退出
+|:wq|	  :wq[!] {file}		写入到{file}文件并退出
+|:xit|	  :x[it][!] [file]	类似":wq"但只会在做出修改时写入
+|ZZ|	     ZZ			等同于":x"
+|ZQ|	     ZQ			等同于":q!"
+|:xall|	  :xa[ll][!]  or :wqall[!]
+				写入所有修改过的缓冲区并退出
+
+|:stop|	  :st[op][!]		挂起Vim或启用新shell；如果'aw'选项启用了且无[!]
+				后缀则将缓冲区写入文件
+|CTRL-Z|     CTRL-Z		等同于":stop"
+------------------------------------------------------------------------------
+*Q_ac*		自动命令
+
+|viminfo-file|	在启动时读取寄存器、标记、历史，退出时保存
+
+|:rviminfo|	:rv[iminfo] [file]	从viminfo文件 [file] 读取信息
+|:rviminfo|	:rv[iminfo]! [file]	同上，覆写已有的viminfo文件
+|:wviminfo|	:wv[iminfo] [file]	向viminfo文件 [file]添加信息
+|:wviminfo|	:wv[iminfo]! [file]	向viminfo文件 [file]写入信息
+
+|modeline|	当编辑文件时设置的自动选项
+
+|modeline|	vim:{set-arg}: ..	在文件的第一行或最后一行(查阅'ml'选项)
+					{set-arg}作为参数被指定给":set"命令
+
+|autocommand|	在某一确定事件自动执行的命令
+
+|:autocmd|	:au			  列出所有自动命令
+|:autocmd|	:au {event}		  为{event}事件列出所有自动命令
+|:autocmd|	:au {event} {pat}	  为匹配{pat}的{event}事件列出所有自动
+					  命令
+|:autocmd|	:au {event} {pat} {cmd}	  为匹配{pat}的{event}时间输入新的自动
+					  命令
+|:autocmd|	:au!			  移除所有的自动命令
+|:autocmd|	:au! {event}		  移除所有{event}事件的自动命令
+|:autocmd|	:au! * {pat}		  移除所有匹配{pat}的自动命令
+|:autocmd|	:au! {event} {pat}	  移除所有匹配{pat}的{event}事件的自动
+					  命令
+|:autocmd|	:au! {event} {pat} {cmd}  移除所有匹配{pat}的{event}事件的自动
+					  命令并输入新的自动命令
+------------------------------------------------------------------------------
+*Q_wi*		多窗口命令
+
+|CTRL-W_s|	CTRL-W s  or  :split	将窗口分隔为两部分
+|:split_f|	:split {file}		分隔窗口并在其中一个窗口编辑{file}文件
+|:vsplit|	:vsplit {file}		同上，但垂直分隔窗口
+|:vertical|	:vertical {cmd}		垂直分隔窗口并执行{cmd}命令
+
+|:sfind|	:sf[ind] {file}		分隔窗口并在'path'路径中查找{file}文件
+					并编辑
+|:terminal|	:terminal {cmd}		打开一个终端窗口
+|CTRL-W_]|	CTRL-W ]		分隔窗口并跳转到光标位置的标签
+|CTRL-W_f|	CTRL-W f		分隔窗口并编辑光标位置的文件名
+|CTRL-W_^|	CTRL-W ^		分隔窗口并编辑备用文件名
+|CTRL-W_n|	CTRL-W n  or  :new	创建一个新的空窗口
+|CTRL-W_q|	CTRL-W q  or  :q[uit]	退出编辑并关闭窗口
+|CTRL-W_c|	CTRL-W c  or  :clo[se]	隐藏缓冲区并关闭窗口
+|CTRL-W_o|	CTRL-W o  or  :on[ly]	将当前窗口设置为屏幕的唯一窗口
+
+|CTRL-W_j|	CTRL-W j		将光标移动到下方的窗口
+|CTRL-W_k|	CTRL-W k		将光标移动到上方的窗口
+|CTRL-W_CTRL-W|	CTRL-W CTRL-W		将光标移动到下方的窗口(循环)
+>
+  wrap这个词在vim中很常见，如文本折行 wrap，文本搜索 wrap，光标在窗口间的移动
+  也用到了wrap这个词，前者可能对应的是line wrap而后者可能对应的是wrap around
+<
+|CTRL-W_W|	CTRL-W W		将光标移动到上方的窗口(循环)
+|CTRL-W_t|	CTRL-W t		移动光标到顶部窗口
+|CTRL-W_b|	CTRL-W b		移动光标到底部窗口
+|CTRL-W_p|	CTRL-W p		移动光标到前一个激活的窗口
+
+|CTRL-W_r|	CTRL-W r		向下轮转窗口
+|CTRL-W_R|	CTRL-W R		向上轮转窗口
+|CTRL-W_x|	CTRL-W x		交换当前窗口与下一个窗口
+
+|CTRL-W_=|	CTRL-W =		将所有的窗口设为等宽等高
+|CTRL-W_-|	CTRL-W -		减少当前窗口的高度
+|CTRL-W_+|	CTRL-W +		增加当前窗口的高度
+|CTRL-W__|	CTRL-W _		设置当前窗口的高度(默认:最高)
+
+|CTRL-W_<|	CTRL-W <		减少当前窗口的宽度
+|CTRL-W_>|	CTRL-W >		增加当前窗口的宽度
+|CTRL-W_bar|	CTRL-W |		设置当前窗口的宽度(默认:尽可能最宽)
+------------------------------------------------------------------------------
+*Q_bu*		缓冲区列表命令
+
+|:buffers|	:buffers  or  :files	列出所有已知的缓冲区及文件名
+
+|:ball|		:ball	  or  :sball	编辑所有的参数/缓冲区
+|:unhide|	:unhide   or  :sunhide	编辑所有已加载的缓冲区
+
+|:badd|		:badd {fname}		添加文件名{fname}到列表中
+|:bunload|	:bunload[!] [N]		从内存中卸载缓冲区[N]
+|:bdelete|	:bdelete[!] [N]		卸载缓冲区[N]并将他从缓冲区列表删除
+
+		     当前窗口	       新窗口	       ~
+|:buffer|	:[N]buffer [N]     :[N]sbuffer [N]     切换到参数/缓冲区 N
+|:bnext|	:[N]bnext [N]      :[N]sbnext [N]      切换到后面的第N个arg/buf
+|:bNext|	:[N]bNext [N]      :[N]sbNext [N]      切换到前面的第N个arg/buf
+|:bprevious|	:[N]bprevious [N]  :[N]sbprevious [N]  切换到前面的第N个arg/buf
+|:bfirst|	:bfirst	           :sbfirst            切换到第一个参数/缓冲区
+|:blast|	:blast	           :sblast	       切换到最后一个参数/缓冲区
+|:bmodified|	:[N]bmod [N]       :[N]sbmod [N]       切换到第N个改动的缓冲区
+------------------------------------------------------------------------------
+*Q_sy*		语法高亮
+
+|:syn-on|	:syntax on		开启使用语法高亮
+|:syn-off|	:syntax off		停止使用语法高亮
+
+|:syn-keyword|	:syntax keyword {group-name} {keyword} ..
+					添加一个语法关键词项目
+|:syn-match|	:syntax match {group-name} {pattern} ...
+					添加语法匹配项目
+|:syn-region|	:syntax region {group-name} {pattern} ...
+					添加语法区域项目
+|:syn-sync|	:syntax sync [ccomment | lines {N} | ...]
+					告知语法怎么同步
+|:syntax|	:syntax [list]		列出当前语法项目
+|:syn-clear|	:syntax clear		清除所有的语法信息
+
+|:highlight|	:highlight clear	清除所有高亮信息
+|:highlight|	:highlight {group-name} {key}={arg} ..
+					为{group-name}设置高亮
+
+|:filetype|	:filetype on		开启文件类型检测但不启用语法高亮
+|:filetype|	:filetype plugin indent on
+					开启文件类型检测及自动缩进及默认设置
+------------------------------------------------------------------------------
+*Q_gu*		GUI commands
+
+|:gui|		:gui			UNIX: 启动GUI程序
+|:gui|		:gui {fname} ..		同上并且编辑{fname}文件
+
+|:menu|		:menu			列出所有的菜单
+|:menu|		:menu {mpath}		列出以{mpath}开始的菜单
+|:menu|		:menu {mpath} {rhs}	添加{mpath}菜单并指定{rhs}
+					{rhs}本意是 right-hand side ，这里应该
+					是菜单命令的占位
+|:menu|		:menu {pri} {mpath} {rhs}
+					同上，但同时指定优先级{pri}
+|:menu|		:menu ToolBar.{name} {rhs}
+					指定{rhs}添加到工具栏项目
+|:tmenu|	:tmenu {mpath} {text}	将工具提示添加到{mptah}菜单
+|:unmenu|	:unmenu {mpath}		移除{mpath}菜单
+------------------------------------------------------------------------------
+*Q_fo*		折叠
+
+|'foldmethod'|	set foldmethod=manual	手动折叠
+		set foldmethod=indent	按缩进折叠
+		set foldmethod=expr	按折叠表达式'foldexpr'折叠
+		set foldmethod=syntax	按语法区域折叠
+		set foldmethod=marker	按折叠标记'foldmarker'折叠
+
+|zf|		zf{motion}		操作符: 手动定义一个折叠
+|:fold|		:{range}fold		为{range}范围行定义一个折叠
+|zd|		zd			删除光标下的一级折叠
+|zD|		zD			删除光标下的所有层级折叠
+
+|zo|		zo			展开光标下的一级折叠
+|zO|		zO			展开光标下的所有层级折叠
+|zc|		zc			闭合光标下的一级折叠
+|zC|		zC			闭合光标下的所有层级折叠
+
+|zm|		zm			折叠更多: 减少'foldlevel'层级
+|zM|		zM			闭合所有折叠: 将'foldlevel'层级置零
+|zr|		zr			减少折叠: 增加'foldlevel'层级
+|zR|		zR			展开所有折叠: 将'foldlevel'层级置最大
+
+|zn|		zn			取消折叠: 关闭'foldenable'选项
+|zN|		zN			正常折叠: 启用'foldenable'选项
+|zi|		zi			反转'foldenable'选项
+
+ vim:tw=78:ts=8:noet:ft=help:
