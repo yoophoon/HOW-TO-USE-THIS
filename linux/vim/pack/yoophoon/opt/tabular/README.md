@@ -1,4 +1,4 @@
-[fork of Tabular](https://github.com/godlygeek/tabular)
+[fork of Tabular Commit 12437cd](https://github.com/godlygeek/tabular)
 ==============
 Sometimes, it's useful to line up text.  Naturally, it's nicer to have the
 computer do this for you, since aligning things by hand quickly becomes
