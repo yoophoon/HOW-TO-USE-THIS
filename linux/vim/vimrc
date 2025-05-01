@@ -104,32 +104,10 @@ set ic              "启用忽略大小写  ignore case  选项默认关闭即 s
 " 插件设置
 "packloadall        "加载所有'packpath'的包
 ":helptags ALL      "生成所有文档的tags文件
-" NETRW
-if has("win32")
-  source $HOME\vimfiles\pluginsRC\netrw
-else
-  source $HOME/.vim/pluginsRC/netrw
-endif
 
-set helpfile=$VIMRUNTIME/doc/help.cnx
+" helpfile was set in './vimrcPOSIX' file
 set helplang=cn
 " helptoc
-"
-"交换文件相关选项
-if !isdirectory($HOME . '/.vim/swap')
-    call mkdir($HOME . '/.vim/swap',"p")
-endif
-set directory=$HOME/.vim/swap//    "linux设置交换文件位置
-"set directory=$HOME\.vim\swap//   "windows设置交换文件位置 vim配置文件统一采用'/'表示路径层级
-set directory=$HOME/.vim/swap// "set noswapfile                      "取消交换文件
-
-"永久撤销设置
-set undofile
-if !isdirectory($HOME . '/.vim/undodir')
-    call mkdir($HOME . '/.vim/undodir',"p")
-endif
-set undodir=$HOME/.vim/undodir
-
 ":map   输出当前vim的所有映射情况
 "eg.
 ":redir >> redir.txt
@@ -159,6 +137,7 @@ nnoremap N Nzzzv
 "New-Item -Path 'c:\temp\New Folder\newFile.txt' -ItemType File     #创建文件
 "Remove-Item ItemName [-Force]                                      #删除文件或文件夹
 if has('win32')
+    source $HOME\vimfiles\vimrc.win
     "echomsg "windows兼容设置启用"
     "windows平台将终端设置为powershell
     set shell=C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
@@ -187,6 +166,7 @@ if has('win32')
     "let g:netrw_ftp_cmd= 'c:\Windows\System32\ftp -s:C:\Users\MyUserName\MACHINE'
     "
 else
+    source $HOME/.vim/vimrc.linux
     ""echomsg "arch兼容设置启用"
     "let g:fcitx5state=system("fcitx5-remote")
     "" 退出插入模式时禁用输入法，并保存状态

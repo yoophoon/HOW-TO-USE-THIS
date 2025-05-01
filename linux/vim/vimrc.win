@@ -1,0 +1,38 @@
+" resolve path on windows and linux
+" for vim configuration file at '$HOME\vimfiles\' on windows
+" while at '$HOME/.vim/' on linux
+" add a symbol link to this directory firt
+
+" this file comes with two parts, vim settings and plugin settings
+" vim settings is about some options for vim itself
+" plugin setting is for vim's plugins
+
+
+"                                                                               
+"                               VIM SETTINGS                                    
+"                                                                               
+" set swap file directory
+" confirm swap directory exist on windows
+if !isdirectory($HOME . '\vimfiles\swap')
+  call mkdir($HOME . '\vimfiles\swap','p')
+endif
+" the suffix // will truen file name from the complete path
+" to the file with all path separators replaced by percent % signs
+" see |directory|
+set directory=$HOME\vimfiles\swap//
+
+" set vim undo file directory
+" confirm undo directory exist on windows
+if !isdirectory($HOME . '\vimfiles\undodir')
+  call mkdir($HOME . '\vimfiles\undodir','p')
+endif
+set undodir=$HOME\vimfiles\undodir
+
+" set help files directory
+set helpfile=$HOME\vimfiles\doc\help.cnx
+
+"                                                                               
+"                              PLUGIN SETTINGS                                  
+"                                                                               
+" NETRW
+source $HOME\vimfiles\pluginsRC\netrw

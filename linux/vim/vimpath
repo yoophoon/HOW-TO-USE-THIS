@@ -1,6 +1,7 @@
 /usr/share/vim
 ├── vim91
-│   ├── autoload          "vim自动加载脚本
+│   ├── autoload          "vim自动加载脚本，这里有些函数可以用过fname#funcname()调用
+│   │                     "同样的目录在$HOME/.vim/autoload，查阅|autoload|
 │   ├── bugreport.vim     "bug提交
 │   ├── colors            "主题相关
 │   ├── compiler          "编译器相关

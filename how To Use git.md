@@ -92,3 +92,7 @@ git config --global core.autocrlf false
 
 ### 区分大小写
 git config --global core.ignorecase false
+
+## git文件操作
+移除文件  `git rm file` 直接移除文件
+        `git rm --cahed file` 从git管理中移除文件但保留本地文件

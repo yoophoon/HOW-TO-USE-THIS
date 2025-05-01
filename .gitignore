@@ -9,6 +9,8 @@ package-lock.json
 
 # vim相关
 linux/vim/plugged/*
+linux/vim/pack/*
+linux/vim/.netrwhist
 swap
 undodir
 PC/msys2/*.png
