@@ -10,3 +10,10 @@ TABULAR_PACKPATH="$(dirname $(realpath "$0"))/pack/tabular/start/tabular"
 if [[ ! -d $TABULAR_PACKPATH ]];then
   git clone https://github.com/godlygeek/tabular.git --depth=1 "$TABULAR_PACKPATH"
 fi
+
+# install vimspector
+VIMSPECTOR_PACKPATH="$(dirname $(realpath "$0"))/pack/vimspector/start/vimspector"
+if [[ ! -d $VIMSPECTOR_PACKPATH ]];then
+  git clone https://github.com/puremourning/vimspector.git --depth=1 "$VIMSPECTOR_PACKPATH"
+fi
+

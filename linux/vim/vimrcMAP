@@ -1,0 +1,8 @@
+" mapleader     vim9的mapleader需要前缀g:，否则只是局部设置
+let mapleader=",,"
+
+" 编辑typescript文件时，在其buffer内覆盖 gd 命令
+autocmd FileType typescript nnoremap <buffer> gd :CocCommand tsserver.goToSourceDefinition<CR>
+
+" 映射jk按键为<Esc>按键方便快速退出插入模式
+inoremap jk <Esc>

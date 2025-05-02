@@ -31,6 +31,9 @@ set undodir=$HOME/.vim/undodir
 " set help files directory
 set helpfile=$HOME/.vim/doc/help.cnx
 
+" set map
+source $HOME/.vim/vimrcMAP
+
 "                                                                               
 "                              PLUGIN SETTINGS                                  
 "                                                                               

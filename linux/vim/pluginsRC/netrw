@@ -52,7 +52,7 @@ let g:netrw_special_syntax=1
 "值小于零则设置窗口的行数或列数
 "值等于零则根据vim的设置进行窗口尺寸设置
 "值大于零则采用当前浏览窗口的百分比
-let g:netrw_winsize=-25
+let g:netrw_winsize=-50
 
 
 

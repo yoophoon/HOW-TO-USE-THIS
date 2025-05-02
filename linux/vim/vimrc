@@ -28,6 +28,7 @@ set guioptions-=e         "取消GUI tabline 以终端tabline的形式显示tabl
 set guifont=Fira_Code:h12:cANSI:qDRAFT
 
 "=================================================================================
+                                                                               
 "编辑器设置
 set nocompatible    "设置不兼容VI
 "设置单行长度被插入的最大文本宽度，更长的文本会被空白字符截断以适应宽度
@@ -57,12 +58,14 @@ set incsearch       "对按回车前所输入的字符进行搜索即动态搜�
 set ignorecase      "搜索忽略大小写
 set showmatch       "高亮匹配的括号
 set matchtime=5       "高亮匹配括号时间
+                                                                                
 "对齐缩进
 set autoindent      "自动对齐
 set smartindent     "智能对齐
 "set tabstop 2      "设置tab键显示宽度
 set expandtab       "设置tab扩展为空格
 set softtabstop=2   "软设置如果tab字符扩展为空格则第一次输入tab为设置的空格数第二次输入为一个tab符否则输入tab符
+                                                                                
 "显示字符
 set list
 set listchars+=space:۰  "空格显示为۰
@@ -92,8 +95,14 @@ set guicursor+=i:ver25-CursorInsert
 set guicursor+=r:hor25-CursorReplace
 "set spell spelllang=en,cjk          "拼写检查
 
-set langmenu=en_US.utf-8
-let $LANG='en'
+                                                                                
+"自动保存
+set autowrite
+"设置vim待机更新时间，默认4000毫秒
+"选项适用于正常情况下将swap内容写入文件及|CursorHold|自动命令
+"set updatetime=4000
+autocmd InsertLeave,TextChanged,CursorHold * silent! w
+autocmd FocusLost,BufLeave * silent! wa
 
 set wrapscan        "是否在文件内循环搜索 默认开启
 set ic              "启用忽略大小写  ignore case  选项默认关闭即 set noic
@@ -113,11 +122,6 @@ set helplang=cn
 ":redir >> redir.txt
 ":map
 "redir END
-"map
-let mapleader="\\"
-
-"imap    input mode map
-imap jk <Esc>
 
 "nmap    normal mode map
 nmap <Space> :
@@ -137,7 +141,12 @@ nnoremap N Nzzzv
 "New-Item -Path 'c:\temp\New Folder\newFile.txt' -ItemType File     #创建文件
 "Remove-Item ItemName [-Force]                                      #删除文件或文件夹
 if has('win32')
+    " 配置文件设置
     source $HOME\vimfiles\vimrc.win
+    " 语言设置
+    language en                 "设置vim使用的语言
+    "let $LANG='en'             "通过设置环境变量的方式设置语言，影响较大且复杂
+    set langmenu=en_US.utf-8
     "echomsg "windows兼容设置启用"
     "windows平台将终端设置为powershell
     set shell=C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
