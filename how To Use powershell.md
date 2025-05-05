@@ -9,6 +9,7 @@
 # 更改PowerShell的字符编码
 `$PSDefaultParameterValues['Out-File:Encoding'] = 'utf8nobom'`    //设置字符集为UTF-8  
 `$PSDefaultParameterValues['*:Encoding'] = 'utf8'`                //更改具有 Encoding 参数的所有 cmdlet 的默认编码  
+修改windows的系统设置 `控制面板\区域\管理\更改系统区域设置\` 勾选 使用Unicode UTF-8 提供全球语言支持
 常见字符集:`chcp 936 GBK`和`chcp 65001 utf-8`                     //chcp 65001  
 
 # 调用本地程序并获取相关信息

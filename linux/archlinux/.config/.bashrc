@@ -26,6 +26,16 @@ export LESS="-n"  # less命令的环境变量，查阅man less获取更多信息
 # Don't use ^D to exit
 # set -o ignoreeof
 #
+# 启用终端 vi 模式
+# 与vim类似，普通交互终端默认为插入模式，需要进入普通模式才可快速移动
+# ~/.inputrc 添加下面两行与后续两行在 ~/.bashrc 的效果一样
+# set editing-mode vi
+# set show-mode-in-prompt on
+# 这里有两个新概念 ~/.inputrc 和 bind 命令 bind 是bash内置命令 help bind查看帮助
+# bind \ ~/.inputrc \ readline 
+set -o vi
+bind 'set show-mode-in-prompt on'
+#
 # Use case-insensitive filename globbing
 # shopt -s nocaseglob
 #
@@ -229,7 +239,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 # nvm use会自动加载$HOME/.bashrc指定的node版本
 # .bashrc的内容为node版本号 如 22.12.0
-nvm use > /dev/null
+# nvm use > /dev/null
 
 
 #                ##     ##  ######  ##    ##  ######   #######                  

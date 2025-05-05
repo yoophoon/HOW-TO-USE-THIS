@@ -108,6 +108,26 @@ UEFI模式启动时如果将根分区设为fat格式，安装系统的时候会�
 - [软件列表](https://wiki.archlinux.org/title/List_of_applications)
 至此，一个最基本的archlinux系统就安装完成了
 
+# 一些概念
+## [pacman](https://wiki.archlinux.org/title/Pacman)
+archlinux的具有识别度的包管理器
+## package scurity
+### [archlinux-keyring](https://gitlab.archlinux.org/archlinux/archlinux-keyring/)
+archlinux的软件包，用于验证软件的PGP签名
+### [pacman-key](https://wiki.archlinux.org/title/Pacman/Package_signing)
+archlinux的root工具，用于管理软件的签名
+
+
+
+                                                                                
+                                                                                
+
+
+
+
+
+
+
 
 # [Archlinux Install(UEFI+GPT+KDE)](https://www.bilibili.com/video/av898108481/)
 1. 停止reflector服务 禁止自动更新服务器列表

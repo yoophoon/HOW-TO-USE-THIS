@@ -5,14 +5,16 @@ emmet官方推荐vim第三方插件[emment-vim](https://github.com/mattn/emmet-v
 :CocInstall coc-tsserver coc-json coc-css coc-html
 
 # 调试
-`npm install -g chrome-debug-adapter`
-vim调试采用[vimspector](https://github.com/puremourning/vimspector.git)
+- [vimspector](https://github.com/puremourning/vimspector.git)
+    可以认为vimspector是vim的调试程序，程序满足[dap](https://microsoft.github.io/debug-adapter-protocol/)，是一个非常强大的工具
+- [vscode-js-debug](https://github.com/microsoft/vscode-js-debug)
+    这是vscode官方使用的[da](调试适配器)，功能非常强大，支持js、ts等js相关的调试
 ## 安装
 这里使用vim自带包管理器进行安装，安装路径为`$HOME/.vim/pack/vimspector/start/vimspector`
 ## 安装调试适配器
 
 ## 碰见的问题
-1. 第一跟着教程碰见无法链接调试适配器的问题:
+1. 第一次跟着教程碰见无法链接调试适配器的问题:
 ╔════════════════════════════════════════════════════════════════X
 ║ Unable to start or connect to debug adapter                    ║
 ║                                                                ║
@@ -20,8 +22,14 @@ vim调试采用[vimspector](https://github.com/puremourning/vimspector.git)
 ║                                                                ║
 ║ :VimspectorReset to close down vimspector                      ║
 ╚════════════════════════════════════════════════════════════════╝
+    最终解决方法：经过多番尝试，发现是wsl2与windows的文件系统造成的,nodejs会报错
+    `Error: Dynamic require of "fs" is not supported`
+    如果是在原生的linux上使用调试适配器是没问题的，解决这个问题之后，vim的配置文
+    件已经不能简单的使用`ln -s`将`$HOME/.vim`链接到仓库的`linux/vim`文件夹了，后
+    续仓库只保留文本文件及shell脚本，需要本地执行的文件统一克隆到目标系统
 
-
+2. Requires Vim compiled with Python 3.6
+    无解，即便编译 +python3 也会出现程序闪退的情况，windows使用vimspector有bug
 
 
 

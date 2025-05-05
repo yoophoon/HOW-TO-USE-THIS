@@ -111,7 +111,7 @@ set ic              "启用忽略大小写  ignore case  选项默认关闭即 s
 "set eadirection "hor" 
 
 " 插件设置
-"packloadall        "加载所有'packpath'的包
+packloadall        "加载所有'packpath'的包
 ":helptags ALL      "生成所有文档的tags文件
 
 " helpfile was set in './vimrcPOSIX' file
@@ -132,8 +132,21 @@ nnoremap N Nzzzv
 "nnoremap <C-tab> :bn<CR>
 "nnoremap <C-s-tab> :bp<CR>
 
+" 跨系统操作还是采用vim-plug插件管理vim的插件
+call plug#begin()
+" [coc.nvim](https://github.com/neoclide/coc.nvim)
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+" [tabular](https://github.com/godlygeek/tabular)
+Plug 'godlygeek/tabular'
 
+" 一些插件只能在linux环境下工作
+" 比如：vimspector在gvim中运行会要求带python3特性，即便带py3编译还是存在毛病
+if !has('win32')
+  " [vimspector](https://github.com/puremourning/vimspector)
+  Plug 'puremourning/vimspector'
+endif
+call plug#end()
 "下面是对跨平台的兼容性设置
 
 "如果是windows则将gvim使用的shell设置为powershell
@@ -174,6 +187,10 @@ if has('win32')
     set renderoptions=type:directx  " [firacode](https://github.com/tonsky/FiraCode/issues/462)
     "let g:netrw_ftp_cmd= 'c:\Windows\System32\ftp -s:C:\Users\MyUserName\MACHINE'
     "
+
+    "let g:python3_host_prog='C:\Users\yoophoon\AppData\Local\Programs\Python\Python36\python.exe'
+    "set pythonthreedll=python36.dll
+    set pythonthreehome='C:\Users\yoophoon\AppData\Local\Programs\Python\Python36'
 else
     source $HOME/.vim/vimrc.linux
     ""echomsg "arch兼容设置启用"

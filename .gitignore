@@ -14,3 +14,7 @@ linux/vim/.netrwhist
 swap
 undodir
 PC/msys2/*.png
+
+# C相关
+*.out
+

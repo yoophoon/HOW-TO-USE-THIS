@@ -1,3 +1,12 @@
+可以通过一下途径安装vim：
+    1. 包管理器
+    2. 二进制文件
+    3. 源码编译
+      3.1 vs2022编译vim源码
+      1. 克隆vim仓库
+      2. 配置路径 `src\msvc2022.bat x86_amd64`命令
+      3. 编译 `nmake -f Make_mvc.mak [options]`命令
+      4. 更多信息查阅 [vim](https://github.com/vim/vim)，src目录给了安装文档
 # VIM
 入门操作  vimtutor
 [vim-galore-zh_cn](https://github.com/wsdjeg/vim-galore-zh_cn)
