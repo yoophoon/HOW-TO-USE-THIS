@@ -1,32 +1,78 @@
-"使用下方命令即可使用其他路劲下的vimrc配置文件
-" linux启动vim会自动加载/etc/vimrc $HOME/.vimrc $HOME/.vim/vimrc $HOME/.config/vim/vimrc
-" linux:  ln -s /path/to/this/directory /path/to/load/directory
-" windows启动vim会自动加载$VIM\vimrc $HOME\_vimrc $HOME\_vimfiles\vimrc $VIM\_vimrc
-" windows:mklink /D x:\path\to\this\directory x:\path\to\load\directory
-" vim自动加载配置文件位置可通过 :version 获取
+" vim启动自动加载配置文件路径通过|:version|查看              |version| |startup|
+" vim命令行启动可通过'-u'选项指定配置文件, 默认配置文件将失效          |man vim|
+" 可生成配置文件的符号链接到vim的配置文件目录
+"   linux:                                                              |man ln|
+"     eg: ln -s /path/to/this/directory /path/to/load/directory
+"   windows:                                                            |mklink|
+"     eg: mklink /D x:\path\to\this\directory x:\path\to\load\directory
 "
 "vim --startuptime startuptime.log  #打印启动用时日志
-"对某个行为进行分析
-":profile start log.txt
-":profile func *
-":profile file *
-":profile stop 或 退出vim
-"help option-list   "查看帮助选项列表
+"对某个行为进行分析                                                    |profile|
+"   :profile start log.txt
+"   :profile func *
+"   :profile file *
+"   :profile stop 或 退出vim
+"重定向命令输出                                                          |redir|
+"   :redir >> redir.txt
+"   :map
+"   :redir END
 
-" 图形界面选项(guioptions) 
-set guioptions+=d         "黑色主题版本
-set guioptions-=m         "菜单栏
-set guioptions-=M         "系统菜单栏
-set guioptions-=t         "可拖动工具条
-set guioptions-=T         "工具条
-set guioptions-=L         "左方滚动条
-set guioptions-=l         "垂直拆分窗口左方滚动条
-set guioptions-=R         "右方滚动条
-set guioptions-=r         "垂直拆分窗口右方滚动条
-set guioptions-=e         "取消GUI tabline 以终端tabline的形式显示tabline
-"字体设置
-set guifont=Fira_Code:h12:cANSI:qDRAFT
+if has('win32')
+    " 配置文件设置
+    " 语言设置
+    language en                 "设置vim使用的语言
+    "let $LANG='en'             "通过设置环境变量的方式设置语言，影响较大且复杂
+    set langmenu=en_US.utf-8
+    "echomsg "windows兼容设置启用"
+    "windows平台将终端设置为powershell
+    "如果是windows则将gvim使用的shell设置为powershell
+    "New-Item -Path 'c:\temp\New Folder' -ItemType Directory            #创建文件夹
+    "New-Item -Path 'c:\temp\New Folder\newFile.txt' -ItemType File     #创建文件
+    "Remove-Item ItemName [-Force]                                      #删除文件或文件夹
+    set shell=C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+    "字体设置
+    set guifont=Fira_Code:h12:cANSI:qDRAFT
+    " 切换GVIM的菜单、工具栏及滚动条的显示 快捷键F2
+    set guioptions-=b
+    set guioptions-=m
+    set guioptions-=T
+    set guioptions-=r
+    set guioptions-=L
+    set guioptions-=c
+    map <silent> <F2> :if &guioptions =~# 'T' <Bar>
+        \set guioptions-=b <Bar>
+        \set guioptions-=T <Bar>
+        \set guioptions-=m <Bar>
+        \set guioptions-=r <Bar>
+        \set guioptions-=L <Bar>
+        \set guioptions-=c <Bar>
+    \else <Bar>
+        \set guioptions+=b <Bar>
+        \set guioptions+=T <Bar>
+        \set guioptions+=m <Bar>
+        \set guioptions+=r <Bar>
+        \set guioptions+=L <Bar>
+        \set guioptions+=c <Bar>
+    \endif<CR>
+    "设置firacode 不显示连字的问题[firacode](https://github.com/tonsky/FiraCode/issues/462)
+    set renderoptions=type:directx
+    "let g:netrw_ftp_cmd= 'c:\Windows\System32\ftp -s:C:\Users\MyUserName\MACHINE'
+    "
+    "let g:python3_host_prog='C:\Users\yoophoon\AppData\Local\Programs\Python\Python36\python.exe'
+    "set pythonthreedll=python36.dll
+    set pythonthreehome='C:\Users\yoophoon\AppData\Local\Programs\Python\Python36'
+else
+    ""echomsg "arch兼容设置启用"
+    "let g:fcitx5state=system("fcitx5-remote")
+    "" 退出插入模式时禁用输入法，并保存状态
+    "autocmd InsertLeave * :silent let fcitx5state=system("fcitx5-remote")[0] | silent !fcitx5-remote -c 
+    "" 2 表示之前状态打开了输入法，则进入插入模式时启动输入法
+    "autocmd InsertEnter * :silent if fcitx5state == 2 | call system("fcitx5-remote -o") | endif 
+endif
 
+" 获取路径分隔符及配置文件根目录
+let s:pathSeprator= has("win32") ? '\' : '/'
+let s:confRoot= expand("<sfile>:h") . s:pathSeprator
 "=================================================================================
                                                                                
 "编辑器设置
@@ -45,11 +91,15 @@ filetype plugin on  "为特定的文件添加对应的插件
 set autoread       "文件改动后自动读取
 set encoding=utf-8
 set fileencoding=utf-8
+set termencoding=utf-8
 set backspace=2
 colorscheme habamax "$VIMRUNTIME/color/*.vim  设置色彩主题就是运行其对应的vim脚本
 set conceallevel=0  "保留高亮语法关键字
 "winpos 100 100
 "set lines=50 columns=winwidth(0)/2
+                                                                                
+" 搜索
+set wrapscan        "是否在文件内循环搜索 默认开启
 set wildmenu        "开启自动补全增强功能
 set wildmode=longest:list,full  "模糊模式
 set hl=""
@@ -60,9 +110,10 @@ set showmatch       "高亮匹配的括号
 set matchtime=5       "高亮匹配括号时间
                                                                                 
 "对齐缩进
+"
 set autoindent      "自动对齐
 set smartindent     "智能对齐
-"set tabstop 2      "设置tab键显示宽度
+set tabstop=2      "设置tab键显示宽度
 set expandtab       "设置tab扩展为空格
 set softtabstop=2   "软设置如果tab字符扩展为空格则第一次输入tab为设置的空格数第二次输入为一个tab符否则输入tab符
                                                                                 
@@ -76,6 +127,7 @@ set shiftwidth=2    "设置自动缩进
 set shiftround      "设置缩进快捷键 “>>”
 set foldmethod=indent   "基于缩进对文本进行折叠
 
+set signcolumn=yes
 set nu              "显示行号
 set relativenumber  "开启相对行号
 set cursorline      "高亮当前行
@@ -97,6 +149,7 @@ set guicursor+=r:hor25-CursorReplace
 
                                                                                 
 "自动保存
+set updatetime=300
 set autowrite
 "设置vim待机更新时间，默认4000毫秒
 "选项适用于正常情况下将swap内容写入文件及|CursorHold|自动命令
@@ -104,34 +157,41 @@ set autowrite
 autocmd InsertLeave,TextChanged,CursorHold * silent! w
 autocmd FocusLost,BufLeave * silent! wa
 
-set wrapscan        "是否在文件内循环搜索 默认开启
-set ic              "启用忽略大小写  ignore case  选项默认关闭即 set noic
+                                                                                
+" vim window
 "set equalalways       "设置拆分窗口是否相等，默认开始，set noea
 "作用于equalalways选项,hor不改变窗口高度ver不改变窗口宽度both宽高由vim决定
 "set eadirection "hor" 
 
+                                                                                
+"ctags设置
+"一些说明：要使用vim的标签跳转功能必须事先生成对应的标签文件
+"
+"= = = c = = =
+"linx:
+"ctags -R --langmap=c:+.h --languages=c --links=yes --kinds-c=+p \
+"-f ~/.vim/ctags /usr/include
+"windows:
+"暂不设置
+" $VIM指向的路径不确定, 可能是配置文件所在目录也可能是vim程序目录
+" autocmd FileType c set tags+=$VIM/ctags
+" autocmd FileType c execute 'set tags+=' .. (expand('<sfile>:h') . s:pathSeprator . 'ctags')
+autocmd FileType c let &tags=&tags . ',' . expand('<sfile>:h') . s:pathSeprator . 'ctags'
+
+                                                                                
 " 插件设置
 packloadall        "加载所有'packpath'的包
 ":helptags ALL      "生成所有文档的tags文件
 
-" helpfile was set in './vimrcPOSIX' file
+                                                                                
+"vim帮助系统
+" helpfile选项因为涉及到跨系统文件路径, 在external节设置
 set helplang=cn
 " helptoc
-":map   输出当前vim的所有映射情况
-"eg.
-":redir >> redir.txt
-":map
-"redir END
 
-"nmap    normal mode map
-nmap <Space> :
-"查找居中显示并取消折叠
-nnoremap n nzzzv
-nnoremap N Nzzzv
-"切换buffer
-"nnoremap <C-tab> :bn<CR>
-"nnoremap <C-s-tab> :bp<CR>
-
+                                                                                
+"                               loading plugins                                 
+                                                                                
 " 跨系统操作还是采用vim-plug插件管理vim的插件
 call plug#begin()
 " [coc.nvim](https://github.com/neoclide/coc.nvim)
@@ -142,62 +202,31 @@ Plug 'godlygeek/tabular'
 
 " 一些插件只能在linux环境下工作
 " 比如：vimspector在gvim中运行会要求带python3特性，即便带py3编译还是存在毛病
-if !has('win32')
-  " [vimspector](https://github.com/puremourning/vimspector)
-  Plug 'puremourning/vimspector'
-endif
+" [vimspector](https://github.com/puremourning/vimspector)
+execute !has('win32') ? "Plug 'puremourning/vimspector'" : ""
 call plug#end()
-"下面是对跨平台的兼容性设置
 
-"如果是windows则将gvim使用的shell设置为powershell
-"New-Item -Path 'c:\temp\New Folder' -ItemType Directory            #创建文件夹
-"New-Item -Path 'c:\temp\New Folder\newFile.txt' -ItemType File     #创建文件
-"Remove-Item ItemName [-Force]                                      #删除文件或文件夹
-if has('win32')
-    " 配置文件设置
-    source $HOME\vimfiles\vimrc.win
-    " 语言设置
-    language en                 "设置vim使用的语言
-    "let $LANG='en'             "通过设置环境变量的方式设置语言，影响较大且复杂
-    set langmenu=en_US.utf-8
-    "echomsg "windows兼容设置启用"
-    "windows平台将终端设置为powershell
-    set shell=C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
-    " GVIM的设置
-    " 切换GVIM的菜单、工具栏及滚动条的显示 快捷键F2
-    set guioptions-=b
-    set guioptions-=m
-    set guioptions-=T
-    set guioptions-=r
-    set guioptions-=L
-    map <silent> <F2> :if &guioptions =~# 'T' <Bar>
-        \set guioptions-=b <Bar>
-        \set guioptions-=T <Bar>
-        \set guioptions-=m <Bar>
-        \set guioptions-=r <Bar>
-        \set guioptions-=L <Bar>
-    \else <Bar>
-        \set guioptions+=b <Bar>
-        \set guioptions+=T <Bar>
-        \set guioptions+=m <Bar>
-        \set guioptions+=r <Bar>
-        \set guioptions+=L <Bar>
-    \endif<CR>
-    "设置firacode 不显示连字的问题
-    set renderoptions=type:directx  " [firacode](https://github.com/tonsky/FiraCode/issues/462)
-    "let g:netrw_ftp_cmd= 'c:\Windows\System32\ftp -s:C:\Users\MyUserName\MACHINE'
-    "
+                                                                                
+"                               internal setting                                
+                                                                                
+" 帮助文档显示行号、相对行号及正常显示字符
+" 直接修改$VIMRUNTIME/ftplugin/help.vim文件会在vim版本更新后失效
+autocmd FileType help setlocal number relativenumber conceallevel=0 list
 
-    "let g:python3_host_prog='C:\Users\yoophoon\AppData\Local\Programs\Python\Python36\python.exe'
-    "set pythonthreedll=python36.dll
-    set pythonthreehome='C:\Users\yoophoon\AppData\Local\Programs\Python\Python36'
-else
-    source $HOME/.vim/vimrc.linux
-    ""echomsg "arch兼容设置启用"
-    "let g:fcitx5state=system("fcitx5-remote")
-    "" 退出插入模式时禁用输入法，并保存状态
-    "autocmd InsertLeave * :silent let fcitx5state=system("fcitx5-remote")[0] | silent !fcitx5-remote -c 
-    "" 2 表示之前状态打开了输入法，则进入插入模式时启动输入法
-    "autocmd InsertEnter * :silent if fcitx5state == 2 | call system("fcitx5-remote -o") | endif 
-endif
+                                                                                
+"                               external setting                                
+                                                                                
+" 设置swap目录
+let &directory= s:confRoot . s:pathSeprator . 'swap//'
+" 设置undo目录
+let &undodir= s:confRoot . s:pathSeprator . 'undoDir'
+" 设置帮助文件
+let &helpfile= s:confRoot . s:pathSeprator . 'doc' . s:pathSeprator . 'help.cnx'
+
+" keymap file
+execute 'source ' . s:confRoot . s:pathSeprator . 'vimrcMAP'
+" netrw config
+execute 'source ' . s:confRoot . s:pathSeprator . 'pluginsRC' . s:pathSeprator . 'netrw'
+" coc.nvim config
+execute 'source ' . s:confRoot . s:pathSeprator . 'pluginsRC' . s:pathSeprator . 'coc'
 

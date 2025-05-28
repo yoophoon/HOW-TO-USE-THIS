@@ -1,0 +1,15 @@
+FROM ubuntu:22.04
+RUN apt-get update
+RUN apt-get install -y curl
+# 在ubuntu下安装指定版本的nodejs
+RUN curl -sL https://deb.nodesource.com/setup_20.x | bash -
+RUN apt list -a nodejs
+RUN apt-get install -y nodejs
+RUN node -v
+RUN npm create vite@latest helloworld -- --template vanilla-ts
+RUN cd helloworld && npm i
+
+WORKDIR /helloworld
+EXPOSE 5173
+# 启动vite的开发服务器并允许外网访问
+CMD npm run dev -- --host 0.0.0.0

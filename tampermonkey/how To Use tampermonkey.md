@@ -34,3 +34,12 @@
 可以通过`let nodeStyle=document.createElement('style')`及`document.head.appendChild(nodeStyle)`将创建的`style`标签添加到documen.head中，并通过`nodeStyle.sheet.insertRule(userCSS)`设置userCSS，文档不会直接显示userCSS，可以在插入的标签的属性中查看而`GM_addStyle(userCSS)`则是直接显示userCSS
 ## [GM_download]()
 - todo
+
+
+## 开发流
+为方便集中管理脚本文件，油猴插件内容均采用`require`meta指令引用仓库脚本文件
+油猴脚本内容采用@name、@match、@icon、@require等字段以满足脚本最小生效条件
+- @name : 以前缀(YYYYMMDD____localdebug_domain)格式创建
+- @math : 油猴生效的条件之一
+- @icon : 油猴的文件图标，增加脚本的辨识度
+- @require : 引用本地文件的指令以实现脚本集中管理

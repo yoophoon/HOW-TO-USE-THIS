@@ -1,3 +1,42 @@
+# Notes For Docker
+## 环境准备
+### linux下的docker使用
+#### 安装
+使用`pacman -S docker`安装docker
+#### 配置
+docker的配置比较复杂，存在容器[container]、守护进程[daemon]、命令行接口[CLI]等多
+种概念。
+##### 守护进程
+###### [代理配置](https://docs.docker.com/engine/daemon/proxy/)
+1. docker守护进程的配置文件为`/etc/systemd/system/docker.service.d/http-proxy.conf`
+```http-proxy.conf
+[Service]
+# 代理宿主机的IP及端口（协议及域名的形式后续测试）
+Environment="HTTP_PROXY=172.20.224.1:7890"
+Environment="HTTPS_PROXY=172.20.224.1:7890"
+```
+
+2. docker镜像站
+`/etc/docker/daemon.json`配置`registry-mirrors`字段：
+```json
+{
+    "registry-mirrors":[
+        # 仅示例，自行添加可用镜像站
+        "https://docker.1ms.run"
+    ]
+}
+```
+
+
+
+
+
+
+
+
+
+
+### windows下docker使用
 - [Notes For Docker](#notes-for-docker)
   - [环境准备](#环境准备)
     - [linux下的docker使用](#linux下的docker使用)

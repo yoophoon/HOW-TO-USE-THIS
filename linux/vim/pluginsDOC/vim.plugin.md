@@ -10,6 +10,7 @@
             `:Tab /^[^.]\zs./r0c1l1
             "以第一个字符 . 进行排版，这里用到了vim的正则表达式
             "更多的信息查询[tabular.txt]($/tabular/doc/tabular.txt)
+- 复杂内容: 使用AddTabularPipeline  |:AddTabularPipeline|
 
 2. [netrw]()
 - 使用`:Lexplore`打开netrw窗口

@@ -1,0 +1,27 @@
+# docker compose up 用于大项目多容器配合工作
+version: '3.3'
+services:
+  stirling-pdf:
+    container_name: stirling_pdf
+    image: docker.stirlingpdf.com/stirlingtools/stirling-pdf:latest
+    ports:
+      - '8080:8080'
+    volumes:
+      - ~/.app/StirlingPDF/trainingData:/usr/share/tessdata # Required for extra OCR languages
+      - ~/.app/StirlingPDF/extraConfigs:/configs
+      - ~/.app/StirlingPDF/customFiles:/customFiles/
+      - ~/.app/StirlingPDF/logs:/logs/
+      - ~/.app/StirlingPDF/pipeline:/pipeline/
+    environment:
+      - DOCKER_ENABLE_SECURITY=false
+      - LANGS=zh_CN
+
+# CLI 适用单个容器应用
+docker run -d --name pdf -p 8080:8080 \
+-v /home/yoophoon/.config/stirling-pdf/trainingData:/usr/share/testdata \
+-v /home/yoophoon/.config/stirling-pdf/extraConfigs:/configs \
+-v /home/yoophoon/.config/stirling-pdf/customFiles:/customFiles \
+-v /home/yoophoon/.config/stirling-pdf/logs:/logs \
+-v /home/yoophoon/.config/stirling-pdf/pipeline:/pipeline \
+-e DOCKER_ENABLE_SECURITY=false \
+-e LANGS=en_GB stirlingtools/stirling-pdf

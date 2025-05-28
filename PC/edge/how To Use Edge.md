@@ -126,3 +126,23 @@ Ctrl + R              |重新加载当前页 *vimc快捷键r*
 Shift + F5            |强制重新加载当前页，无视当前页面改动
 Ctrl + Shift + R      |强制重新加载当前页，无视当前页面改动
 Esc                   |停止加载网页、关闭对话框或弹窗
+
+
+# archlinux安装edge右上角copilot图标无效的[解决方法](https://techcommunity.microsoft.com/discussions/edgeinsiderdiscussions/ms-edge---sidebar-and-copilot-not-working-on-linux-ubuntu-v24-lts/4271812)
+问题的根本原因是edge安装之后缺少 **HubApps** 这个文件
+
+- linux   : @`~/.config/microsoft-edge/Default/`(默认缺失，导致功能不正常)
+- windows : @`$HOME\AppData\Local\Microsoft\Edge\User Data\Default\HubApps`
+- flatpak : @`/var/app/com.microsoft.Edge/config/microsoft-edge/Default/`(同样缺失)
+
+这个文件是通用的，找到这个文件并复制到对应系统目录即可解决问题
+
+
+
+
+
+
+
+
+
+

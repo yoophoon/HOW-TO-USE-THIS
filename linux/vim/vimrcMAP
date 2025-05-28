@@ -1,8 +1,122 @@
+" [按键映射高级技巧](https://zhuanlan.zhihu.com/p/38150203)
+" [简单使用](https://zhuanlan.zhihu.com/p/532430825)
 " mapleader     vim9的mapleader需要前缀g:，否则只是局部设置
-let mapleader=",,"
+let mapleader="\<space>"
+
+" 自定义快速映射函数, 用指定映射命令将字典的键值对进行映射
+" mapCmd: 指定映射方式的命令字面量
+" mapDic: 指定参与映射的字典, 字典的键作为目标按键, 值作为被映射按键
+function s:customQuickMap(mapCmd, mapDic)
+  " 遍历字典中的键值对
+  for [key, val] in items(a:mapDic)
+    " 字典中以"comment_"开头的键名被当作注释处理, 不参与映射
+    if(key !~? 'comment_*')
+      " 正常使用按键映射命令, 其所有参数均会被当作字面量处理
+      " 采用excute命令解析参数
+      execute a:mapCmd . ' ' . key . ' ' . val
+    endif
+  endfor
+endfunction
+                                                                                
+"                               normal mode                                     
+                                                                                
+" 普通末世作为命令输入, 字母键一般被映射到命令, 这里的映射主要考虑方便编辑
+let s:n_keymap= {
+      \ 'vv'  : '<C-v>',
+      \}
+call s:customQuickMap('nnoremap', s:n_keymap)
+
+" vv: 映射vv按键为CTRL-v按键，因为CTRL-v在某些情况下为粘贴的含义
+
+                                                                                
+"                               insert mode                                     
+                                                                                
+" 插入模式作为文字输入, 字母键一般不映射到命令, 这里的映射主要考虑编码风格
+" 极少部分考虑快速编辑需求映射到命令
+let s:i_keymap= {
+      \ 'comment_command': '--------------------------------------------------',
+      \ 'jk'  : '<Esc>',
+      \ 'icv' : '<C-v>',
+      \ 'comment_formmat': '--------------------------------------------------',
+      \ ','   : ', ',
+      \ '，'  : ', ',
+      \ ':'   : ': ',
+      \ '：'  : ': ',
+      \ '"'   : '" ',
+      \ '?'   : '? ',
+      \ '？'  : '? ',
+      \ '='   : '= ',
+      \ '('   : '()<Esc>i',
+      \ '{'   : '{<Cr>}<Esc>O',
+      \ }
+call s:customQuickMap('inoremap', s:i_keymap)
+
+" 插入模式命令: 
+"   jk: 映射jk按键为<Esc>按键方便快速退出插入模式
+"   icv: 映射icv按键为|i_CTRL-v|，即输入字符字面量
+" 格式化
+"   映射","为", "
+"   映射"="为"= "
 
 " 编辑typescript文件时，在其buffer内覆盖 gd 命令
 autocmd FileType typescript nnoremap <buffer> gd :CocCommand tsserver.goToSourceDefinition<CR>
 
-" 映射jk按键为<Esc>按键方便快速退出插入模式
-inoremap jk <Esc>
+
+
+
+"nmap    normal mode map
+"nmap <Space> :
+"查找居中显示并取消折叠
+nnoremap n nzzzv
+nnoremap N Nzzzv
+"切换buffer
+"nnoremap <C-tab> :bn<CR>
+"nnoremap <C-s-tab> :bp<CR>
+
+                                                                                
+"                                 tabpage                                       
+                                                                                
+"普通模式命令 gt/gT 前往下/上一个标签页
+"nnoremap <Leader><Tab> :tabnext<CR>
+
+
+                                                                                
+"                                 COMPILER                                      
+                                                                                
+"rhs中的空格也是有特殊意义的比如mapleader或将光标像右移动一个位置
+autocmd FileType c nnoremap <buffer> <Leader>c :w<CR>:!gcc %<CR>
+autocmd FileType vim nnoremap <buffer> <Leader>c :w<CR>:so %<CR>
+
+                                                                                
+"                                vimspector                                     
+"开始调试及继续运行 start debugging || continue
+"nnoremap <F5>
+"
+"结束 stop
+"nnoremap <Shift-F5>
+"
+"步过 step over
+"nnoremap <F10>
+"
+"步入 step into
+"nnoremap <F11>
+"
+"步出 step out
+"nnoremap <Shift-F11>
+"
+"重启 restart
+"nnoremap <Ctrl-Shift-F5>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

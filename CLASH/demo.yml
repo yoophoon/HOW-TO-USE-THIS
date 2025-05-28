@@ -1,0 +1,1131 @@
+mixed-port: 7890
+allow-lan: true
+bind-address: "*"
+mode: rule
+log-level: info
+external-controller: 127.0.0.1:9090
+dns:
+  enable: true
+  ipv6: false
+  use-hosts: true
+  hosts:
+    local.com: 127.0.0.1
+    pdf.local.com: 172.20.233.112
+  default-nameserver:
+    - 223.5.5.5
+    - 223.6.6.6
+  proxy-server-nameserver:
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+    - https://223.5.5.5/dns-query
+    - https://223.6.6.6/dns-query
+    - tls://dns.alidns.com
+    - tls://223.5.5.5:853
+    - tls://223.6.6.6:853
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - "*.lan"
+    - localhost.ptlogin2.qq.com
+  nameserver:
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+    - https://223.5.5.5/dns-query
+    - https://223.6.6.6/dns-query
+    - tls://dns.alidns.com
+    - tls://223.5.5.5:853
+    - tls://223.6.6.6:853
+  fallback:
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+    - https://223.5.5.5/dns-query
+    - https://223.6.6.6/dns-query
+    - tls://dns.alidns.com
+    - tls://223.5.5.5:853
+    - tls://223.6.6.6:853
+  fallback-filter:
+    geoip: true
+    ipcidr:
+      - 240.0.0.0/4
+      - 0.0.0.0/32
+proxies:
+  - name: 剩余流量：239.84 GB
+    type: ss
+    server: lh.node-is.green
+    port: 50001
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 套餐到期：长期有效
+    type: ss
+    server: lh.node-is.green
+    port: 50001
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 香港1
+    type: ss
+    server: lh.node-is.green
+    port: 50001
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 香港2
+    type: ss
+    server: lh.node-is.green
+    port: 50002
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 香港3
+    type: ss
+    server: lh.node-is.green
+    port: 50003
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 香港4
+    type: ss
+    server: lh.node-is.green
+    port: 50004
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 新加坡1
+    type: ss
+    server: lh2.node-is.green
+    port: 50005
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 新加坡2
+    type: ss
+    server: lh2.node-is.green
+    port: 50006
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 新加坡3
+    type: ss
+    server: lh2.node-is.green
+    port: 50007
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 新加坡4
+    type: ss
+    server: lh2.node-is.green
+    port: 50008
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 日本1
+    type: ss
+    server: lh2.node-is.green
+    port: 50009
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 日本2
+    type: ss
+    server: lh2.node-is.green
+    port: 50010
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 日本3
+    type: ss
+    server: lh2.node-is.green
+    port: 50011
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 日本4
+    type: ss
+    server: lh2.node-is.green
+    port: 50012
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 美国1
+    type: ss
+    server: lh2.node-is.green
+    port: 50013
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 美国2
+    type: ss
+    server: lh2.node-is.green
+    port: 50014
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 美国3
+    type: ss
+    server: lh2.node-is.green
+    port: 50015
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 美国4
+    type: ss
+    server: lh2.node-is.green
+    port: 50016
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 台湾1
+    type: ss
+    server: lh2.node-is.green
+    port: 50017
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 台湾2
+    type: ss
+    server: lh2.node-is.green
+    port: 50018
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 台湾3
+    type: ss
+    server: lh2.node-is.green
+    port: 50019
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 台湾4
+    type: ss
+    server: lh2.node-is.green
+    port: 50020
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 加拿大1
+    type: ss
+    server: lh2.node-is.green
+    port: 50021
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 加拿大2
+    type: ss
+    server: lh2.node-is.green
+    port: 50022
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 韩国1
+    type: ss
+    server: lh2.node-is.green
+    port: 50025
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 韩国2
+    type: ss
+    server: lh2.node-is.green
+    port: 50026
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 泰国1
+    type: ss
+    server: lh2.node-is.green
+    port: 50031
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 泰国2
+    type: ss
+    server: lh2.node-is.green
+    port: 50032
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 英国1
+    type: ss
+    server: lh2.node-is.green
+    port: 50023
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 英国2
+    type: ss
+    server: lh2.node-is.green
+    port: 50024
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 菲律宾1
+    type: ss
+    server: lh2.node-is.green
+    port: 50027
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 菲律宾2
+    type: ss
+    server: lh2.node-is.green
+    port: 50028
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 缅甸1
+    type: ss
+    server: lh2.node-is.green
+    port: 50029
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: 缅甸2
+    type: ss
+    server: lh2.node-is.green
+    port: 50030
+    cipher: aes-128-gcm
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+  - name: Trojan-香港1 | 低倍率
+    type: trojan
+    server: cc.rk1.node-is.green
+    port: 10116
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+    sni: tchk1.bilibili.com
+    skip-cert-verify: true
+  - name: Trojan-新加坡1 | 低倍率
+    type: trojan
+    server: cc.rk1.node-is.green
+    port: 10116
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+    sni: tcsg1.bilibili.com
+    skip-cert-verify: true
+  - name: Trojan-日本1 | 低倍率
+    type: trojan
+    server: cc.rk1.node-is.green
+    port: 10116
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+    sni: tcjp1.bilibili.com
+    skip-cert-verify: true
+  - name: Trojan-台湾1 | 低倍率
+    type: trojan
+    server: cc.rk1.node-is.green
+    port: 10116
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+    sni: tctw1.bilibili.com
+    skip-cert-verify: true
+  - name: Trojan-美国1 | 低倍率
+    type: trojan
+    server: cc.rk1.node-is.green
+    port: 10116
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+    sni: tcus1.bilibili.com
+    skip-cert-verify: true
+  - name: Trojan-加拿大1 | 低倍率
+    type: trojan
+    server: cc.rk1.node-is.green
+    port: 10116
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+    sni: tcca1.bilibili.com
+    skip-cert-verify: true
+  - name: Trojan-香港2 | 低倍率
+    type: trojan
+    server: ea904af0beee7ca2ef3bc43bec7cb3d4.lh.gtm.node-is.green
+    port: 46125
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+    sni: tchk1.bilibili.com
+    skip-cert-verify: true
+  - name: Trojan-新加坡2 | 低倍率
+    type: trojan
+    server: 5e5183c582cac5878d43f2e1dfbc0df6.lh.gtm.node-is.green
+    port: 46189
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+    sni: tcsg1.bilibili.com
+    skip-cert-verify: true
+  - name: Trojan-日本2 | 低倍率
+    type: trojan
+    server: 1826a840f1b81ccfe901a84b5fa3dfc6.lh.gtm.node-is.green
+    port: 46062
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+    sni: tcjp1.bilibili.com
+    skip-cert-verify: true
+  - name: Trojan-美国2 | 低倍率
+    type: trojan
+    server: 4f12a874760eb4005ca9485c51502d8a.lh.gtm.node-is.green
+    port: 42085
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+    sni: tcus1.bilibili.com
+    skip-cert-verify: true
+  - name: Trojan-台湾2 | 低倍率
+    type: trojan
+    server: b5eadb2885fc31ea7c8fbc2508ecc9c0.lh.gtm.node-is.green
+    port: 42064
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+    sni: tctw1.bilibili.com
+    skip-cert-verify: true
+  - name: Trojan-加拿大2 | 低倍率
+    type: trojan
+    server: 80dc10fa8771be4db7731bf4086dcf72.lh.gtm.node-is.green
+    port: 43230
+    password: 48ece1d2-366c-4250-be83-339c9cc7e27f
+    udp: true
+    sni: tcca1.bilibili.com
+    skip-cert-verify: true
+proxy-groups:
+  - name: UserDefine
+    proxies:
+      - 香港1
+      - 香港2
+      - 香港3
+      - 香港4
+      - 新加坡1
+      - 新加坡2
+      - 新加坡3
+      - 新加坡4
+      - 日本1
+      - 日本2
+      - 日本3
+      - 日本4
+      - 美国1
+      - 美国2
+      - 美国3
+      - 美国4
+    type: select
+  - name: 🚀 节点选择
+    proxies:
+      - 香港1
+      - 香港2
+      - 香港3
+      - 香港4
+      - 新加坡1
+      - 新加坡2
+      - 新加坡3
+      - 新加坡4
+      - 日本1
+      - 日本2
+      - 日本3
+      - 日本4
+      - 美国1
+      - 美国2
+      - 美国3
+      - 美国4
+      - 台湾1
+      - 台湾2
+      - 台湾3
+      - 台湾4
+      - 加拿大1
+      - 加拿大2
+      - 韩国1
+      - 韩国2
+      - 泰国1
+      - 泰国2
+      - 英国1
+      - 英国2
+      - 菲律宾1
+      - 菲律宾2
+      - 缅甸1
+      - 缅甸2
+      - Trojan-香港1 | 低倍率
+      - Trojan-新加坡1 | 低倍率
+      - Trojan-日本1 | 低倍率
+      - Trojan-台湾1 | 低倍率
+      - Trojan-美国1 | 低倍率
+      - Trojan-加拿大1 | 低倍率
+      - Trojan-香港2 | 低倍率
+      - Trojan-新加坡2 | 低倍率
+      - Trojan-日本2 | 低倍率
+      - Trojan-美国2 | 低倍率
+      - Trojan-台湾2 | 低倍率
+      - Trojan-加拿大2 | 低倍率
+    type: select
+  - name: 🎁 自动选择
+    type: url-test
+    proxies:
+      - 剩余流量：239.84 GB
+      - 套餐到期：长期有效
+      - 香港1
+      - 香港2
+      - 香港3
+      - 香港4
+      - 新加坡1
+      - 新加坡2
+      - 新加坡3
+      - 新加坡4
+      - 日本1
+      - 日本2
+      - 日本3
+      - 日本4
+      - 美国1
+      - 美国2
+      - 美国3
+      - 美国4
+      - 台湾1
+      - 台湾2
+      - 台湾3
+      - 台湾4
+      - 加拿大1
+      - 加拿大2
+      - 韩国1
+      - 韩国2
+      - 泰国1
+      - 泰国2
+      - 英国1
+      - 英国2
+      - 菲律宾1
+      - 菲律宾2
+      - 缅甸1
+      - 缅甸2
+      - Trojan-香港1 | 低倍率
+      - Trojan-新加坡1 | 低倍率
+      - Trojan-日本1 | 低倍率
+      - Trojan-台湾1 | 低倍率
+      - Trojan-美国1 | 低倍率
+      - Trojan-加拿大1 | 低倍率
+      - Trojan-香港2 | 低倍率
+      - Trojan-新加坡2 | 低倍率
+      - Trojan-日本2 | 低倍率
+      - Trojan-美国2 | 低倍率
+      - Trojan-台湾2 | 低倍率
+      - Trojan-加拿大2 | 低倍率
+    url: http://www.apple.com/library/test/success.html
+    interval: 86400
+    lazy: true
+  - name: 🎁 故障转移
+    type: fallback
+    proxies:
+      - 剩余流量：239.84 GB
+      - 套餐到期：长期有效
+      - 香港1
+      - 香港2
+      - 香港3
+      - 香港4
+      - 新加坡1
+      - 新加坡2
+      - 新加坡3
+      - 新加坡4
+      - 日本1
+      - 日本2
+      - 日本3
+      - 日本4
+      - 美国1
+      - 美国2
+      - 美国3
+      - 美国4
+      - 台湾1
+      - 台湾2
+      - 台湾3
+      - 台湾4
+      - 加拿大1
+      - 加拿大2
+      - 韩国1
+      - 韩国2
+      - 泰国1
+      - 泰国2
+      - 英国1
+      - 英国2
+      - 菲律宾1
+      - 菲律宾2
+      - 缅甸1
+      - 缅甸2
+      - Trojan-香港1 | 低倍率
+      - Trojan-新加坡1 | 低倍率
+      - Trojan-日本1 | 低倍率
+      - Trojan-台湾1 | 低倍率
+      - Trojan-美国1 | 低倍率
+      - Trojan-加拿大1 | 低倍率
+      - Trojan-香港2 | 低倍率
+      - Trojan-新加坡2 | 低倍率
+      - Trojan-日本2 | 低倍率
+      - Trojan-美国2 | 低倍率
+      - Trojan-台湾2 | 低倍率
+      - Trojan-加拿大2 | 低倍率
+    url: http://www.apple.com/library/test/success.html
+    interval: 7200
+  - name: 🌍 国外媒体
+    type: select
+    proxies:
+      - 🎯 全球直连
+      - 🚀 节点选择
+      - 剩余流量：239.84 GB
+      - 套餐到期：长期有效
+      - 香港1
+      - 香港2
+      - 香港3
+      - 香港4
+      - 新加坡1
+      - 新加坡2
+      - 新加坡3
+      - 新加坡4
+      - 日本1
+      - 日本2
+      - 日本3
+      - 日本4
+      - 美国1
+      - 美国2
+      - 美国3
+      - 美国4
+      - 台湾1
+      - 台湾2
+      - 台湾3
+      - 台湾4
+      - 加拿大1
+      - 加拿大2
+      - 韩国1
+      - 韩国2
+      - 泰国1
+      - 泰国2
+      - 英国1
+      - 英国2
+      - 菲律宾1
+      - 菲律宾2
+      - 缅甸1
+      - 缅甸2
+      - Trojan-香港1 | 低倍率
+      - Trojan-新加坡1 | 低倍率
+      - Trojan-日本1 | 低倍率
+      - Trojan-台湾1 | 低倍率
+      - Trojan-美国1 | 低倍率
+      - Trojan-加拿大1 | 低倍率
+      - Trojan-香港2 | 低倍率
+      - Trojan-新加坡2 | 低倍率
+      - Trojan-日本2 | 低倍率
+      - Trojan-美国2 | 低倍率
+      - Trojan-台湾2 | 低倍率
+      - Trojan-加拿大2 | 低倍率
+  - name: Ⓜ️ 微软服务
+    type: select
+    proxies:
+      - 🎯 全球直连
+      - 🚀 节点选择
+      - 剩余流量：239.84 GB
+      - 套餐到期：长期有效
+      - 香港1
+      - 香港2
+      - 香港3
+      - 香港4
+      - 新加坡1
+      - 新加坡2
+      - 新加坡3
+      - 新加坡4
+      - 日本1
+      - 日本2
+      - 日本3
+      - 日本4
+      - 美国1
+      - 美国2
+      - 美国3
+      - 美国4
+      - 台湾1
+      - 台湾2
+      - 台湾3
+      - 台湾4
+      - 加拿大1
+      - 加拿大2
+      - 韩国1
+      - 韩国2
+      - 泰国1
+      - 泰国2
+      - 英国1
+      - 英国2
+      - 菲律宾1
+      - 菲律宾2
+      - 缅甸1
+      - 缅甸2
+      - Trojan-香港1 | 低倍率
+      - Trojan-新加坡1 | 低倍率
+      - Trojan-日本1 | 低倍率
+      - Trojan-台湾1 | 低倍率
+      - Trojan-美国1 | 低倍率
+      - Trojan-加拿大1 | 低倍率
+      - Trojan-香港2 | 低倍率
+      - Trojan-新加坡2 | 低倍率
+      - Trojan-日本2 | 低倍率
+      - Trojan-美国2 | 低倍率
+      - Trojan-台湾2 | 低倍率
+      - Trojan-加拿大2 | 低倍率
+  - name: 🍎 苹果服务
+    type: select
+    proxies:
+      - 🎯 全球直连
+      - 🚀 节点选择
+      - 剩余流量：239.84 GB
+      - 套餐到期：长期有效
+      - 香港1
+      - 香港2
+      - 香港3
+      - 香港4
+      - 新加坡1
+      - 新加坡2
+      - 新加坡3
+      - 新加坡4
+      - 日本1
+      - 日本2
+      - 日本3
+      - 日本4
+      - 美国1
+      - 美国2
+      - 美国3
+      - 美国4
+      - 台湾1
+      - 台湾2
+      - 台湾3
+      - 台湾4
+      - 加拿大1
+      - 加拿大2
+      - 韩国1
+      - 韩国2
+      - 泰国1
+      - 泰国2
+      - 英国1
+      - 英国2
+      - 菲律宾1
+      - 菲律宾2
+      - 缅甸1
+      - 缅甸2
+      - Trojan-香港1 | 低倍率
+      - Trojan-新加坡1 | 低倍率
+      - Trojan-日本1 | 低倍率
+      - Trojan-台湾1 | 低倍率
+      - Trojan-美国1 | 低倍率
+      - Trojan-加拿大1 | 低倍率
+      - Trojan-香港2 | 低倍率
+      - Trojan-新加坡2 | 低倍率
+      - Trojan-日本2 | 低倍率
+      - Trojan-美国2 | 低倍率
+      - Trojan-台湾2 | 低倍率
+      - Trojan-加拿大2 | 低倍率
+  - name: 🍎 Apple TV
+    type: select
+    proxies:
+      - 🎯 全球直连
+      - 🚀 节点选择
+      - 剩余流量：239.84 GB
+      - 套餐到期：长期有效
+      - 香港1
+      - 香港2
+      - 香港3
+      - 香港4
+      - 新加坡1
+      - 新加坡2
+      - 新加坡3
+      - 新加坡4
+      - 日本1
+      - 日本2
+      - 日本3
+      - 日本4
+      - 美国1
+      - 美国2
+      - 美国3
+      - 美国4
+      - 台湾1
+      - 台湾2
+      - 台湾3
+      - 台湾4
+      - 加拿大1
+      - 加拿大2
+      - 韩国1
+      - 韩国2
+      - 泰国1
+      - 泰国2
+      - 英国1
+      - 英国2
+      - 菲律宾1
+      - 菲律宾2
+      - 缅甸1
+      - 缅甸2
+      - Trojan-香港1 | 低倍率
+      - Trojan-新加坡1 | 低倍率
+      - Trojan-日本1 | 低倍率
+      - Trojan-台湾1 | 低倍率
+      - Trojan-美国1 | 低倍率
+      - Trojan-加拿大1 | 低倍率
+      - Trojan-香港2 | 低倍率
+      - Trojan-新加坡2 | 低倍率
+      - Trojan-日本2 | 低倍率
+      - Trojan-美国2 | 低倍率
+      - Trojan-台湾2 | 低倍率
+      - Trojan-加拿大2 | 低倍率
+  - name: 📢 谷歌FCM
+    type: select
+    proxies:
+      - 🚀 节点选择
+      - 🎯 全球直连
+      - 剩余流量：239.84 GB
+      - 套餐到期：长期有效
+      - 香港1
+      - 香港2
+      - 香港3
+      - 香港4
+      - 新加坡1
+      - 新加坡2
+      - 新加坡3
+      - 新加坡4
+      - 日本1
+      - 日本2
+      - 日本3
+      - 日本4
+      - 美国1
+      - 美国2
+      - 美国3
+      - 美国4
+      - 台湾1
+      - 台湾2
+      - 台湾3
+      - 台湾4
+      - 加拿大1
+      - 加拿大2
+      - 韩国1
+      - 韩国2
+      - 泰国1
+      - 泰国2
+      - 英国1
+      - 英国2
+      - 菲律宾1
+      - 菲律宾2
+      - 缅甸1
+      - 缅甸2
+      - Trojan-香港1 | 低倍率
+      - Trojan-新加坡1 | 低倍率
+      - Trojan-日本1 | 低倍率
+      - Trojan-台湾1 | 低倍率
+      - Trojan-美国1 | 低倍率
+      - Trojan-加拿大1 | 低倍率
+      - Trojan-香港2 | 低倍率
+      - Trojan-新加坡2 | 低倍率
+      - Trojan-日本2 | 低倍率
+      - Trojan-美国2 | 低倍率
+      - Trojan-台湾2 | 低倍率
+      - Trojan-加拿大2 | 低倍率
+  - name: 🎯 全球直连
+    type: select
+    proxies:
+      - DIRECT
+      - 🚀 节点选择
+      - 剩余流量：239.84 GB
+      - 套餐到期：长期有效
+      - 香港1
+      - 香港2
+      - 香港3
+      - 香港4
+      - 新加坡1
+      - 新加坡2
+      - 新加坡3
+      - 新加坡4
+      - 日本1
+      - 日本2
+      - 日本3
+      - 日本4
+      - 美国1
+      - 美国2
+      - 美国3
+      - 美国4
+      - 台湾1
+      - 台湾2
+      - 台湾3
+      - 台湾4
+      - 加拿大1
+      - 加拿大2
+      - 韩国1
+      - 韩国2
+      - 泰国1
+      - 泰国2
+      - 英国1
+      - 英国2
+      - 菲律宾1
+      - 菲律宾2
+      - 缅甸1
+      - 缅甸2
+      - Trojan-香港1 | 低倍率
+      - Trojan-新加坡1 | 低倍率
+      - Trojan-日本1 | 低倍率
+      - Trojan-台湾1 | 低倍率
+      - Trojan-美国1 | 低倍率
+      - Trojan-加拿大1 | 低倍率
+      - Trojan-香港2 | 低倍率
+      - Trojan-新加坡2 | 低倍率
+      - Trojan-日本2 | 低倍率
+      - Trojan-美国2 | 低倍率
+      - Trojan-台湾2 | 低倍率
+      - Trojan-加拿大2 | 低倍率
+  - name: 🛑 全球拦截
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+      - 剩余流量：239.84 GB
+      - 套餐到期：长期有效
+      - 香港1
+      - 香港2
+      - 香港3
+      - 香港4
+      - 新加坡1
+      - 新加坡2
+      - 新加坡3
+      - 新加坡4
+      - 日本1
+      - 日本2
+      - 日本3
+      - 日本4
+      - 美国1
+      - 美国2
+      - 美国3
+      - 美国4
+      - 台湾1
+      - 台湾2
+      - 台湾3
+      - 台湾4
+      - 加拿大1
+      - 加拿大2
+      - 韩国1
+      - 韩国2
+      - 泰国1
+      - 泰国2
+      - 英国1
+      - 英国2
+      - 菲律宾1
+      - 菲律宾2
+      - 缅甸1
+      - 缅甸2
+      - Trojan-香港1 | 低倍率
+      - Trojan-新加坡1 | 低倍率
+      - Trojan-日本1 | 低倍率
+      - Trojan-台湾1 | 低倍率
+      - Trojan-美国1 | 低倍率
+      - Trojan-加拿大1 | 低倍率
+      - Trojan-香港2 | 低倍率
+      - Trojan-新加坡2 | 低倍率
+      - Trojan-日本2 | 低倍率
+      - Trojan-美国2 | 低倍率172.20.233.112/
+      - Trojan-台湾2 | 低倍率
+      - Trojan-加拿大2 | 低倍率
+  - name: 🍃 应用净化
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+      - 剩余流量：239.84 GB
+      - 套餐到期：长期有效
+      - 香港1
+      - 香港2
+      - 香港3
+      - 香港4
+      - 新加坡1
+      - 新加坡2
+      - 新加坡3
+      - 新加坡4
+      - 日本1
+      - 日本2
+      - 日本3
+      - 日本4
+      - 美国1
+      - 美国2
+      - 美国3
+      - 美国4
+      - 台湾1
+      - 台湾2
+      - 台湾3
+      - 台湾4
+      - 加拿大1
+      - 加拿大2
+      - 韩国1
+      - 韩国2
+      - 泰国1
+      - 泰国2
+      - 英国1
+      - 英国2
+      - 菲律宾1
+      - 菲律宾2
+      - 缅甸1
+      - 缅甸2
+      - Trojan-香港1 | 低倍率
+      - Trojan-新加坡1 | 低倍率
+      - Trojan-日本1 | 低倍率
+      - Trojan-台湾1 | 低倍率
+      - Trojan-美国1 | 低倍率
+      - Trojan-加拿大1 | 低倍率
+      - Trojan-香港2 | 低倍率
+      - Trojan-新加坡2 | 低倍率
+      - Trojan-日本2 | 低倍率
+      - Trojan-美国2 | 低倍率
+      - Trojan-台湾2 | 低倍率
+      - Trojan-加拿大2 | 低倍率
+  - name: 🐟 漏网之鱼
+    type: select
+    proxies:
+      - 🚀 节点选择
+      - 🎯 全球直连
+      - 剩余流量：239.84 GB
+      - 套餐到期：长期有效
+      - 香港1
+      - 香港2
+      - 香港3
+      - 香港4
+      - 新加坡1
+      - 新加坡2
+      - 新加坡3
+      - 新加坡4
+      - 日本1
+      - 日本2
+      - 日本3
+      - 日本4
+      - 美国1
+      - 美国2
+      - 美国3
+      - 美国4
+      - 台湾1
+      - 台湾2
+      - 台湾3
+      - 台湾4
+      - 加拿大1
+      - 加拿大2
+      - 韩国1
+      - 韩国2
+      - 泰国1
+      - 泰国2
+      - 英国1
+      - 英国2
+      - 菲律宾1
+      - 菲律宾2
+      - 缅甸1
+      - 缅甸2
+      - Trojan-香港1 | 低倍率
+      - Trojan-新加坡1 | 低倍率
+      - Trojan-日本1 | 低倍率
+      - Trojan-台湾1 | 低倍率
+      - Trojan-美国1 | 低倍率
+      - Trojan-加拿大1 | 低倍率
+      - Trojan-香港2 | 低倍率
+      - Trojan-新加坡2 | 低倍率
+      - Trojan-日本2 | 低倍率
+      - Trojan-美国2 | 低倍率
+      - Trojan-台湾2 | 低倍率
+      - Trojan-加拿大2 | 低倍率
+rules:
+  - DOMAIN,local.com,DIRECT
+  - DOMAIN-SUFFIX,local.com,DIRECT
+  - DOMAIN-SUFFIX,microsoft.com,UserDefine
+  - IP-CIDR,18.167.109.72/32,DIRECT,no-resolve
+  - IP-CIDR,183.236.51.24/32,DIRECT,no-resolve
+  - IP-CIDR,120.233.171.86/32,DIRECT,no-resolve
+  - IP-CIDR,183.233.187.222/32,DIRECT,no-resolve
+  - DOMAIN,www.teacat.cloud,DIRECT
+  - RULE-SET,ADD-DIRECT,🎯 全球直连
+  - RULE-SET,LocalAreaNetwork,🎯 全球直连
+  - RULE-SET,UnBan,🎯 全球直连
+  - RULE-SET,BanAD,🛑 全球拦截
+  - RULE-SET,BanProgramAD,🍃 应用净化
+  - RULE-SET,GoogleFCM,📢 谷歌FCM
+  - RULE-SET,GoogleCN,🎯 全球直连
+  - RULE-SET,Microsoft,Ⓜ️ 微软服务
+  - RULE-SET,Apple,🍎 苹果服务
+  - RULE-SET,AppleTV,🍎 Apple TV
+  - RULE-SET,ProxyMedia,🌍 国外媒体
+  - RULE-SET,ProxyLite,🚀 节点选择
+  - RULE-SET,ADD-Proxy,🚀 节点选择
+  - RULE-SET,ChinaDomain,🎯 全球直连
+  - RULE-SET,ChinaCompanyIp,🎯 全球直连
+  - GEOIP,CN,🎯 全球直连
+  - MATCH,🐟 漏网之鱼
+rule-providers:
+  ADD-DIRECT:
+    type: http
+    behavior: classical
+    url: http://47.76.80.41:50001/getruleset?type=6&url=aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2hvbmdDY2hhby9HbG9iYWxNZWRpYS1DbGFzaFJ1bGUvcmVmcy9oZWFkcy9tYWluL0FERC1ESVJFQ1QubGlzdA
+    path: ./providers/rule-provider_ADD-DIRECT.yaml
+    interval: 86400
+  LocalAreaNetwork:
+    type: http
+    behavior: classical
+    url: http://47.76.80.41:50001/getruleset?type=6&url=aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0FDTDRTU1IvQUNMNFNTUi9tYXN0ZXIvQ2xhc2gvTG9jYWxBcmVhTmV0d29yay5saXN0
+    path: ./providers/rule-provider_LocalAreaNetwork.yaml
+    interval: 86400
+  UnBan:
+    type: http
+    behavior: classical
+    url: http://47.76.80.41:50001/getruleset?type=6&url=aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0FDTDRTU1IvQUNMNFNTUi9tYXN0ZXIvQ2xhc2gvVW5CYW4ubGlzdA
+    path: ./providers/rule-provider_UnBan.yaml
+    interval: 86400
+  BanAD:
+    type: http
+    behavior: classical
+    url: http://47.76.80.41:50001/getruleset?type=6&url=aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0FDTDRTU1IvQUNMNFNTUi9tYXN0ZXIvQ2xhc2gvQmFuQUQubGlzdA
+    path: ./providers/rule-provider_BanAD.yaml
+    interval: 86400
+  BanProgramAD:
+    type: http
+    behavior: classical
+    url: http://47.76.80.41:50001/getruleset?type=6&url=aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0FDTDRTU1IvQUNMNFNTUi9tYXN0ZXIvQ2xhc2gvQmFuUHJvZ3JhbUFELmxpc3Q
+    path: ./providers/rule-provider_BanProgramAD.yaml
+    interval: 86400
+  GoogleFCM:
+    type: http
+    behavior: classical
+    url: http://47.76.80.41:50001/getruleset?type=6&url=aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0FDTDRTU1IvQUNMNFNTUi9tYXN0ZXIvQ2xhc2gvUnVsZXNldC9Hb29nbGVGQ00ubGlzdA
+    path: ./providers/rule-provider_GoogleFCM.yaml
+    interval: 86400
+  GoogleCN:
+    type: http
+    behavior: classical
+    url: http://47.76.80.41:50001/getruleset?type=6&url=aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0FDTDRTU1IvQUNMNFNTUi9tYXN0ZXIvQ2xhc2gvR29vZ2xlQ04ubGlzdA
+    path: ./providers/rule-provider_GoogleCN.yaml
+    interval: 86400
+  Microsoft:
+    type: http
+    behavior: classical
+    url: http://47.76.80.41:50001/getruleset?type=6&url=aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0FDTDRTU1IvQUNMNFNTUi9tYXN0ZXIvQ2xhc2gvTWljcm9zb2Z0Lmxpc3Q
+    path: ./providers/rule-provider_Microsoft.yaml
+    interval: 86400
+  Apple:
+    type: http
+    behavior: classical
+    url: http://47.76.80.41:50001/getruleset?type=6&url=aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0FDTDRTU1IvQUNMNFNTUi9tYXN0ZXIvQ2xhc2gvQXBwbGUubGlzdA
+    path: ./providers/rule-provider_Apple.yaml
+    interval: 86400
+  AppleTV:
+    type: http
+    behavior: classical
+    url: http://47.76.80.41:50001/getruleset?type=6&url=aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0FDTDRTU1IvQUNMNFNTUi9yZWZzL2hlYWRzL21hc3Rlci9DbGFzaC9SdWxlc2V0L0FwcGxlVFYubGlzdA
+    path: ./providers/rule-provider_AppleTV.yaml
+    interval: 86400
+  ProxyMedia:
+    type: http
+    behavior: classical
+    url: http://47.76.80.41:50001/getruleset?type=6&url=aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0FDTDRTU1IvQUNMNFNTUi9tYXN0ZXIvQ2xhc2gvUHJveHlNZWRpYS5saXN0
+    path: ./providers/rule-provider_ProxyMedia.yaml
+    interval: 86400
+  ProxyLite:
+    type: http
+    behavior: classical
+    url: http://47.76.80.41:50001/getruleset?type=6&url=aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0FDTDRTU1IvQUNMNFNTUi9tYXN0ZXIvQ2xhc2gvUHJveHlMaXRlLmxpc3Q
+    path: ./providers/rule-provider_ProxyLite.yaml
+    interval: 86400
+  ADD-Proxy:
+    type: http
+    behavior: classical
+    url: http://47.76.80.41:50001/getruleset?type=6&url=aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2hvbmdDY2hhby9HbG9iYWxNZWRpYS1DbGFzaFJ1bGUvcmVmcy9oZWFkcy9tYWluL0FERC1Qcm94eS5saXN0
+    path: ./providers/rule-provider_ADD-Proxy.yaml
+    interval: 86400
+  ChinaDomain:
+    type: http
+    behavior: classical
+    url: http://47.76.80.41:50001/getruleset?type=6&url=aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0FDTDRTU1IvQUNMNFNTUi9tYXN0ZXIvQ2xhc2gvQ2hpbmFEb21haW4ubGlzdA
+    path: ./providers/rule-provider_ChinaDomain.yaml
+    interval: 86400
+  ChinaCompanyIp:
+    type: http
+    behavior: classical
+    url: http://47.76.80.41:50001/getruleset?type=6&url=aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0FDTDRTU1IvQUNMNFNTUi9tYXN0ZXIvQ2xhc2gvQ2hpbmFDb21wYW55SXAubGlzdA
+    path: ./providers/rule-provider_ChinaCompanyIp.yaml
+    interval: 86400

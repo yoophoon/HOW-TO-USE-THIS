@@ -10,7 +10,7 @@ fi
 alias ls='ls --color=auto'
 alias ll='ls -l --color=auto'
 alias la='ls -a --color=auto'
-alias startproxy='export http_proxy=http://127.0.0.1:7890; export https_proxy=http://127.0.0.1:7890'
+alias startproxy='export http_proxy=http://172.20.224.1:7890; export https_proxy=http://172.20.224.1:7890'
 alias endproxy='unset http_proxy;unset https_proxy'
 
 

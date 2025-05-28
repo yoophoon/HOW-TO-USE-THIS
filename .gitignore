@@ -17,4 +17,4 @@ PC/msys2/*.png
 
 # C相关
 *.out
-
+*.o

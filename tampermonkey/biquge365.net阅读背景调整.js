@@ -4,12 +4,12 @@
 // @copyright    2024, yoophoon (https://github.com/yoophoon)
 // @version      2024-02-25
 // @description  改善笔趣阁的阅读体验
-// @icon         https://www.biquge365.net/style/favicon.ico
+// @icon         https://www.xbiquge365.net/style/favicon.ico
 // @grant        unsafeWindow
 // @grant        GM_addStyle
 // @author       yoophoon
 // @homepage     https://github.com/yoophoon
-// @match        https://www.biquge365.net/chapter/*
+// @match        https://www.xbiquge365.net/chapter/*
 // @run-at       document-end
 // @updateURL    https://raw.githubusercontent.com/yoophoon/HOW-TO-USE-THIS/main/tampermonkey/biquge365.net%E9%98%85%E8%AF%BB%E8%83%8C%E6%99%AF%E8%B0%83%E6%95%B4.js
 // @downloadURL  https://raw.githubusercontent.com/yoophoon/HOW-TO-USE-THIS/main/tampermonkey/biquge365.net%E9%98%85%E8%AF%BB%E8%83%8C%E6%99%AF%E8%B0%83%E6%95%B4.js
@@ -257,7 +257,7 @@ function preloadNextChapters(chapterPanel, contentPanel, allChaptersInfo, nodeNu
  * @returns 所有章节标题及链接
  */
 async function getAllChaptersInfo(bookID) {
-    const chaptersURL = `https://www.biquge365.net/newbook/${bookID}/`
+    const chaptersURL = `https://www.xbiquge365.net/newbook/${bookID}/`
     const parser = new DOMParser()
     let allChaptersInfo = new Array()
 
@@ -269,7 +269,7 @@ async function getAllChaptersInfo(bookID) {
             for (i = 0; i < chapterLi.length; i++) {
                 let tempInfo = new Array(4)
                 tempInfo[0] = chapterLi[i].getAttribute('title')
-                tempInfo[1] = 'https://www.biquge365.net' + chapterLi[i].getAttribute('href')
+                tempInfo[1] = 'https://www.xbiquge365.net' + chapterLi[i].getAttribute('href')
                 tempInfo[2] = 1
                 tempInfo[3] = false
                 allChaptersInfo.push(tempInfo)
@@ -292,7 +292,7 @@ function setChapterPanel(chapterPanel, currentChapterID, allChaptersInfo, nodeNu
         //设置侧栏目录
         let directory = document.createElement('a')
         directory.style.cssText = 'color:#cc9966;font-size:25px;padding-bottom:5px;display:block;text-align:center'
-        directory.href = `https://www.biquge365.net/newbook/${window.location.href.split('/')[4]}/`
+        directory.href = `https://www.xbiquge365.net/newbook/${window.location.href.split('/')[4]}/`
         directory.innerText = '全部章节'
         chapterPanel.appendChild(directory)
         //处理前后章节信息
