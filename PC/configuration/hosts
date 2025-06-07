@@ -30,5 +30,6 @@
 # Settings->System Proxy->Bypass Domain/IPNet 列表
 172.20.233.112      local.com
 172.20.233.112      pdf.local.com
-172.20.233.112      xl.local.com
+172.20.233.112      xunlei.local.com
+172.20.233.112      aria2.local.com
 # 局域网方向代理及监听使用[nginx](https://github.com/nginx/nginx)

@@ -95,41 +95,51 @@ cc  类似于dd但会保留一个换行符
   :set option
 
 ### 模式切换
-可视模式:   v
-可是行模式: SHIFT-v
-可视块模式: CTRL-v / CTRL-q
-正常模式:   ESC
-*区别于 :(命令模式)该模式下输入visual才会退出而命令模式执行完一条命令就回到normal模式了*
-*vim将 : 定义为命令行模式 即 输入一条Ex模式的命令*
-命令模式:   :         
-Ex- 模式:   Q / gQ
-选择模式:   gh 逐字 / gH 逐行   *进入该模式后 motion 只能是方向键，与 s 功能类似* 
-替换模式:   r   字符替换 / R  持续替换    *概念与s不同，s是command级别而R是模式级别且s替换后会进入插入模式*
-插入模式:   i
-> 有很多方式进入插入模式
-  如:
-      C  删除光标位置指行尾内容并进入插入模式;
-      c  删除并进入插入模式;
-      S  删除指定行并进入插入模式;
-      s  删除进入插入模式;
-      O  在光标上方新增加一行并进入插入模式;
-      o  在光标下方新增一行并进入插入模式; 
-      A  在光标所在行尾进入插入模式;
-      a  在光标位置之前进入插入模式;
-      I  在光标所在行首进入插入模式;
-      i  在光标所在行尾进入插入模式;
+模式                        快捷方式       解释
+                       |mode-switching|
+                                                        **概念服务于按键映射**
+                                                                  |mapmode-nvo|
+|nmode|     普通模式        |<Esc>|         其他模式使用esc键返回该模式
+|xmode|     可视模式        |v|             字符级可视模式
+                            |V||<Shift-v>   文本行可视模式
+                            |<Ctrl-v>|      文本块可视模式
+|smode|     选择模式        |gh|            与可视模式类似但又有些差异 |Select|
+|vmode|                                     可视模式与选择模式, 常用于按键映射
+|omode|     操作符待定模式                  指输入操作符等待后续输入如文本对象
+                                            较常见的为字符修改操作
+                                                                  |mapmode-ic|
+|imode|     插入模式        |i|             输入文本
+|lmode|     lang-args                       有点复杂等看完map章节之后再解释
+|cmode|     命令行模式      |:|             要前缀':'执行的命令的模式
+|tmode|     终端模式        |:terminal<CR>| 通过vim打开的终端
+                                                       **概念服务于编辑操作**
+|Ex|        扩展模式        |Q||<Shift-q>   |:vi[sual]|可返回普通模式
+                                           注: 其他模式下|:vi|与|:e[dit]|命令
+                                               效果一样
+|rmode|     替换模式        |r||<Shift-r>|  字符替换模式, 这个|s||:s|有着根本性
+                                            的不同. 前者体现vim的模式编辑而后者
+                                            只是vim的命令
+ vim的主要概念就是模式编辑, 后续继续补充相关模式内容
+
 
 ## 命令
+
 i_CTRL-o      执行命令并返回插入模式
 v_o           可视模式文本块两端移动
 v_CTRL-g      <=>  s_CTRL-g   可视模式和选择模式互相切换
 diw           删除光标所在单词
 dd            删除当前行
-dw            删除至下一个单词开始位置                                                dw  是组合命令  command=operator + motion   dw与cw的命令形式完全不同，前者为组合命令而后者则为独立命令(一个整体)
-                                                                                      两者执行结果也完全不同，前者会将光标至下个单词开始位置内容全部删除而后者仅删除光标位置至当前光标所在单词结束位置的内容
+dw            删除至下一个单词开始位置
+                dw  是组合命令  command=operator + motion
+                dw与cw的命令形式完全不同，前者为组合命令而后者则为独立命令(一个整体)
+                两者执行结果也完全不同，前者会将光标至下个单词开始位置内容全部删除而后者仅删除光标位置至当前光标所在单词结束位置的内容
 s / S         替换 字符 / 行并进入插入模式，后者与cc有点类似
-cw            删除光标到当前单词的结束位置并进入插入模式                              cw  是独立命令  command=command             cw是change command本身为一个整体
-ciw           删除当前光标所在档次并进入插入模式                                      ciw 是组合命令  command=operator + motion   ciw则是组合命令，operator:c command,motion<text-object-selection>:iw 
+cw            删除光标到当前单词的结束位置并进入插入模式
+                cw  是独立命令  command=command
+                cw是change command本身为一个整体
+ciw           删除当前光标所在档次并进入插入模式
+                ciw 是组合命令  command=operator + motion   
+                ciw则是组合命令，operator:c command,motion<text-object-selection>:iw 
 u / CTRL-r    撤销与重做  redo / undo
 f / F         单字符查找 find，向右 / 左查找，/ 命令的简化版
 w / e / b     下一个单词开始/结束/上一个单词开始位置
@@ -222,6 +232,27 @@ i_C-l         当insertmode启用时，切换到正常模式(启用insertmode设
 :mkvimrc      将当前vim的配置保存到当前目录的.vimrc文件中
 :mksession    将当前的工作保存到当前目录的Session.vim文件中
 > 上面3个命令都可以指定保存的文件，看个人喜好使用默认文件名或者自定义文件名
+
+
+
+# Command-line window
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

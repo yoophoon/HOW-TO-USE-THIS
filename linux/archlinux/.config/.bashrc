@@ -12,6 +12,17 @@ alias ll='ls -l --color=auto'
 alias la='ls -a --color=auto'
 alias startproxy='export http_proxy=http://172.20.224.1:7890; export https_proxy=http://172.20.224.1:7890'
 alias endproxy='unset http_proxy;unset https_proxy'
+# docker
+alias dockeril='sudo docker image list'
+alias dockerir='sudo docker image rm'
+alias dockerpa='sudo docker ps -a'
+alias dockerrm='sudo docker rm'
+alias dockerst='sudo docker start'
+# vimgolf
+# 官方命令: 
+# $> docker run --rm -it -e "key=YOUR_VIMGOLF_KEY" ghcr.io/filbranden/vimgolf challenge_ID
+# 这里的别名需要自己用dockerfile构建vimgolf镜像并将环境变量key集成到镜像中
+alias vimgolf='sudo docker run --rm -it vimgolf:selfbuild'
 
 
 export LESS="-n"  # less命令的环境变量，查阅man less获取更多信息

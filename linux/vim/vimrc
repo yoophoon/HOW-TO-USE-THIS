@@ -31,16 +31,18 @@ if has('win32')
     "Remove-Item ItemName [-Force]                                      #删除文件或文件夹
     set shell=C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
     "字体设置
-    set guifont=Fira_Code:h12:cANSI:qDRAFT
+    set guifont=FiraCode_Nerd_Font_Mono:h12:cANSI:qDRAFT
     " 切换GVIM的菜单、工具栏及滚动条的显示 快捷键F2
     set guioptions-=b
-    set guioptions-=m
+	set guioptions-=e
     set guioptions-=T
+    set guioptions-=m
     set guioptions-=r
     set guioptions-=L
     set guioptions-=c
     map <silent> <F2> :if &guioptions =~# 'T' <Bar>
         \set guioptions-=b <Bar>
+        \set guioptions-=e <Bar>
         \set guioptions-=T <Bar>
         \set guioptions-=m <Bar>
         \set guioptions-=r <Bar>
@@ -48,6 +50,7 @@ if has('win32')
         \set guioptions-=c <Bar>
     \else <Bar>
         \set guioptions+=b <Bar>
+        \set guioptions+=e <Bar>
         \set guioptions+=T <Bar>
         \set guioptions+=m <Bar>
         \set guioptions+=r <Bar>
@@ -73,69 +76,129 @@ endif
 " 获取路径分隔符及配置文件根目录
 let s:pathSeprator= has("win32") ? '\' : '/'
 let s:confRoot= expand("<sfile>:h") . s:pathSeprator
-"=================================================================================
-                                                                               
-"编辑器设置
-set nocompatible    "设置不兼容VI
-"设置单行长度被插入的最大文本宽度，更长的文本会被空白字符截断以适应宽度
-"设为0将会禁用文本最大宽度限制  help textwidth
-set textwidth=80
-"set wrapmargin=10  "设置窗口右方10个字符的margin并换行
-set colorcolumn=80  "高亮指定行
-set formatoptions+=t  "默认就是tcq
-"set columns=80      "设置初始窗口宽度，可变尺寸窗口会自动修改该值
-set showcmd         "在状态栏显示最后执行的命令
-syntax on           "语法高亮
-filetype on         "检测文件类型
-filetype plugin on  "为特定的文件添加对应的插件
-set autoread       "文件改动后自动读取
-set encoding=utf-8
-set fileencoding=utf-8
-set termencoding=utf-8
-set backspace=2
-colorscheme habamax "$VIMRUNTIME/color/*.vim  设置色彩主题就是运行其对应的vim脚本
-set conceallevel=0  "保留高亮语法关键字
-"winpos 100 100
-"set lines=50 columns=winwidth(0)/2
+"=============================================================================="
+                                                                                
+" motion options
+set matchpairs+=<:>				" 匹配尖括号
+                                                                                
+" 编辑器设置
+set nocompatible				" 设置不兼容VI
+set belloff=esc					" 取消对应响铃
+" set noerrorbells				" 错误响铃
+" set novisualbell				" 启用效果 如闪屏, 默认值(boolean): 0
+
+" 格式化
+set textwidth=80				" 单行文本宽度, 超过自动截断换行
+" set wrapmargin=10				" 窗口右侧保留区域宽度
+" set formatoptions+=t			" 内部格式化选项, 如换行格式	|fo-table||gq|
+" set formatexpr				" 格式化表达式
+" set formatprg					" 外部格式化程序
+" gui窗体设置											|winpos()||winwidth()|
+" set columns=80				" 设置初始窗口宽度, gui有效, tui被终端宽度覆盖
+" set lines=80					" 设置初始窗口高度, gui有效
+" winpos 100 100				" 设置初始窗口位置, gui有效.
+" winsize 100 100				" 设置初始窗口尺寸
+set showcmd						" 在最后一行显示部分命令, 关闭该选项提升性能
+syntax on						" 语法高亮
+filetype on						" 文件类型检测
+filetype plugin on				" 为特定的文件添加对应的插件
+
+set encoding=utf-8				" Vim内部使用的字符编码
+let &fileencoding=&encoding		" 文件的字符编码, 保持和Vim编码一致
+let &termencoding=&encoding		" 终端的字符编码, 保持和Vim编码一致
+set backspace=indent,eol,start	" 插入模式退格键、删除键、i_CTRL-W、i_CTRL-U的行为
+colorscheme habamax				" 色彩主题, $VIMRUNTIME/color/*.vim
+highlight Normal ctermbg=NONE	" 取消Vim背景颜色以适用终端背景
+set fillchars+=vert:\┼			" Vim窗口分隔符
+highlight VertSplit term=reverse ctermfg=243 ctermbg=NONE guifg=#767676 guibg=#767676
                                                                                 
 " 搜索
-set wrapscan        "是否在文件内循环搜索 默认开启
-set wildmenu        "开启自动补全增强功能
-set wildmode=longest:list,full  "模糊模式
+set wrapscan					" 文件内循环搜索 默认开启
+set wildmode=longest:list,full  " 补全模式, 怎么进行补全
+set wildmenu					" 增强补全功能
+set wildoptions=fuzzy,pum		" 命令行补全项来源, 模糊搜索项, 匹配项
 set hl=""
-set hlsearch        "highlight search 高亮显示搜索结果
-set incsearch       "对按回车前所输入的字符进行搜索即动态搜索
-set ignorecase      "搜索忽略大小写
-set showmatch       "高亮匹配的括号
-set matchtime=5       "高亮匹配括号时间
+set hlsearch					" 高亮搜索结果
+set incsearch					" 对按回车前所输入的字符进行搜索即动态搜索
+set ignorecase					" 搜索忽略大小写
+set showmatch					" 输入括号时短暂的跳转到匹配的括号
+set matchtime=5					" 跳转停留的时间, 单位: 十分之一秒
+
                                                                                 
 "对齐缩进
-"
-set autoindent      "自动对齐
-set smartindent     "智能对齐
-set tabstop=2      "设置tab键显示宽度
-set expandtab       "设置tab扩展为空格
-set softtabstop=2   "软设置如果tab字符扩展为空格则第一次输入tab为设置的空格数第二次输入为一个tab符否则输入tab符
+set autoindent					" 自动对齐
+set smartindent					" 智能对齐
+set tabstop=4					" 设置tab键显示宽度, 标准宽度8
+set noexpandtab					" 设置tab扩展为空格
+set softtabstop=2				" 软制表符宽度, 当达到制表符宽度则替换为制表符
+let &shiftwidth=&softtabstop	" 缩进宽度保持与软制表符宽度一致
+set shiftround					" 缩进命令对齐缩进宽度, Vim缩进命令宽度默认1'sw'
                                                                                 
 "显示字符
-set list
-set listchars+=space:۰  "空格显示为۰
-set listchars+=tab:├\ → "tab显示为→
-"set listchars=tab
-">~,space=.
-set shiftwidth=2    "设置自动缩进
-set shiftround      "设置缩进快捷键 “>>”
-set foldmethod=indent   "基于缩进对文本进行折叠
+set list						" 列表模式: 映射特殊字符并显示
+set listchars+=space:۰			" 空格显示为۰
+set listchars+=tab:→\ ┤			" tab显示为→\ ┤
 
-set signcolumn=yes
-set nu              "显示行号
-set relativenumber  "开启相对行号
-set cursorline      "高亮当前行
-set cursorcolumn    "高亮当前列
-set ruler           "在状态栏显示当前光标的位置
-set laststatus=2    "状态栏显示策略
+set conceallevel=0				" 保留高亮语法关键字
+" set concealcursor				" 改变鼠标所在行或可视区域的隐藏行为
+                                                                                
+" 折叠
+set foldmethod=indent			" 基于缩进对文本进行折叠
+set foldminlines=1				" 最小折叠行数, 可折叠的行数超过该值时产生折叠
+function! CustomFoldText()
+  let tw= &textwidth > 0 ? &textwidth : 80
+  let firstline= substitute(getline(v:foldstart), '\t', repeat(' ', &tabstop), 'g')
+  let foldinfo='[' . v:foldstart . '->' . v:foldend . ':' . 
+              \(v:foldend - v:foldstart) . '+ ' . 
+              \((v:foldend - v:foldstart) > 1 ? 'lines' : 'line') . ']'
+  let foldinfoWidth= strdisplaywidth(foldinfo)
+  let firstlineWidth= strdisplaywidth(firstline)
+  if(firstlineWidth > (tw / 2 + 5))
+    let displayline= ''
+    for char in firstline
+      if(strdisplaywidth(displayline)>= tw / 2 + 5)
+        break
+      else
+        let displayline ..= char
+      endif
+    endfor
+    " return strcharpart(firstline, 0, tw / 2 + 5) . 
+    return displayline . repeat(' ', tw / 2 + 10 - strdisplaywidth(displayline))
+          \ . repeat(nr2char(0xf09f), 3) . 
+          \repeat(' ', tw / 2 - 20 - foldinfoWidth) . foldinfo
+  else
+    return firstline . repeat(' ', tw / 2 + 10 - firstlineWidth) . 
+          \repeat(nr2char(0xf09f), 3) . 
+          \repeat(' ', tw / 2 - 20 - foldinfoWidth) . foldinfo
+  endif
+endfunction
+set fillchars+=fold:\ 
+set foldtext=CustomFoldText()
+  " 自定义foldtext可以, 但是样式是unsupported
+  " highlight FoldHighlightSymbol ctermfg=Yellow guifg=Yellow
+  " syntax match FoldHighlightSymbol /^.*\zs\ze\s*\[\d\+->\d\+:\d\++\slines\?\]/
+  " unsupported feature, [Different highlighting groups for different fold levels]
+  " (https://github.com/vim/vim/issues/6172)
+  " 测试正则:match Search /^.*\zs\ze\s*\[\d\+->\d\+:\d\++\slines\?\]/
+  " let tw= &textwidth > 0 ? &textwidth : 80        [133->157:24+ lines]
+  " 配置文件设置                                  [21->63:42+ lines]
+                                                                                
+" 特殊行列
+set signcolumn=number			" 在行号列显示符号
+set foldcolumn=0				" 折叠标记列宽度, 默认值为0即关闭功能
+set colorcolumn=80				" 高亮指定行, 用于标识指定宽度
+set cursorcolumn				" 高亮光标所在列
+set nu							" 显示行号
+set relativenumber				" 开启相对行号
+
+set cursorline					" 高亮光标所在行
+                                                                                
+" 状态栏
+set ruler						" 显示光标所在位置的行号和列号, 低于'stl'优先级
+set laststatus=2				" 状态栏显示策略0:禁止状态栏,1:多窗口显示状态栏
 "set statusline=%(%0.100F%m%)%=%(%#ColorColum#\|%)%=%P\ @\ %L,%c/%v%=%S       "被airline设置代替
-set statusline=%#StatuslineNC#%-20.30F%m%#ColorColumn#%(\ >\ %#StatuslineNC#%)%=%-(%P\ @\ %-20.30L,%c%S%) 
+set statusline=%#StatuslineNC#%-20.30F%m%#ColorColumn#%(\ >\ 
+              \%#StatuslineNC#%)%=%-(%P\ @\ %-20.30L,%c%S%) 
 
 set wrap          "取消自动换行
 set display+=lastline   "长文本行的显示内容
@@ -148,12 +211,15 @@ set guicursor+=r:hor25-CursorReplace
 "set spell spelllang=en,cjk          "拼写检查
 
                                                                                 
-"自动保存
-set updatetime=300
-set autowrite
-"设置vim待机更新时间，默认4000毫秒
-"选项适用于正常情况下将swap内容写入文件及|CursorHold|自动命令
-"set updatetime=4000
+" 编辑信息
+" set viminfo+=f1
+                                                                                
+"文件读写
+set updatetime=300				" 更新时间间隔
+set autoread					" 文件改动后自动读取
+set autowrite					" 缓冲区内容自动写入文件, 规则挺多
+" set autowriteall				" 与自动写入类似, 但有更多的触发规则
+" 
 autocmd InsertLeave,TextChanged,CursorHold * silent! w
 autocmd FocusLost,BufLeave * silent! wa
 
@@ -162,21 +228,6 @@ autocmd FocusLost,BufLeave * silent! wa
 "set equalalways       "设置拆分窗口是否相等，默认开始，set noea
 "作用于equalalways选项,hor不改变窗口高度ver不改变窗口宽度both宽高由vim决定
 "set eadirection "hor" 
-
-                                                                                
-"ctags设置
-"一些说明：要使用vim的标签跳转功能必须事先生成对应的标签文件
-"
-"= = = c = = =
-"linx:
-"ctags -R --langmap=c:+.h --languages=c --links=yes --kinds-c=+p \
-"-f ~/.vim/ctags /usr/include
-"windows:
-"暂不设置
-" $VIM指向的路径不确定, 可能是配置文件所在目录也可能是vim程序目录
-" autocmd FileType c set tags+=$VIM/ctags
-" autocmd FileType c execute 'set tags+=' .. (expand('<sfile>:h') . s:pathSeprator . 'ctags')
-autocmd FileType c let &tags=&tags . ',' . expand('<sfile>:h') . s:pathSeprator . 'ctags'
 
                                                                                 
 " 插件设置
@@ -198,7 +249,7 @@ call plug#begin()
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " [tabular](https://github.com/godlygeek/tabular)
-Plug 'godlygeek/tabular'
+" Plug 'godlygeek/tabular'
 
 " 一些插件只能在linux环境下工作
 " 比如：vimspector在gvim中运行会要求带python3特性，即便带py3编译还是存在毛病
@@ -230,3 +281,19 @@ execute 'source ' . s:confRoot . s:pathSeprator . 'pluginsRC' . s:pathSeprator .
 " coc.nvim config
 execute 'source ' . s:confRoot . s:pathSeprator . 'pluginsRC' . s:pathSeprator . 'coc'
 
+                                                                                
+"ctags设置
+                                                                                
+"                                 ctags setting                                 
+                                                                                
+"一些说明：要使用vim的标签跳转功能必须事先生成对应的标签文件
+"linx:
+"ctags -R --langmap=c:+.h --languages=c --links=yes --kinds-c=+p \
+"-f ~/.vim/ctags /usr/include
+"windows:
+"暂不设置
+" $VIM指向的路径不确定, 可能是配置文件所在目录也可能是vim程序目录
+" autocmd FileType c set tags+=$VIM/ctags
+" autocmd FileType c execute 'set tags+=' .. (expand('<sfile>:h') . s:pathSeprator . 'ctags')
+autocmd FileType c let &tags=&tags . ',' . s:confRoot . 'ctags'
+" vim:tabstop=4 noexpandtab

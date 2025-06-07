@@ -7,8 +7,11 @@ let g:coc_user_config= {
     \ "suggest.autoTrigger": "none",
     \}
 " 补全项类型标签                   |coc-config-suggest-completionItemKindLabels|
-" 补全列表项 由补全内容 + 类型标签 + 补全来源组成
-" [vscode](https://code.visualstudio.com/docs/editing/intellisense#_types-of-completions)
+  " 补全列表项 由补全内容 + 类型标签 + 补全来源组成
+  " (windows terminal巨坑, 字体要针对标签类型单独设置)
+  " 一些unicode字符编码可以通过 codicon.ttf 查看, 编码为unicode标准编码,
+  " 其他字体也支持, 如nerdfont
+  " [vscode](https://code.visualstudio.com/docs/editing/intellisense#_types-of-completions)
 let g:coc_user_config['suggest.completionItemKindLabels']= {
     \     "constructor": "\uea8c",
     \     "keyword": "\ueb62",

@@ -9,10 +9,8 @@
 VIMCONF_PATH="$HOME/.vim"
 if [[ -d $VIMCONF_PATH ]];then
   rm -rf $VIMCONF_PATH
-  mkdir $VIMCONF_PATH
-else
-  mkdir $VIMCONF_PATH
 fi
+mkdir $VIMCONF_PATH
 
 # generate links
 for file in  $(dirname $(realpath "$0"))/*;do 

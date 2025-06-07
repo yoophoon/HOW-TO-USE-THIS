@@ -1,0 +1,9 @@
+# [igrigorik/vimgol](https://github.com/igrigorik/vimgolf)
+# vimgolf需要用到账号相关的key, 如果直接在配置文件写入则不方便备份
+# 这里采用再构建一层的方法, 在创建容器的时候设置vimgolf的key, 方法不适用公开镜像
+#
+# 使用方法, 将此文件复制一份并修改`YOUT_VIMGOLF_KEY`为自己账号的key然后build
+
+FROM ghcr.io/filbranden/vimgolf:20230509
+# docker run --rm -it -e "key=YOUR_VIMGOLF_KEY" ghcr.io/filbranden/vimgolf challenge_ID
+ENV key=YOUR_VIMGOLF_KEY
