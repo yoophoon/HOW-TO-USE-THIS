@@ -18,6 +18,8 @@ alias dockerir='sudo docker image rm'
 alias dockerpa='sudo docker ps -a'
 alias dockerrm='sudo docker rm'
 alias dockerst='sudo docker start'
+alias dockersp='sudo docker stop'
+alias dockerrs='sudo docker restart'
 # vimgolf
 # 官方命令: 
 # $> docker run --rm -it -e "key=YOUR_VIMGOLF_KEY" ghcr.io/filbranden/vimgolf challenge_ID

@@ -240,7 +240,11 @@ LOCAL ADDITIONS:				*local-additions*
 *bars*		Bars example
 
 Now that you've jumped here with CTRL-] or a double mouse click, you can use
-CTRL-T, CTRL-O, g<RightMouse>, or <C-RightMouse> to go back to where you were.
+CTRL-T, CTRL-O, g<RightMouse>, or <C-RightMouse> to go back to where you were. >
+  CTRL-]对应的tag search
+  CTRL-T,<C-RightMouse>,g<RightMouse>对应的tag stack, 即标签栈
+  CTRL-O对应的jump list, 即跳转列表, 通常跳转列表包含抱歉栈, 因为每次标签搜索
+  都对应一次跳转.
 
 Note that tags are within | characters, but when highlighting is enabled these
 characters are hidden.  That makes it easier to read a command.

@@ -17,6 +17,10 @@
 "   :map
 "   :redir END
 
+" 获取路径分隔符及配置文件根目录
+let s:pathSeprator= has("win32") ? '\' : '/'
+let s:confRoot= expand("<sfile>:h") . s:pathSeprator
+
 if has('win32')
     " 配置文件设置
     " 语言设置
@@ -64,6 +68,10 @@ if has('win32')
     "let g:python3_host_prog='C:\Users\yoophoon\AppData\Local\Programs\Python\Python36\python.exe'
     "set pythonthreedll=python36.dll
     set pythonthreehome='C:\Users\yoophoon\AppData\Local\Programs\Python\Python36'
+	" 窗体透明度设置及最大化[vimtweak.dll](https://github.com/mattn/vimtweak)
+	" let g:vimtweakEnableMaximize= 0
+	" let g:vimtweakEnableTopMost= 0
+	" call libcallnr(s:confRoot."vimtweak64.dll", "SetAlpha", 100)
 else
     ""echomsg "arch兼容设置启用"
     "let g:fcitx5state=system("fcitx5-remote")
@@ -73,9 +81,6 @@ else
     "autocmd InsertEnter * :silent if fcitx5state == 2 | call system("fcitx5-remote -o") | endif 
 endif
 
-" 获取路径分隔符及配置文件根目录
-let s:pathSeprator= has("win32") ? '\' : '/'
-let s:confRoot= expand("<sfile>:h") . s:pathSeprator
 "=============================================================================="
                                                                                 
 " motion options
@@ -86,6 +91,10 @@ set nocompatible				" 设置不兼容VI
 set belloff=esc					" 取消对应响铃
 " set noerrorbells				" 错误响铃
 " set novisualbell				" 启用效果 如闪屏, 默认值(boolean): 0
+
+" 主题设置被drewtempelmeyer/palenight.vim插件覆盖
+" colorscheme habamax			" 色彩主题, $VIMRUNTIME/color/*.vim
+" highlight Normal ctermbg=NONE	" 取消Vim背景颜色以适用终端背景
 
 " 格式化
 set textwidth=80				" 单行文本宽度, 超过自动截断换行
@@ -107,8 +116,6 @@ set encoding=utf-8				" Vim内部使用的字符编码
 let &fileencoding=&encoding		" 文件的字符编码, 保持和Vim编码一致
 let &termencoding=&encoding		" 终端的字符编码, 保持和Vim编码一致
 set backspace=indent,eol,start	" 插入模式退格键、删除键、i_CTRL-W、i_CTRL-U的行为
-colorscheme habamax				" 色彩主题, $VIMRUNTIME/color/*.vim
-highlight Normal ctermbg=NONE	" 取消Vim背景颜色以适用终端背景
 set fillchars+=vert:\┼			" Vim窗口分隔符
 highlight VertSplit term=reverse ctermfg=243 ctermbg=NONE guifg=#767676 guibg=#767676
                                                                                 
@@ -138,7 +145,6 @@ set shiftround					" 缩进命令对齐缩进宽度, Vim缩进命令宽度默认
 set list						" 列表模式: 映射特殊字符并显示
 set listchars+=space:۰			" 空格显示为۰
 set listchars+=tab:→\ ┤			" tab显示为→\ ┤
-
 set conceallevel=0				" 保留高亮语法关键字
 " set concealcursor				" 改变鼠标所在行或可视区域的隐藏行为
                                                                                 
@@ -197,28 +203,45 @@ set cursorline					" 高亮光标所在行
 set ruler						" 显示光标所在位置的行号和列号, 低于'stl'优先级
 set laststatus=2				" 状态栏显示策略0:禁止状态栏,1:多窗口显示状态栏
 "set statusline=%(%0.100F%m%)%=%(%#ColorColum#\|%)%=%P\ @\ %L,%c/%v%=%S       "被airline设置代替
-set statusline=%#StatuslineNC#%-20.30F%m%#ColorColumn#%(\ >\ 
+" set statusline=%#StatuslineNC#%-20.30F%m%#ColorColumn#%(\ >\ 
               \%#StatuslineNC#%)%=%-(%P\ @\ %-20.30L,%c%S%) 
 
-set wrap          "取消自动换行
-set display+=lastline   "长文本行的显示内容
-set linebreak       "单词软换行
-set scrolloff=999   "光标移动到buffer的顶部和底部时保留的行数
-set novisualbell    "取消光标闪动
+set wrap						" 开启折行显示, 注: 区分textwidth选项
+set display+=lastline			" 尽可能多的显示最后一行, 无法显示的则用"@@@"代替
+set linebreak					" 单词软换行
+" set breakat=					" 导致换行的字符
+  " 注意: 区分移动光标所在行位置与移动光标位置的区别
+  " 移动光标所在行在屏幕种的位置使用: 
+  " |z<CR>|, |zt|			将光标所在行置于窗口顶部, 后者保持光标所在列位置
+  " |z.|, |zz|			将光标所在行置于窗口中部, 后者保持光标所在列位置
+  " |z-|, |zb|			将光标所在行至于窗口底部, 后者保持光标所在列位置
+  " 移动光标位置使用: 
+  " H, M, L				将光标移动至窗口顶部、中部、底部
+set scrolloff=10				" 光标上方或下方保留的最小行数, 光标无法抵达区域
+set novisualbell				" 取消光标闪动
 set guicursor=n-v-c:block-Cursor
 set guicursor+=i:ver25-CursorInsert
 set guicursor+=r:hor25-CursorReplace
-"set spell spelllang=en,cjk          "拼写检查
+"set spell spelllang=en,cjk		" 拼写检查
 
                                                                                 
 " 编辑信息
-" set viminfo+=f1
+set viminfo+=f1					" 保留文件标记
+let &viminfofile=s:confRoot.."viminfo"		" 启用viminfo记录文件信息
+" 跳转至文件上次退出位置
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | 
+				\	exe "normal! g'\"" | 
+				\endif
                                                                                 
 "文件读写
 set updatetime=300				" 更新时间间隔
 set autoread					" 文件改动后自动读取
 set autowrite					" 缓冲区内容自动写入文件, 规则挺多
 " set autowriteall				" 与自动写入类似, 但有更多的触发规则
+set nobackup					" 保留备份文件, 默认设置
+" set backupdir
+" set backupskip				" 匹配的文件不进行备份
+set writebackup					" 写入备份文件
 " 
 autocmd InsertLeave,TextChanged,CursorHold * silent! w
 autocmd FocusLost,BufLeave * silent! wa
@@ -230,15 +253,16 @@ autocmd FocusLost,BufLeave * silent! wa
 "set eadirection "hor" 
 
                                                                                 
-" 插件设置
-packloadall        "加载所有'packpath'的包
-":helptags ALL      "生成所有文档的tags文件
+" Vim内置插件加载设置
+" 第三方插件使用vim-plug管理较为方便
+packloadall						" 加载所有'packpath/start'的包
 
                                                                                 
-"vim帮助系统
+" vim帮助系统
 " helpfile选项因为涉及到跨系统文件路径, 在external节设置
 set helplang=cn
-" helptoc
+":helptags ALL					" 生成所有文档的tags文件
+":helptoc						" 查看帮助文档目录
 
                                                                                 
 "                               loading plugins                                 
@@ -246,16 +270,54 @@ set helplang=cn
 " 跨系统操作还是采用vim-plug插件管理vim的插件
 call plug#begin()
 " [coc.nvim](https://github.com/neoclide/coc.nvim)
+" 基于Nodejs和lsp的补全插件
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " [tabular](https://github.com/godlygeek/tabular)
-" Plug 'godlygeek/tabular'
+" 轻量化文本排版插件
+Plug 'godlygeek/tabular'
+
+" [editorconfig-vim](https://github.com/editorconfig/editorconfig-vim)
+" 类似于VSCode的.editorconfig配置
+" Plug 'editorconfig/editorconfig-vim'
+
+" [palenight.vim](https://github.com/drewtempelmeyer/palenight.vim)
+" 色彩主题
+	let g:palenight_color_overrides = {
+	\    'black': { 'gui': '#2C323C', "cterm": "NONE", "cterm16": "NONE" },
+	\}
+Plug 'drewtempelmeyer/palenight.vim'
+
+" [vim-airline](https://github.com/vim-airline/vim-airline)
+" 状态栏插件|airline|
+	let g:airline#extensions#whitespace#enabled = 0		" 取消空白字符规则检查
+	let g:airline_theme="violet"
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" = = = = = = = = = = = = = = = = = = = = = = 
+" 前端开发插件集
+" [emmet-vim](https://github.com/mattn/emmet-vim)
+" html/xml/css简写语法插件
+	let g:user_emmet_mode= 'i'
+	let g:user_emmet_install_global= 0
+	autocmd FileType html,css EmmetInstall
+Plug 'mattn/emmet-vim'
+
+" git管理
+Plug 'tpope/vim-fugitive'
 
 " 一些插件只能在linux环境下工作
 " 比如：vimspector在gvim中运行会要求带python3特性，即便带py3编译还是存在毛病
 " [vimspector](https://github.com/puremourning/vimspector)
 execute !has('win32') ? "Plug 'puremourning/vimspector'" : ""
 call plug#end()
+
+                                                                                
+"                               setting plugins                                 
+                                                                                
+" drewtempelmeyer/palenight.vim
+colorscheme palenight
 
                                                                                 
 "                               internal setting                                
@@ -268,18 +330,30 @@ autocmd FileType help setlocal number relativenumber conceallevel=0 list
 "                               external setting                                
                                                                                 
 " 设置swap目录
-let &directory= s:confRoot . s:pathSeprator . 'swap//'
+let &directory= s:confRoot . 'swap//'
+if !isdirectory(&directory)
+  call mkdir(&directory)
+endif
 " 设置undo目录
-let &undodir= s:confRoot . s:pathSeprator . 'undoDir'
+let &undodir= s:confRoot . 'undoDir'
+if !isdirectory(&undodir)
+  call mkdir(&undodir)
+endif
 " 设置帮助文件
-let &helpfile= s:confRoot . s:pathSeprator . 'doc' . s:pathSeprator . 'help.cnx'
+let &helpfile= s:confRoot . 'doc' . s:pathSeprator . 'help.cnx'
 
 " keymap file
-execute 'source ' . s:confRoot . s:pathSeprator . 'vimrcMAP'
+execute 'source ' . s:confRoot . 'vimrcMAP'
 " netrw config
-execute 'source ' . s:confRoot . s:pathSeprator . 'pluginsRC' . s:pathSeprator . 'netrw'
+" 这里实现有问题, 应该触发自动命令而非简单条件判断
+" if exists("g:loaded_netrwPlugin")
+  execute 'source ' . s:confRoot . 'pluginsRC' . s:pathSeprator . 'netrw'
+" endif
 " coc.nvim config
-execute 'source ' . s:confRoot . s:pathSeprator . 'pluginsRC' . s:pathSeprator . 'coc'
+" 这里需要延时加载或将命令移至其他稍后被加载的文件
+" if exists('g:did_coc_loaded') 
+  execute 'source ' . s:confRoot . 'pluginsRC' . s:pathSeprator . 'coc'
+" endif
 
                                                                                 
 "ctags设置

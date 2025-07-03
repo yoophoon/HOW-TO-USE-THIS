@@ -5,303 +5,251 @@
 
 
 						*Insert* *Insert-mode*
-Inserting and replacing text				*mode-ins-repl*
+插入和替换文本		 				*mode-ins-repl*
 
-Most of this file is about Insert and Replace mode.  At the end are a few
-commands for inserting text in other ways.
+本文档的大多数内容是关于插入和替换模式的. 文档末尾有少部分用其他方式插入文本的
+命令
 
-An overview of the most often used commands can be found in chapter 24 of the
-user manual |usr_24.txt|.
+可以再用户手册24章|usr_24.txt|查看常用命令的概览. 
 
-1. Special keys						|ins-special-keys|
-2. Special special keys					|ins-special-special|
-3. 'textwidth' and 'wrapmargin' options			|ins-textwidth|
-4. 'expandtab', 'smarttab' and 'softtabstop'  options	|ins-expandtab|
-5. Replace mode						|Replace-mode|
-6. Virtual Replace mode					|Virtual-Replace-mode|
-7. Insert mode completion				|ins-completion|
-8. Insert mode commands					|inserting|
-9. Ex insert commands					|inserting-ex|
-10. Inserting a file					|inserting-file|
+1. 特殊按键						|ins-special-keys|
+2. 特殊的特殊按键					|ins-special-special|
+3. 'textwidth' 及 'wrapmargin' 选项			|ins-textwidth|
+4. 'expandtab', 'smarttab' 及 'softtabstop'  选项	|ins-expandtab|
+5. 替换模式						|Replace-mode|
+6. 虚拟替换模式						|Virtual-Replace-mode|
+7. 插入模式补全						|ins-completion|
+8. 插入模式命令						|inserting|
+9. Ex插入命令						|inserting-ex|
+10. 插入文件内容					|inserting-file|
 
-Also see 'virtualedit', for moving the cursor to positions where there is no
-character.  Useful for editing a table.
+查阅'virtualedit'选项以移动光标到不存在字符的位置. 这在编辑表格时是很有效的. 
 
 ==============================================================================
-1. Special keys						*ins-special-keys*
+1. 特殊按键						*ins-special-keys*
 
-In Insert and Replace mode, the following characters have a special meaning;
-other characters are inserted directly.  To insert one of these special
-characters into the buffer, precede it with CTRL-V.  To insert a <Nul>
-character use "CTRL-V CTRL-@" or "CTRL-V 000".  On some systems, you have to
-use "CTRL-V 003" to insert a CTRL-C.  Note: When CTRL-V is mapped you can
-often use CTRL-Q instead |i_CTRL-Q|.
+在插入模式和替换模式中, 下面这些字符具有特殊意义; 其他字符则被直接插入. 使用
+CTRL-V可以将这些特殊字符插入到缓冲区中. 如可以使用"CTRL-V CTRL-@"或"CTRL-V 000"
+插入<Nul>字符. 在有些协同, 则需要使用"CTRL-V 003"插入CTRL-C. 注意: 如果CTRL-V
+被映射了, 可以使用CTRL-Q代替|i_CTRL-Q|.
 
-If you are working in a special language mode when inserting text, see the
-'langmap' option, |'langmap'|, on how to avoid switching this mode on and off
-all the time.
+如果插入文本的时候正在特殊语言模式中工作, 查阅'langmap'选项|'langmap'|以避免反
+复切换模式. 
 
-If you have 'insertmode' set, <Esc> and a few other keys get another meaning.
-See |'insertmode'|.
+如果设置了'insertmode'选项, <Esc>及一些其他的按键则会有另外的意义.
+查阅|'insertmode'|.
 
 char		action	~
 -----------------------------------------------------------------------
 						*i_CTRL-[* *i_<Esc>*
-<Esc> or CTRL-[	End insert or Replace mode, go back to Normal mode.  Finish
-		abbreviation.
-		Note: If your <Esc> key is hard to hit on your keyboard, train
-		yourself to use CTRL-[.
-		If Esc doesn't work and you are using a Mac, try CTRL-<Esc>.
-		Or disable Listening under Accessibility preferences.
-						*i_CTRL-C*
-CTRL-C		Quit insert mode, go back to Normal mode.  Do not check for
-		abbreviations.  Does not trigger the |InsertLeave| autocommand
-		event.
-
+<Esc> or CTRL-[	结束插入或替换模式并返回普通模式. 如果是缩写还会对其进行扩展. 
+		注意: 如果<Esc>在键在键盘上不好按尝试训练自己使用CTRL-[.
+		如果使用的是Mac且Esc不生效, 尝试使用CTRL-<Esc>.或禁止辅助功能
+		偏好的监听. >
+		CTRL-[是ascii编码控制字符Esc的字面量. 即
+<						*i_CTRL-C*
+CTRL-C		退出插入模式并返回普通模式. 不检查缩写. 不触发|InsertLeavel|
+		自动命令事件. >
+		CTRL-C是ascii编码控制字符Etx的字面量. 即
+<
 						*i_CTRL-@*
-CTRL-@		Insert previously inserted text and stop insert.
+CTRL-@		插入上一次被插入的文本并退出插入模式. 
 
 						*i_CTRL-A*
-CTRL-A		Insert previously inserted text.
+CTRL-A		插入上一次被插入的文本. 
 
 						*i_CTRL-H* *i_<BS>* *i_BS*
-<BS> or CTRL-H	Delete the character before the cursor (see |i_backspacing|
-		about joining lines).
-		See |:fixdel| if your <BS> key does not do what you want.
+<BS> or CTRL-H	删除光标前面的字符 (查阅文档|i_backspacing|关于合并多行的内容) 
+		查阅|:fixdel|命令, 如果<BS>键的行为不符合预期. 
 
 						*i_<Del>* *i_DEL*
-<Del>		Delete the character under the cursor.  If the cursor is at
-		the end of the line, and the 'backspace' option includes
-		"eol", delete the <EOL>; the next line is appended after the
-		current one.
-		See |:fixdel| if your <Del> key does not do what you want.
+<Del>		删除光标位置的字符. 如果光标在行尾且'backspace'选项包含"eol"则会
+		删除换行符; 下一行的内容将会添加到当前行的末尾.  
+		查阅|:fixdel|命令, 如果<Del>键的行为不符合预期. 
 						*i_CTRL-W*
-CTRL-W		Delete the word before the cursor (see |i_backspacing| about
-		joining lines).  See the section "word motions",
-		|word-motions|, for the definition of a word.
+CTRL-W		删除光标位置前面的单词 (查阅|i_backspacing|关于合并多行内容). 
+		查阅"word motions"章节|word-motions|获取单词的定义. 
 						*i_CTRL-U*
-CTRL-U		Delete all entered characters before the cursor in the current
-		line.  If there are no newly entered characters and
-		'backspace' is not empty, delete all characters before the
-		cursor in the current line.
-		If C-indenting is enabled the indent will be adjusted if the
-		line becomes blank.
-		See |i_backspacing| about joining lines.
+CTRL-U		删除当前行光标前面所有键入的字符.如果没有新键入的字符且'backspace'
+		选项不为空则删除当前行光标前面的所有字符. 
+		如果C-indenting被启用, Vim将会在行内容为空时调整缩进. 
+		查阅|i_backspacing|关于合并多行内容的文档. 
 						*i_CTRL-I* *i_<Tab>* *i_Tab*
-<Tab> or CTRL-I Insert a tab.  If the 'expandtab' option is on, the
-		equivalent number of spaces is inserted (use CTRL-V <Tab> to
-		avoid the expansion; use CTRL-Q <Tab> if CTRL-V is mapped
-		|i_CTRL-Q|).  See also the 'smarttab' option and
-		|ins-expandtab|.
-						*i_CTRL-J* *i_<NL>*
-<NL> or CTRL-J	Begin new line.
-						*i_CTRL-M* *i_<CR>*
-<CR> or CTRL-M	Begin new line.
+<Tab> or CTRL-I 插入一个制表符. 如果'expandtab'选项被启用则会插入相同数量的空格.
+		(使用CTRL-V <Tab>避免扩展, 如果CTRL-V被映射了使用CTRL-Q <Tab>, 
+		|i_CTRL-Q|), 查阅'smarttab'选项及|ins-expandtab|文档. >
+		CTRL-I是ascii编码控制字符HT的字面量. 即^I	Horizontal tab
+<						*i_CTRL-J* *i_<NL>*
+<NL> or CTRL-J	开始新行(换行) >
+		CTRL-J时ascii编码控制字符LF的字面量. 即^J	Line feed
+		有意思的是CTRL-V CTRL-@和CTRL-V CTRL-J的字面量都是^@, Vim应该
+		对输入行为做了处理. 
+<						*i_CTRL-M* *i_<CR>*
+<CR> or CTRL-M	开始新行(回车) >
+		CTRL-M时ascii编码控制字符CR的字面量. 即	Carriage return
 						*i_CTRL-K*
 CTRL-K {char1} [char2]
-		Enter digraph (see |digraphs|).  When {char1} is a special
-		key, the code for that key is inserted in <> form.  For
-		example, the string "<S-Space>" can be entered by typing
-		<C-K><S-Space> (two keys).  Neither char is considered for
-		mapping.
+		输入复合字(查阅|digraph|文档). 当{char1}是特殊键时, 对应的键会
+		被<>形式包裹. 比如, 字符串"<S-Space>"可以通过<C-K><S-Space>键入
+		(两个按键). 字符不会被映射处理. 
 
-CTRL-N		Find next keyword (see |i_CTRL-N|).
-CTRL-P		Find previous keyword (see |i_CTRL-P|).
+CTRL-N		查找下一个关键字 (查阅|i_CTRL-N|) 
+CTRL-P		查找上一个关键字 (查阅|i_CTRL-N|)
 
 CTRL-R {register}				*i_CTRL-R*
-		Insert the contents of a register.  Between typing CTRL-R and
-		the second character, '"' will be displayed to indicate that
-		you are expected to enter the name of a register.
-		The text is inserted as if you typed it, but mappings and
-		abbreviations are not used.  If you have options like
-		'textwidth', 'formatoptions', or 'autoindent' set, this will
-		influence what will be inserted.  This is different from what
-		happens with the "p" command and pasting with the mouse.
-		Special registers:
-			'"'	the unnamed register, containing the text of
-				the last delete or yank
-			'%'	the current file name
-			'#'	the alternate file name
-			'*'	the clipboard contents (X11: primary selection)
-			'+'	the clipboard contents
-			'/'	the last search pattern
-			':'	the last command-line
-			'.'	the last inserted text
+		插入寄存器中的内容. 在键入CTRL-R和第二个字符之间, '"'将会被显示
+		以表明期望输入寄存器的名字. 
+		文本就像按键输入那样被插入到缓冲区, 但是映射及缩写不会被应用. 
+		如果'textwidth', 'formatoptions'活着'autoindent'选项被启用, 这
+		会影响被插入的内容. 这与"p"命令及使用鼠标产生的粘贴行为是不同的.
+		特殊寄存器: 
+			'"'	匿名寄存器, 包含上次删除或复制的文本. 
+			'%'	当前文件名称.
+			'#'	轮换文件名称.
+			'*'	粘贴板内容 (X11: 主选区) 
+			'+'	张贴版内容
+			'/'	上一个搜索模式
+			':'	上一个命令行命令
+			'.'	上一次被插入的文本
 							*i_CTRL-R_-*
-			'-'	the last small (less than a line) delete
-				register. This is repeatable using |.| since
-				it remembers the register to put instead of
-				the literal text to insert.
+			'-'	上次轻量删除(少于一行)寄存器. 可通过|.|重复使用
+				因为它明白是使用寄存器粘贴而不是插入文本字面量. 
 							*i_CTRL-R_=*
-			'='	the expression register: you are prompted to
-				enter an expression (see |expression|)
-				Note that 0x80 (128 decimal) is used for
-				special keys.  E.g., you can use this to move
-				the cursor up:
-					CTRL-R ="\<Up>"
-				Use CTRL-R CTRL-R to insert text literally.
-				When the result is a |List| the items are used
-				as lines.  They can have line breaks inside
-				too.
-				When the result is a Float it's automatically
-				converted to a String.
-				When append() or setline() is invoked the undo
-				sequence will be broken.
-		See |registers| about registers.
+			'='	表达式寄存器: Vim会提示输入一个表达式(查阅文档
+				|expression|). 注意0x80(数字128)被用于特殊按键. 
+				比如可以使用这个移动光标: 
+					CTRL-R="\<Up>"
+				当结果是列表时, 其中的每一项都将占据一行. 列表
+				项的内部也能包含换行符. 
+				当结果时浮点数时则会被自动转换为字符串. 
+				当append()活着setline()函数被调用时撤销序列将会
+				被破坏. 
+		查阅关于寄存器的文档|registers|. 
 
 CTRL-R CTRL-R {register}			*i_CTRL-R_CTRL-R*
-		Insert the contents of a register.  Works like using a single
-		CTRL-R, but the text is inserted literally, not as if typed.
-		This differs when the register contains characters like <BS>.
-		Example, where register a contains "ab^Hc": >
+		插入寄存器的内容. 这和键入单个CTRL-R类似, 但只会插入文本的字面量
+		而不会像真正键入那样被解析. 这在寄存器包含像<BS>这样的字符时不同.
+		比如:, 包含"abc"的寄存器: >
 	CTRL-R a		results in "ac".
 	CTRL-R CTRL-R a		results in "ab^Hc".
-<		Options 'textwidth', 'formatoptions', etc. still apply.  If
-		you also want to avoid these, use CTRL-R CTRL-O, see below.
-		The '.' register (last inserted text) is still inserted as
-		typed.
-		After this command, the '.' register contains the text from
-		the register as if it was inserted by typing it.
+<		选项'textwidth', 'formatoptions'等仍然会被应用. 如果想要避免这些
+		使用CTRL-R CTRL-O, 查看下面的文档. '.'寄存器(上次被插入的文本)
+		则仍然会被当作被按键输入的. 
+		执行命令之后, '.'寄存器包含将会包含来自寄存器的文本就像通过按键
+		键入的. 
 
 CTRL-R CTRL-O {register}			*i_CTRL-R_CTRL-O*
-		Insert the contents of a register literally and don't
-		auto-indent.  Does the same as pasting with the mouse
-		|<MiddleMouse>|. When the register is linewise this will
-		insert the text above the current line, like with `P`.
-		The '.' register (last inserted text) is still inserted as
-		typed.
-		After this command, the '.' register contains the command
-		typed and not the text. I.e., the literals "^R^O" and not the
-		text from the register.
-		Does not replace characters in |Replace-mode|!
+		将寄存器的内容按字面量插入并且取消自动缩进. 这和使用鼠标粘贴文本
+		是一样的|<MiddleMouse>|. 当寄存器是行范围的, 这将会将文本插入到
+		当前行的上方, 就像"P"一样. '.'寄存器 (上次被插入文本) 仍作为键
+		盘输入插入到缓冲区. 
+		执行命令之后, '.'寄存器包含键入的命令而不是文本.比如包含字面量
+		""而不是来自这个寄存器的文本. 
+		这在替换模式中不会替换字符|Replace-mode|! 
 
 CTRL-R CTRL-P {register}			*i_CTRL-R_CTRL-P*
-		Insert the contents of a register literally and fix the
-		indent, like |[<MiddleMouse>|.
-		The '.' register (last inserted text) is still inserted as
-		typed.
-		After this command, the '.' register contains the command
-		typed and not the text. I.e., the literals "^R^P" and not the
-		text from the register.
-		Does not replace characters in |Replace-mode|!
+		将寄存器的内容按字面量插入并且修复缩进, 像|[<MiddleMouse>|.
+		'.'寄存器 (上次被插入文本) 扔作为键盘输入插入到缓冲区. 
+		执行命令之后, '.'寄存器包含键入的命令而不是对应寄存器的文本. 
+		比如包含字面量"". 
+		这在替换模式中不会替换字符|Replace-mode|! 
 
 						*i_CTRL-T*
-CTRL-T		Insert one shiftwidth of indent at the start of the current
-		line.  The indent is always rounded to a 'shiftwidth' (this is
-		vi compatible).
+CTRL-T		在当前行首插入一个shiftwidth宽度的缩进.缩进总是会对齐'shiftwidth'
+		(这是vi兼容的). 
 						*i_CTRL-D*
-CTRL-D		Delete one shiftwidth of indent at the start of the current
-		line.  The indent is always rounded to a 'shiftwidth' (this is
-		vi compatible).
+CTRL-D		在当前函授删除一个shiftwidth宽度的缩进.缩进总是会对齐'shiftwidth'
+		(这是vi兼容的).
 						*i_0_CTRL-D*
-0 CTRL-D	Delete all indent in the current line.
+0 CTRL-D	将当前行的所有缩进都删除.
 
 						*i_^_CTRL-D*
-^ CTRL-D	Delete all indent in the current line.  The indent is
-		restored in the next line.  This is useful when inserting a
-		label.
+^ CTRL-D	将当前行的所有缩进都删除. 下一行恢复缩进. 这在插入标签时很有效.
 
 						*i_CTRL-V*
-CTRL-V		Insert next non-digit literally.  For special keys, the
-		terminal code is inserted.  It's also possible to enter the
-		decimal, octal or hexadecimal value of a character
-		|i_CTRL-V_digit|.
-		The characters typed right after CTRL-V are not considered for
-		mapping.
-		Note: When CTRL-V is mapped (e.g., to paste text) you can
-		often use CTRL-Q instead |i_CTRL-Q|.
-		When |modifyOtherKeys| is enabled then special Escape sequence
-		is converted back to what it was without |modifyOtherKeys|,
-		unless the Shift key is also pressed.
+CTRL-V		插入下一个非数字字符字面量. 对于特殊按键则插入终端编码. 键入数字
+		八进制或十六进制字符的值也是可行的|i_CTRL-V_digit|.
+		CTRL-V之后键入的字符不会应用映射. 
+		注意当CTRL-V被映射时(比如用来粘贴文本)可以使用CTRL-Q来代替|i_CTRL-Q|
+		当|modifyOtherKeys|启用时特殊转义序列则会被转换为|modifyOtherKeys|
+		关闭时的格式, 除非Shift按键被按下了. 
 
 						*i_CTRL-Q*
-CTRL-Q		Same as CTRL-V.
-		Note: Some terminal connections may eat CTRL-Q, it doesn't
-		work then.  It does work in the GUI.
+CTRL-Q		和CTRL-V一致.
+		注意: 一些终端连接可能不会响应CTRL-Q. 这在GUI中总是会生效. 
 
 CTRL-SHIFT-V				*i_CTRL-SHIFT-V* *i_CTRL-SHIFT-Q*
-CTRL-SHIFT-Q	Works just like CTRL-V, unless |modifyOtherKeys| is active,
-		then it inserts the Escape sequence for a key with modifiers.
-		Note: When CTRL-SHIFT-V is intercepted by your system (e.g.,
-		to paste text) you can often use CTRL-SHIFT-Q instead.
-		However, in some terminals (e.g. GNOME Terminal), CTRL-SHIFT-Q
-		quits the terminal without confirmation.
+CTRL-SHIFT-Q	类似于CTRL-V一样的作用, 如果|modifyOtherKeys|被激活则会插入带有
+		modifiers的转义序列按键. 
+		注意: 当CTRL-SHIFT-V被系统捕获时 (比如用来粘贴文本) 则可以使用
+		CTRL-SHIFT-Q代替.然而,在某些终端中(比如GNOME终端),CTRL-SHIFT-Q
+		会在不确认的情况下强制退出终端. 
 
-CTRL-X		Enter CTRL-X mode.  This is a sub-mode where commands can
-		be given to complete words or scroll the window.  See
-		|i_CTRL-X| and |ins-completion|.
+CTRL-X		进入CTRL-X模式. 这是可以使用命令补全单词或滚动窗口的子模式. 
+		查阅文档|i_CTRL-X|及|ins-completion|. 
 
 						*i_CTRL-E*
-CTRL-E		Insert the character which is below the cursor.
+CTRL-E		将光标下方的字符插入到光标的位置.
 						*i_CTRL-Y*
-CTRL-Y		Insert the character which is above the cursor.
-		Note that for CTRL-E and CTRL-Y 'textwidth' is not used, to be
-		able to copy characters from a long line.
+CTRL-Y		将光标上方的字符插入到光标的位置.
+		注意对于CTRL-E及CTRL-Y,'textwidth'选项不会被应用以能够从长文本
+		行中复制字符. 
 
 						*i_CTRL-_*
-CTRL-_		Switch between languages, as follows:
-		-  When in a rightleft window, revins and nohkmap are toggled,
-		   since English will likely be inserted in this case.
-		-  When in a norightleft window, revins and hkmap are toggled,
-		   since Hebrew will likely be inserted in this case.
+CTRL-_		像下面这样切换语言:
+		-  当在右左排版语言的窗口中, 启用revins和nohkmap, 因为英语可能
+		   会在这种情况被插入. >
+			revins: reverse insert mode
+			nohkmap: no hebrew keyboard mapping
+<		-  当在非右左排版语言的窗口中, revins及hkmap被启用, 因为希伯来
+		   语可能在这种情况被插入.
 
-		CTRL-_ moves the cursor to the end of the typed text.
+		CTRL-_移动光标到键入文本的末尾. 
 
-		This command is only available when the 'allowrevins' option
-		is set.
-		Please refer to |rileft.txt| for more information about
-		right-to-left mode.
-		Only if compiled with the |+rightleft| feature.
+		这个命令只会在'allowrevins'选项被启用时有效. 
+		请查阅|rileft.txt|获取关于right-to-left模式的更多信息. 
+		仅用于编译时带|+rightleft|特性的Vim. 
 
 						*i_CTRL-^*
-CTRL-^		Toggle the use of typing language characters.
-		When language |:lmap| mappings are defined:
-		- If 'iminsert' is 1 (langmap mappings used) it becomes 0 (no
-		  langmap mappings used).
-		- If 'iminsert' has another value it becomes 1, thus langmap
-		  mappings are enabled.
-		When no language mappings are defined:
-		- If 'iminsert' is 2 (Input Method used) it becomes 0 (no
-		  Input Method used).
-		- If 'iminsert' has another value it becomes 2, thus the Input
-		  Method is enabled.
-		When set to 1, the value of the "b:keymap_name" variable, the
-		'keymap' option or "<lang>" appears in the status line.
-		The language mappings are normally used to type characters
-		that are different from what the keyboard produces.  The
-		'keymap' option can be used to install a whole number of them.
+CTRL-^		切换使用的键入语言字符. 
+		当语言|:lmap|映射被定义时: 
+		- 如果'iminsert'为1 (langmap映射被使用) 则切换为0
+		  (不使用langmap映射) 
+		- 如果'iminsert'为其他值时则切换为1, 因此langmap映射被启用. 
+		当没有语言映射被定义时: 
+		- 如果'iminsert'为2 (使用输入法) 则切换为0 (不适用输入法). 
+		- 如果'iminsert'有其他值则切换为2, 因此输入法被启用. 
+		当设置为1时,"b:keymap_name"变量的值、'keymap'选项的值或"<lang>"
+		会被显示在状态栏中. 语言映射被正常的用来键入与键盘生成所不同的
+		字符. 'keymap'选项可以被用来安装它们的所有编号. 
 
 						*i_CTRL-]*
-CTRL-]		Trigger abbreviation, without inserting a character.
+CTRL-]		在不插入字符的情况下触发缩写.
 
 						*i_<Insert>*
-<Insert>	Toggle between Insert and Replace mode.
+<Insert>	切换插入模式和替换模式.
 -----------------------------------------------------------------------
 
 						*i_backspacing*
-The effect of the <BS>, CTRL-W, and CTRL-U depend on the 'backspace' option
-(unless 'revins' is set).  This is a comma-separated list of items:
+<BS>, CTRL-W及CTRL-U的效果取决于'backspace'选项 (除非'revins'选项被启用). 这是
+一个由逗号分隔项组成的列表: 
 
 item	    action ~
-indent	    allow backspacing over autoindent
-eol	    allow backspacing over end-of-line (join lines)
-start	    allow backspacing over the start position of insert; CTRL-W and
-	    CTRL-U stop once at the start position
+indent	    允许退格处理自动缩进
+eol	    允许退格处理换行符 (合并后续行)
+start	    允许退格处理插入的开始位置; CTRL-W及CTRL-R则会在开始位置停留一次.
 
-When 'backspace' is empty, Vi compatible backspacing is used.  You cannot
-backspace over autoindent, before column 1 or before where insert started.
+当'backspace'选项为空时, Vim会采用Vi兼容的退格方式. 这种情况不能处理自动缩进、
+换行符或插入开始位置之前的文本. 
 
-For backwards compatibility the values "0", "1", "2" and "3" are also allowed,
-see |'backspace'|.
+为了向后兼容, 选项也能使用"0", "1", "2"及"3"这些值, 查阅文档|'backspace'|. 
 
-If the 'backspace' option does contain "eol" and the cursor is in column 1
-when one of the three keys is used, the current line is joined with the
-previous line.  This effectively deletes the <EOL> in front of the cursor.
+如果'backspace'选项不包含"eol"且光标在第一列, 当上面这三个键名中的一种被使用时, 
+当前行会与上一行合并. 这在删除光标前面的<EOL>是高效的. 
 
 						*i_CTRL-V_digit*
-With CTRL-V the decimal, octal or hexadecimal value of a character can be
-entered directly.  This way you can enter any character, except a line break
-(<NL>, value 10).  There are five ways to enter the character value:
+在CTRL-V后面输入字符的十进制、八进制或十六进制编码会生成对应的字符. 可以使用这
+种方式输入任意字符除了换行符 (<NL>, 十进制值为10). 有5种方式键入字符的编码: 
 
 first char	mode	     max nr of chars   max value ~
 (none)		decimal		   3		255
@@ -310,26 +258,22 @@ x or X		hexadecimal	   2		ff	 (255)
 u		hexadecimal	   4		ffff	 (65535)
 U		hexadecimal	   8		7fffffff (2147483647)
 
-Normally you would type the maximum number of characters.  Thus to enter a
-space (value 32) you would type <C-V>032.  You can omit the leading zero, in
-which case the character typed after the number must be a non-digit.  This
-happens for the other modes as well: As soon as you type a character that is
-invalid for the mode, the value before it will be used and the "invalid"
-character is dealt with in the normal way.
+通常应该键入字符的最大编号的位数. 因此要键入一个空格 (值为32) 应该键入<C-V>032.
+可以省略前导0, 这种情况数值之后键入的字符必须是非数值字符.这在其他模式也会发生: 
+只要在当前模式键入非法字符,字符前面的值就会被使用并且非法字符则会按一般方式处理.
 
-If you enter a value of 10, it will end up in the file as a 0.  The 10 is a
-<NL>, which is used internally to represent the <Nul> character.  When writing
-the buffer to a file, the <NL> character is translated into <Nul>.  The <NL>
-character is written at the end of each line.  Thus if you want to insert a
-<NL> character in a file you will have to make a line break.
-Also see 'fileformat'.
-
+如果键入了10这个值, 它将会在文件中作为0结束. 10是一个<NL>,内部用来表示<Nul>字符.
+当将缓冲区写入到文件时, <NL>字符被转换为<Nul>字符.<NL>字符则在每一行的末尾被写入.
+因此如果想要在文件中插入一个<NL>字符则会导致换行. 查阅'fileformat'选项. >
+  这里是解释前面为啥不能键入<NL>这个字面量的原因,  这个能是因为文件在读取
+  <NL>这个字符就换自动换行, 文件内部特殊的字符应该只有一个换行符,
+  至于<EOF>则应该是程序自动判断而非文本内容控制. 
+<
 						*i_CTRL-X* *insert_expand*
-CTRL-X enters a sub-mode where several commands can be used.  Most of these
-commands do keyword completion; see |ins-completion|.
+CTRL-X进入可以使用多种命令的子模式. 这些命令的大多数进行关键字补全.
+查阅文档|ins-completion|. 
 
-Two commands can be used to scroll the window up or down, without exiting
-insert mode:
+有两个命令被用来向上或向下滚动补全窗口而不用离开插入模式: 
 
 						*i_CTRL-X_CTRL-E*
 CTRL-X CTRL-E		将屏幕向上滚动一行。
@@ -345,26 +289,21 @@ CTRL-X CTRL-Y		将屏幕向下滚动一行。
   补全操作时，CTRL-y会阻止补全行为并使用当前选择的补全(CTRL-Y的默认行为被阻止了)
 <
 
-After CTRL-X is pressed, each CTRL-E (CTRL-Y) scrolls the window up (down) by
-one line unless that would cause the cursor to move from its current position
-in the file.  As soon as another key is pressed, CTRL-X mode is exited and
-that key is interpreted as in Insert mode.
+在CTRL-X被按下后, 每一个CTRL-E (CTRL-Y) 将窗口向上(下)滚动一行, 而无需导致光标
+从文件的当前位置移动. 一旦其他按键被按下, CTRL-X模式就会退出且被按下的按键被
+当作在插入模式中被解释. 
 
 
 ==============================================================================
-2. Special special keys				*ins-special-special*
+2. 特殊的特殊按键					*ins-special-special*
 
-The following keys are special.  They stop the current insert, do something,
-and then restart insertion.  This means you can do something without getting
-out of Insert mode.  This is very handy if you prefer to use the Insert mode
-all the time, just like editors that don't have a separate Normal mode.  You
-may also want to set the 'backspace' option to "indent,eol,start" and set the
-'insertmode' option.  You can use CTRL-O if you want to map a function key to
-a command.
+下面这些按键是特殊的. 它们会离开插入模式进行其他工作然后再回到插入模式. 这意味
+着可以在不离开插入模式进行其他工作. 如果想要一直使用插入模式这将会是非常方便的. 
+就像编辑器没有区分普通模式. 可以设置'backspace'选项为"indent,eol,start"并设置
+'insertmode'选项. 还可以使用CTRL-O如果想映射功能键到命令的话. 
 
-The changes (inserted or deleted characters) before and after these keys can
-be undone separately.  Only the last change can be redone and always behaves
-like an "i" command.
+在这些按键之前或之后的(被插入或被删除的字符)改动能被当都撤销.但只有最后一次改动
+能被重做并且总是表象的像"i"命令. 
 
 char		action	~
 -----------------------------------------------------------------------
@@ -408,44 +347,36 @@ CTRL-G U	don't start a new undo block with the next   *i_CTRL-G_U*
 		stays within the same line
 -----------------------------------------------------------------------
 
-Note: If the cursor keys take you out of Insert mode, check the 'noesckeys'
-option.
+注意: 如果方向键退出了插入模式, 请检查'noesckeys'选项. Vim使用cursor keys指代
+方向键, 但实际上更通用的叫法是Arrow keys. 
 
-The CTRL-O command sometimes has a side effect: If the cursor was beyond the
-end of the line, it will be put on the last character in the line.  In
-mappings it's often better to use <Esc> (first put an "x" in the text, <Esc>
-will then always put the cursor on it).  Or use CTRL-\ CTRL-O, but then
-beware of the cursor possibly being beyond the end of the line.  Note that the
-command following CTRL-\ CTRL-O can still move the cursor, it is not restored
-to its original position.
+CTRL-O命令有时会有副作用: 如果光标在行尾之外, 命令会将光标置于行尾最后一个字符
+在映射中通常使用<Esc>会更好 (首先放置一个"x"在文本中, <Esc>之后总是会将光标置于
+其上[这里指的应该是<Esc>会退出插入模式并把光标放在插入模式光标前一个字符上]).
+或者使用CTRL-\ CTRL-O, 但要意识到光标可能会超出行尾. 注意CTRL-\ CTRL-O之后的命令
+仍可以移动光标, 光标的位置不会恢复为它原先的位置. 
 
-The CTRL-O command takes you to Normal mode.  If you then use a command enter
-Insert mode again it normally doesn't nest.  Thus when typing "a<C-O>a" and
-then <Esc> takes you back to Normal mode, you do not need to type <Esc> twice.
-An exception is when not typing the command, e.g. when executing a mapping or
-sourcing a script.  This makes mappings work that briefly switch to Insert
-mode.
+CTRL-O命令会切换到普通模式. 如果再用命令进入插入模式它通常是不会嵌套的. 因此当
+键入"a<C-O>a"之后按<Esc>回到普通模式, 这不需要按两次<Esc>键. 一个例外是当没有键
+入命令时, 比如执行一个映射或引入一个脚本. 短暂的切换到插入模式才能让映射生效. 
 
-The shifted cursor keys are not available on all terminals.
+修饰键Shift+方向键并不是在所有的终端上都能生效. 
 
-Another side effect is that a count specified before the "i" or "a" command is
-ignored.  That is because repeating the effect of the command after CTRL-O is
-too complicated.
+另一个副作用就是在"i"或者"a"命令前面指定计数会被忽略. 这是因为重复CTRL-O之后的
+命令效果太复杂了. 
 
-An example for using CTRL-G u: >
+一个使用CTRL-G u的例子: >
 
 	:inoremap <C-H> <C-G>u<C-H>
 
-This redefines the backspace key to start a new undo sequence.  You can now
-undo the effect of the backspace key, without changing what you typed before
-that, with CTRL-O u.  Another example: >
+这重定义了退格键开启新的撤销序列.现在使用CTRL-O u可以撤销退格键的操作而不用改动
+之前键入内容. 另一个例子: >
 
 	:inoremap <CR> <C-]><C-G>u<CR>
 
-This starts a new undo block at each line break.  It also expands
-abbreviations before this.
+这在每一个换行符处开启了心的撤销块. 它也会扩展之前的缩写. 
 
-An example for using CTRL-G U: >
+一个使用CTRL-G U的例子: >
 
 	inoremap <Left>  <C-G>U<Left>
 	inoremap <Right> <C-G>U<Right>
@@ -457,181 +388,139 @@ An example for using CTRL-G U: >
 	inoremap <expr> <End> repeat('<C-G>U<Right>', col('$') - col('.'))
 	inoremap ( ()<C-G>U<Left>
 
-This makes it possible to use the cursor keys in Insert mode, without starting
-a new undo block and therefore using |.| (redo) will work as expected.  Also
-entering a text like (with the "(" mapping from above):
+这使得在插入模式使用方向键不开启新撤销块得以实现且因此使用|.|(redo)也会按预期
+生效. 此外键入像上面那样使用"("映射键入(: 
 
    Lorem ipsum (dolor
 
-will be repeatable by using |.| to the expected
+将可以通过|.|命令按预期重复输入
 
    Lorem ipsum (dolor)
 
-Using CTRL-O splits undo: the text typed before and after it is undone
-separately.  If you want to avoid this (e.g., in a mapping) you might be able
-to use CTRL-R = |i_CTRL-R|.  E.g., to call a function: >
+使用CTRL-O会分隔撤销块: 在这之前或之后键入的文本将会被分别撤销. 如果像要避免这样
+(比如在映射中)则可能需要使用CTRL-R = |i_CTRL-R|. 比如, 调用一个函数: >
 	:imap <F2> <C-R>=MyFunc()<CR>
 
-When the 'whichwrap' option is set appropriately, the <Left> and <Right>
-keys on the first/last character in the line make the cursor wrap to the
-previous/next line.
+当'whichwrap'选项被恰当的设置, 在行首/尾字符使用<Left>/<Right>将会使光标跳转到
+上/下一行. 
 
-The CTRL-G j and CTRL-G k commands can be used to insert text in front of a
-column.  Example: >
+CTRL-G j及CTRL-G k命令可以被用来在一列的前面插入文本. 比如: >
    int i;
    int j;
-Position the cursor on the first "int", type "istatic <C-G>j       ".  The
-result is: >
+将光标的位置移动到第一个"int", 键入 "istatic <C-G>j       ". 结果将会变为: >
    static int i;
 	  int j;
-When inserting the same text in front of the column in every line, use the
-Visual blockwise command "I" |v_b_I|.
+可以使用可是快级别命令"I"在每一行的同一列前面插入同样的文本	|v_b_I|
 
 ==============================================================================
-3. 'textwidth' and 'wrapmargin' options			*ins-textwidth*
+3. 'textwidth' 及 'wrapmargin' 选项			*ins-textwidth*
 
-The 'textwidth' option can be used to automatically break a line before it
-gets too long.  Set the 'textwidth' option to the desired maximum line
-length.  If you then type more characters (not spaces or tabs), the
-last word will be put on a new line (unless it is the only word on the
-line).  If you set 'textwidth' to 0, this feature is disabled.
+'textwidth'选项可以被用来在行内容过长时自动打断行. 设置'textwidth'选项为想要的
+最大行长度. 如果键入了过多字符 (非空格或制表符) , 最后一个单词将会被放到新行. 
+(除非这个单词是当前行的唯一一个单词, 如汉语). 如果设置'textwidth'为0, 这个特性
+将会被禁用. 
 
-The 'wrapmargin' option does almost the same.  The difference is that
-'textwidth' has a fixed width while 'wrapmargin' depends on the width of the
-screen.  When using 'wrapmargin' this is equal to using 'textwidth' with a
-value equal to (columns - 'wrapmargin'), where columns is the width of the
-screen.
+'wrapmargin'选项做几乎同样的事. 差异之处在于'textwidth'有固定的宽度而'wrapmargin'
+取决于屏幕的宽度. 当使用'wrapmargin'时, 这就等同于使用'textwidth'设置值为(columns - 
+'wrapmargin'), 这里的columns是屏幕的宽度. 
 
-When 'textwidth' and 'wrapmargin' are both set, 'textwidth' is used.
+当'textwidth'及'wrapmargin'同时被设置时, 优先使用'textwidth'.
 
-If you don't really want to break the line, but view the line wrapped at a
-convenient place, see the 'linebreak' option.
+如果不想打断行但又想在合适的地方折行, 查阅'linebreak'选项. 
 
-The line is only broken automatically when using Insert mode, or when
-appending to a line.  When in replace mode and the line length is not
-changed, the line will not be broken.
+行内容只会在使用插入模式时或合并后续行时被自动打断. 当在替换模式且行长度没被改动
+行内容将不会被打断. 
 
-Long lines are broken if you enter a non-white character after the margin.
-The situations where a line will be broken can be restricted by adding
-characters to the 'formatoptions' option:
-"l"  Only break a line if it was not longer than 'textwidth' when the insert
-     started.
-"v"  Only break at a white character that has been entered during the
-     current insert command.  This is mostly Vi-compatible.
-"lv" Only break if the line was not longer than 'textwidth' when the insert
-     started and only at a white character that has been entered during the
-     current insert command.  Only differs from "l" when entering non-white
-     characters while crossing the 'textwidth' boundary.
+长内容行会在外边距之后键入非空白字符时被打断. 行内容应该被打断的状况可以通过向
+'formatoptions'选项添加字符进行限制: 
+"l"  只会在开始插入时打断短于'textwidth'的行.
+"v"  只会在当前插入命令期间在被输入空白字符的位置打断. 这通常是Vi兼容的. 
+"lv" 只会在开始插入时打断短于'textwidth'的行且在插入命令期间在被输入空白字符的
+     的位置打断. 只在跨越'textwidth'边界时键入非空白字符与"l"不同.
 
-Normally an internal function will be used to decide where to break the line.
-If you want to do it in a different way set the 'formatexpr' option to an
-expression that will take care of the line break.
+通常来说内部函数会被用来决定怎么打断行内容. 如果想要设置不同的打断方式, 可以设置
+'formatexpr'选项为一个关注换行的表达式. 
 
-If you want to format a block of text, you can use the "gq" operator.  Type
-"gq" and a movement command to move the cursor to the end of the block.  In
-many cases, the command "gq}" will do what you want (format until the end of
-paragraph).  Alternatively, you can use "gqap", which will format the whole
-paragraph, no matter where the cursor currently is.  Or you can use Visual
-mode: hit "v", move to the end of the block, and type "gq".  See also |gq|.
+如果想要格式化文本块, 可以适用操作符"gq". 键入"gq"及一个移动命令将光标移动到块的
+末尾. 在多数情况下, "gq}"命令会实现想要的操作 (格式化至当前段落末尾). 同样的,
+可以适用"gqap"格式化整个段落而不管光标当前的位置在哪. 活着可以使用可视模式: 
+按下"v"键, 移动到块的末尾然后按下"gq". 查阅文档|gq|. 
 
 ==============================================================================
-4. 'expandtab', 'smarttab' and 'softtabstop' options	*ins-expandtab*
+4. 'expandtab', 'smarttab' 及 'softtabstop' 选项	*ins-expandtab*
 
-If the 'expandtab' option is on, spaces will be used to fill the amount of
-whitespace of the tab.  If you want to enter a real <Tab>, type CTRL-V first
-(use CTRL-Q when CTRL-V is mapped |i_CTRL-Q|).
-The 'expandtab' option is off by default.  Note that in Replace mode, a single
-character is replaced with several spaces.  The result of this is that the
-number of characters in the line increases.  Backspacing will delete one
-space at a time.  The original character will be put back for only one space
-that you backspace over (the last one).
+如果'expandtab'选项被启用, 空格将会被用来填充制表符指定数量的空白. 如果想要输入
+真的<Tab>, 先按下CTRL-V (当CTRL-V被映射时使用CTRL-Q |i_CTRL-Q|).
+'expandtab'选项默认是关闭的. 注意在替换模式中, 单个字符将会被多个空格替换. 这样
+的结果就是行内的字符数量增加了. 退格键一次会删除一个空格. 原来的字符将会被放置
+回退格键扫过的范围(一次只会恢复一个原来的字符).
 
 							*ins-smarttab*
-When the 'smarttab' option is on, a <Tab> inserts 'shiftwidth' positions at
-the beginning of a line and 'tabstop' positions in other places.  This means
-that often spaces instead of a <Tab> character are inserted.  When 'smarttab'
-is off, a <Tab> always inserts 'tabstop' positions, and 'shiftwidth' is only
-used for ">>" and the like.
-
+当'smarttab'选项被启用时, 按一次<Tab>按键会在行首位置插入'shiftwidth'占位而在其
+它位置插入'tabstop'占位. 这意味着多空格被用来代替<Tab>被插入. 当'smarttab'关闭时
+<Tab>总是会插入'tabstop'个占位且'shiftwidth'只会用于">>"及类似的命令. >
+  这里的描述并不完全正确, 各选项的全部作用请查阅各自选项的文档.
+<
 							*ins-softtabstop*
-When the 'softtabstop' option is non-zero, a <Tab> inserts 'softtabstop'
-positions, and a <BS> used to delete white space, will delete 'softtabstop'
-positions.  This feels like 'tabstop' was set to 'softtabstop', but a real
-<Tab> character still takes 'tabstop' positions, so your file will still look
-correct when used by other applications.
+当'softtabstop'选项是非零值, <Tab>插入'softtabstop'个位置且用于删除空格的<BS>会
+删除'softtabstop'个位置. 这就像'tabstop'被设置为'softtabstop', 但真实的<Tab>仍
+占用'tabstop'个位置, 因此文件被其他应用使用时看起来仍是正确的. 
 
-If 'softtabstop' is non-zero, a <BS> will try to delete as much white space to
-move to the previous 'softtabstop' position, except when the previously
-inserted character is a space, then it will only delete the character before
-the cursor.  Otherwise you cannot always delete a single character before the
-cursor.  You will have to delete 'softtabstop' characters first, and then type
-extra spaces to get where you want to be.
+如果'softtabstop'是非零值,<BS>将会尝试删除同样多的空格已移动到上一个'softtabstop'
+的位置, 如果上一个被插入的字符是空格则仅删除光标前面的单个字符. 否则将不能将不能
+删除光标前面的单个字符. 这首先会删除'softtabstop'个字符然后键入额外的空格让光标
+位于期望的位置. 
 
 ==============================================================================
-5. Replace mode				*Replace* *Replace-mode* *mode-replace*
+5. 替换模式				*Replace* *Replace-mode* *mode-replace*
 
-Enter Replace mode with the "R" command in normal mode.
+在普通模式中输入"R"命令进入替换模式. 
 
-In Replace mode, one character in the line is deleted for every character you
-type.  If there is no character to delete (at the end of the line), the
-typed character is appended (as in Insert mode).  Thus the number of
-characters in a line stays the same until you get to the end of the line.
-If a <NL> is typed, a line break is inserted and no character is deleted.
+在替换模式中, 每个键入的字符都将会替换当前行光标位置的字符. 如果没有要被替换的
+字符 (在行尾时), 键入的字符将会添加到行尾 (就像插入模式一样).因此行内的字符数量
+会保持一致直到触及行尾. 如果键入<NL>, 则会插入一个换行符且不会删除字符. 
 
-Be careful with <Tab> characters.  If you type a normal printing character in
-its place, the number of characters is still the same, but the number of
-columns will become smaller.
+小心<Tab>字符. 如果在它的地方键入普通的打印字符, 则字符的数量保持不变但列数量则
+会减小. 
 
-If you delete characters in Replace mode (with <BS>, CTRL-W, or CTRL-U), what
-happens is that you delete the changes.  The characters that were replaced
-are restored.  If you had typed past the existing text, the characters you
-added are deleted.  This is effectively a character-at-a-time undo.
+如果在替换模式中删除字符 (使用<BS>, CTRL-W或CTRL-U), 最终结果就是删除之前做出的
+替换改动. 之前被替换的字符会被恢复. 如果键入超过已经存在的文本, 则之前添加的
+字符会被删除. 这实际上是a-character-at-a-time撤销命令.
 
-If the 'expandtab' option is on, a <Tab> will replace one character with
-several spaces.  The result of this is that the number of characters in the
-line increases.  Backspacing will delete one space at a time.  The original
-character will be put back for only one space that you backspace over (the
-last one).
+如果'expandtab'选项被启用, <Tab>将会替换用多个空格替换单个字符. 这样的结果就是
+行内字符数量增加了. 退格会一次会删除一个空格. 并恢复这个空格扫过的原来的字符
+(最后一个字符).
 
 ==============================================================================
-6. Virtual Replace mode		*vreplace-mode* *Virtual-Replace-mode*
+6. 虚拟替换模式				*vreplace-mode* *Virtual-Replace-mode*
 
-Enter Virtual Replace mode with the "gR" command in normal mode.
-{not available when compiled without the |+vreplace| feature}
+在普通模式使用"gR"命令进入虚拟替换模式.  {当编译不带|+vreplace|特性时则不可用}
 
-Virtual Replace mode is similar to Replace mode, but instead of replacing
-actual characters in the file, you are replacing screen real estate, so that
-characters further on in the file never appear to move.
+虚拟替换模式和替换模式相似, 但不会替换文件中真实字符而是替换屏幕真实的区域,因此
+文件中其余字符的不会被移动. 
 
-So if you type a <Tab> it may replace several normal characters, and if you
-type a letter on top of a <Tab> it may not replace anything at all, since the
-<Tab> will still line up to the same place as before.
+如果键入<Tab>则可能替换多个普通字符, 如果在<Tab>位置键入普通字母则可能键入失败,
+因为<Tab>仍会像之前一样占据同样的位置. 
 
-Typing a <NL> still doesn't cause characters later in the file to appear to
-move.  The rest of the current line will be replaced by the <NL> (that is,
-they are deleted), and replacing continues on the next line.  A new line is
-NOT inserted unless you go past the end of the file.
+键入<NL>也不会导致文件中后续的字符被移动. 当前行的剩余内容会被<NL>替换 (也就是
+光标之后的内容会被删除), 并且替换会在下一行继续进行. 新行并不会被插入除非到了
+文件的末尾. 
 
-Interesting effects are seen when using CTRL-T and CTRL-D.  The characters
-before the cursor are shifted sideways as normal, but characters later in the
-line still remain still.  CTRL-T will hide some of the old line under the
-shifted characters, but CTRL-D will reveal them again.
+插入效果可以通过使用CTRL-T及CTRL-D查看. 光标之前的字符会被正常的缩进到一边, 但
+行内之后的字符则保持不变. CTRL-T会隐藏旧内容处被缩进的字符, 但CTRL-D则会重新
+显示它们. >
+  实测在虚拟替换模式中更多的类似插入模式的<Del>的正向和反向操作. 
 
-As with Replace mode, using <BS> etc will bring back the characters that were
-replaced.  This still works in conjunction with 'smartindent', CTRL-T and
-CTRL-D, 'expandtab', 'smarttab', 'softtabstop', etc.
+如替换模式, 使用<BS>等按键会恢复之前被替换的字符. 这在用'smartindent'、CTRL-T及
+CTRL-D, 'expandtab', 'smarttab', 'softtabstop'等连字符中也能生效.
 
-In 'list' mode, Virtual Replace mode acts as if it was not in 'list' mode,
-unless "L" is in 'cpoptions'.
+在'list'模式, 虚拟替换模式就像不在'list'模式一样,除非在'cpoptions'中设置"L"字符
 
-Note that the only situations for which characters beyond the cursor should
-appear to move are in List mode |'list'|, and occasionally when 'wrap' is set
-(and the line changes length to become shorter or wider than the width of the
-screen).  In other cases spaces may be inserted to avoid following characters
-to move.
+注意光标之外的字符被移动的唯一情况就是在'list'模式|'list'|, 并恰巧'wrap'选项被
+启用 (这样行长度变得比屏幕的宽度更宽或更短). 其他情况下空格可能被插入以避免后续
+字符被移动. 
 
-This mode is very useful for editing <Tab> separated columns in tables, for
-entering new data while keeping all the columns aligned.
+这个模式编辑表格中<Tab>分隔的列是很有效的, 因为这会在键入新数据时保持其他列对齐. 
 
 ==============================================================================
 7. 插入模式补全						*ins-completion*
@@ -655,68 +544,59 @@ entering new data while keeping all the columns aligned.
 12. 拼写建议						|i_CTRL-X_s|
 13. 'complete'选项设置关键字查找			|i_CTRL-N| |i_CTRL-P|
 >
-  3,4	侧重点不同，3侧重字典补全即补全内容，4侧重同义字补全即补全同义字
+  3,4	侧重点不同，3侧重字典补全即补全内容, 4侧重同义字补全
   13	这个选项设置了很多内容以支持补全，功能很强大
   12	听说是个很神奇的补全 |omnifunc| |complete-functions|
 <
 
-Additionally, |i_CTRL-X_CTRL-Z| stops completion without changing the text.
+另外, |i_CTRL-X_CTRL-Z|会在不改动文本的情况下停止补全. >
+  这里应该是指在按下CTRL-X之后会进入补全模式选择状态, 这时可以通过按CTRL-Z退出
+  这个状态. 按其他键会在离开这个状态并键入按下的按键. 
 
-All these, except CTRL-N and CTRL-P, are done in CTRL-X mode.  This is a
-sub-mode of Insert and Replace modes.  You enter CTRL-X mode by typing CTRL-X
-and one of the CTRL-X commands.  You exit CTRL-X mode by typing a key that is
-not a valid CTRL-X mode command.  Valid keys are the CTRL-X command itself,
-CTRL-N (next), and CTRL-P (previous).
+所有命令除了CTRL-N及CTRL-P都在CTRL-X模式被执行. 这是插入模式和替换模式的子模式. 
+通过键入CTRL-X及一个CTRL-X命令进入CTRL-X模式. 通过键入CTRL-X模式的非法命令离开
+CTRL-X模式. 有效按键是CTRL-X命令本身, CTRL-N (下一个)及CTRL-P (上一个). >
+  这里有三个概念, 键入CTRL-X指在键盘上键入CTRL-X组合键
+		  CTRL-X命令指上文提到的那些命令
+		  CTRL-X模式指补全模式, 按下CTRL-X命令之后会弹出补全窗口
 
-To get the current completion information, |complete_info()| can be used.
-Also see the 'infercase' option if you want to adjust the case of the match.
+可以使用|complete_info()|获取当前补全信息. 如果想要调整匹配的内容可以查阅
+'infercase'选项. 
 
-When inserting a selected candidate word from the |popup-menu|, the part of
-the candidate word that does not match the query is highlighted using
-|hl-ComplMatchIns|.  If fuzzy is enabled in 'completeopt', highlighting will
-not be applied.
+当插入一个从|popup-menu|中选择的候选词, 列表中候选词不匹配的部分会被使用
+|hl-ComplMatchIns|高亮.如果在'completeopt'选项中启用了模糊搜索(fuzzy)则不会高亮
 
 							*complete_CTRL-E*
-When completion is active you can use CTRL-E to stop it and go back to the
-originally typed text.  The CTRL-E will not be inserted.
+当补全窗口被激活后可以使用CTRL-E停止补全并恢复原来键入的文本. CTRL-E不会被插入. 
 
 							*complete_CTRL-Y*
-When the popup menu is displayed you can use CTRL-Y to stop completion and
-accept the currently selected entry.  The CTRL-Y is not inserted.  Typing a
-space, Enter, or some other unprintable character will leave completion mode
-and insert that typed character.
+当补全弹窗菜单被显示时可以使用CTRL-Y停止补全并接受当前选择入口.CTRL-Y不会被插入.
+键入空格, 回车或一些其他不可打印字符将会离开补全模式并插入键入的字符. 
 
-When the popup menu is displayed there are a few more special keys, see
-|popupmenu-keys|.
+当弹出菜单被显示时存在一些特殊按键, 查阅文档|popupmenu-keys|. 
 
-Note: The keys that are valid in CTRL-X mode are not mapped.  This allows for
-`:map <C-F> <C-X><C-F>` to work (assuming "<" is not in 'cpo').  The key that
-ends CTRL-X mode (any key that is not a valid CTRL-X mode command) is mapped.
-Also, when doing completion with 'complete' mappings apply as usual.
+注意: CTRL-X模式中合法的按键不会被映射. 这允许`:map <C-F> <C-X><C-F>`映射生效. 
+(假定"<"不在'cpo'选项中启用). 结束CTRL-X模式的按键(任意非法CTRL-X模式命令按键)
+会被映射. 此外, 当使用'complete'进行补全时映射会正常被应用. 
 
 								*E565*
-Note: While completion is active Insert mode can't be used recursively and
-buffer text cannot be changed.  Mappings that somehow invoke ":normal i.."
-will generate an E565 error.
+注意: 当补全被激活时插入模式不能被递归使用且缓冲区的文本不能被改动.
+调用":normal i .."的映射会生成E565错误.
 
-The following mappings are suggested to make typing the completion commands
-a bit easier (although they will hide other commands; this requires "<" is not
-in 'cpo'): >
+建议使用下面映射让键入补全命令更轻松 (尽管这会隐藏其他命令; 这要求'cpo'选项
+不包"<"): >
     :inoremap <C-]> <C-X><C-]>
     :inoremap <C-F> <C-X><C-F>
     :inoremap <C-D> <C-X><C-D>
     :inoremap <C-L> <C-X><C-L>
 
-As a special case, typing CTRL-R to perform register insertion (see
-|i_CTRL-R|) will not exit CTRL-X mode.  This is primarily to allow the use of
-the '=' register to call some function to determine the next operation.  If
-the contents of the register (or result of the '=' register evaluation) are
-not valid CTRL-X mode keys, then CTRL-X mode will be exited as if those keys
-had been typed.
+键入CTRL-R将寄存器内容插入不会离开CTRL-X模式,这是一个特殊情况(查阅|i_CTRL-R|命令) 
+这主要目的是允许使用'='寄存器调用一些函数确认下个操作符. 如果寄存器的内容
+(或执行'='寄存器表达式的结果) 不是有效的CTRL-X模式按键则会导致退出CTRL-X模式
+就像这些按键被键入那样. 
 
-For example, the following will map <Tab> to either actually insert a <Tab> if
-the current line is currently only whitespace, or start/continue a CTRL-N
-completion operation: >
+比如,下面脚本会在当前行当前只有空格字符时将<Tab>映射一个真正的<Tab>插入或开始/
+继续CTRL-N补全操作: >
 
 	function! CleverTab()
 	   if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
@@ -728,168 +608,138 @@ completion operation: >
 	inoremap <Tab> <C-R>=CleverTab()<CR>
 
 
-
-Completing whole lines					*compl-whole-line*
+补全整行						*compl-whole-line*
 
 							*i_CTRL-X_CTRL-L*
-CTRL-X CTRL-L		Search backwards for a line that starts with the
-			same characters as those in the current line before
-			the cursor.  Indent is ignored.  The matching line is
-			inserted in front of the cursor.
-			The 'complete' option is used to decide which buffers
-			are searched for a match.  Both loaded and unloaded
-			buffers are used.
-	CTRL-L	or
-	CTRL-P		Search backwards for next matching line.  This line
-			replaces the previous matching line.
+CTRL-X CTRL-L		向后搜索以当前行同样字符开始的文本行. 缩进会被忽略.匹配
+			的行会被插入到光标之前. 
+			'complete'选项被用来确定哪个缓冲区的内容被用来搜索匹配项.
+			被加载或被卸载的缓冲区都会被使用. 
+	CTRL-L	或
+	CTRL-P		向后搜索下一个匹配行. 搜索到的文本行会替换上一个匹配行. 
 
-	CTRL-N		Search forward for next matching line.  This line
-			replaces the previous matching line.
+	CTRL-N		向前搜索下个匹配行. 搜索到的文本行会替换上一个匹配行.
 
-	CTRL-X CTRL-L	After expanding a line you can additionally get the
-			line next to it by typing CTRL-X CTRL-L again, unless
-			a double CTRL-X is used.  Only works for loaded
-			buffers.
+	CTRL-X CTRL-L	在扩展一行内容后可以通过键入CTRL-X CTRL-L再次获取额外的
+			下一行. 除非键入两次CTRL-X. 这只对加载的缓冲区有效. 
 
-Completing keywords in current file			*compl-current*
+补全当前文件中的关键字			*compl-current*
 
 							*i_CTRL-X_CTRL-P*
 							*i_CTRL-X_CTRL-N*
-CTRL-X CTRL-N		Search forwards for words that start with the keyword
-			in front of the cursor.  The found keyword is inserted
-			in front of the cursor.
+CTRL-X CTRL-N		向前搜索以光标之前关键字开始的单词.被找到的关键字会被
+			插入到光标之前.
 
-CTRL-X CTRL-P		Search backwards for words that start with the keyword
-			in front of the cursor.  The found keyword is inserted
-			in front of the cursor.
+CTRL-X CTRL-P		向后所有以光标之前关键字开始的单词.被找到的关键字会被
+			插入到光标之前.
 
-	CTRL-N		Search forward for next matching keyword.  This
-			keyword replaces the previous matching keyword.
+	CTRL-N		向前搜索下一个匹配的关键字.关键字会替换上个匹配的关键字
 
-	CTRL-P		Search backwards for next matching keyword.  This
-			keyword replaces the previous matching keyword.
+	CTRL-P		向后索索下一个匹配的关键字.关键字会替换上个匹配的关键字
 
-	CTRL-X CTRL-N or
-	CTRL-X CTRL-P	Further use of CTRL-X CTRL-N or CTRL-X CTRL-P will
-			copy the words following the previous expansion in
-			other contexts unless a double CTRL-X is used.
+	CTRL-X CTRL-N 或
+	CTRL-X CTRL-P	进一步使用CTRL-X CTRL-N或CTRL-X CTRL-P会复制在其他上下
+			文中上次扩展的单词除非键入CTRL-X两次. 
 
-If there is a keyword in front of the cursor (a name made out of alphabetic
-characters and characters in 'iskeyword'), it is used as the search pattern,
-with "\<" prepended (meaning: start of a word).  Otherwise "\<\k\k" is used
-as search pattern (start of any keyword of at least two characters).
+如果在光标之前存在关键字 (不在字母表或不在'iskeyword'选项中的名称), 它会在添加
+"\<"前缀后被用做搜索模式 (意思是: 单词的开始), 否则"\<\k\k"被当作搜索模式
+(任意以最少两个字符开始的关键字). 
 
-In Replace mode, the number of characters that are replaced depends on the
-length of the matched string.  This works like typing the characters of the
-matched string in Replace mode.
+在替换模式中, 被替换字符的数量取决于匹配到的字符串的长度. 这就像将匹配到的字符串
+在替换模式中键入. 
 
-If there is not a valid keyword character before the cursor, any keyword of
-at least two characters is matched.
-	e.g., to get:
+如果光标之前没有有效的关键字, 任意至少两个字符的关键字都会被匹配. 
+	比如, 要获取: 
 	    printf("(%g, %g, %g)", vector[0], vector[1], vector[2]);
-	just type:
+	只需要键入: 
 	    printf("(%g, %g, %g)", vector[0], ^P[1], ^P[2]);
 
-The search wraps around the end of the file, the value of 'wrapscan' is not
-used here.
+搜索会在文件内循环进行, 'wrapscan'选项的值不会被应用. 
 
-Multiple repeats of the same completion are skipped; thus a different match
-will be inserted at each CTRL-N and CTRL-P (unless there is only one
-matching keyword).
+多次重复的相同补全会被跳过; 因此不同的匹配内容会在按下每个CTRL-N及CTRL-P键时被
+插入 (除非仅有一个匹配关键字). 
 
-Single character matches are never included, as they usually just get in
-the way of what you were really after.
-	e.g., to get:
+单个字符匹配不会被包含在内, 因为它们通常妨碍真正要补全的内容. 
+	比如, 要获得: 
 		printf("name = %s\n", name);
-	just type:
+	只需要键入: 
 		printf("name = %s\n", n^P);
-	or even:
+	或甚至键入:
 		printf("name = %s\n", ^P);
-The 'n' in '\n' is skipped.
+'\n'中的'n'被跳过. 
 
-After expanding a word, you can use CTRL-X CTRL-P or CTRL-X CTRL-N to get the
-word following the expansion in other contexts.  These sequences search for
-the text just expanded and further expand by getting an extra word.  This is
-useful if you need to repeat a sequence of complicated words.  Although CTRL-P
-and CTRL-N look just for strings of at least two characters, CTRL-X CTRL-P and
-CTRL-X CTRL-N can be used to expand words of just one character.
-	e.g., to get:
+在扩展单词之后, 可以使用CTRL-X CTRL-P或CTRL-X CTRL-N以获取在其他上下文中跟在
+扩展内容之后的单词. 这些序列搜索被扩展的文本及通过获取额外单词进一步扩展. 这在
+需要重复一个复杂单词序列时是很有用的. 尽管CTRL-P及CTRL-N只查找至少包含两个字符
+的字符串, CTRL-X CTRL-P及CTRL-X CTRL-N可以被用来扩展只有一个字符的单词. 
+	比如, 要获取: 
 		M&eacute;xico
-	you can type:
+	可以键入: 
 		M^N^P^X^P^X^P
-CTRL-N starts the expansion and then CTRL-P takes back the single character
-"M", the next two CTRL-X CTRL-P's get the words "&eacute" and ";xico".
 
-If the previous expansion was split, because it got longer than 'textwidth',
-then just the text in the current line will be used.
+CTRL-N开始扩展然后CTRL-P恢复单个字符"M",下两组按键CTRL-X CTRL-P补全单词"&eacute"
+及";xico".
 
-If the match found is at the end of a line, then the first word in the next
-line will be inserted and the message "Word from other line" displayed, if
-this word is accepted the next CTRL-X CTRL-P or CTRL-X CTRL-N will search
-for those lines starting with this word.
+如果前一个扩展被分隔, 因为扩展比'textwidth'要长, 之后只有当前行的文本会被使用. 
+
+如果被找到的匹配内容是在行尾, 那么下一行的首个单词将会被插入并且发送一条"word 
+from other line"信息显示, 如果这个单词被接受下一个CTRL-X CTRL-P或CTRL-X CTRL-N
+将会搜索以这个单词开始的文本行. 
 
 
-Completing keywords in 'dictionary'			*compl-dictionary*
+补全'dictionary'选项中的关键字				*compl-dictionary*
 
 							*i_CTRL-X_CTRL-K*
-CTRL-X CTRL-K		Search the files given with the 'dictionary' option
-			for words that start with the keyword in front of the
-			cursor.  This is like CTRL-N, but only the dictionary
-			files are searched, not the current file.  The found
-			keyword is inserted in front of the cursor.  This
-			could potentially be pretty slow, since all matches
-			are found before the first match is used.  By default,
-			the 'dictionary' option is empty.
-			For suggestions where to find a list of words, see the
-			'dictionary' option.
-			'ignorecase', 'smartcase' and 'infercase' apply.
+CTRL-X CTRL-K		在'dictionary'选项指定的文件中搜索以光标位置内容开始的
+			单词. 这与CTRL-N类似, 但只会搜索字典文件的内容而不会搜
+			索当前文件的内容. 被找到的关键字会被插入到光标前面. 这
+			可能会相当慢因为在使用找到的匹配项之前需要查找所有的匹
+			配项. 'dictionary'选项默认是空的. 
+			对于在哪查找建议的单词列表, 查阅'dictionary'选项. 
+			补全会应用'ignorecase', 'smartcase',及'infercase'选项. 
 
-	CTRL-K	or
-	CTRL-N		Search forward for next matching keyword.  This
-			keyword replaces the previous matching keyword.
+	CTRL-K	或
+	CTRL-N		向下搜索下一个匹配的关键字. 这个关键字会替换掉前一个
+			匹配的关键字.
 
-	CTRL-P		Search backwards for next matching keyword.  This
-			keyword replaces the previous matching keyword.
+	CTRL-P		向上搜索下一个匹配的关键字. 这个关键字会替换掉前一个
+			匹配的关键字.
 
 
-Completing words in 'thesaurus'				*compl-thesaurus*
+补全'thesaurus'(同义词)的单词					*compl-thesaurus*
 
 							*i_CTRL-X_CTRL-T*
-CTRL-X CTRL-T		Works as CTRL-X CTRL-K, but in a special way.  It uses
-			the 'thesaurus' option instead of 'dictionary'.  If a
-			match is found in the thesaurus file, all the
-			remaining words on the same line are included as
-			matches, even though they don't complete the word.
-			Thus a word can be completely replaced.
+CTRL-X CTRL-T		与CTRL-X CTRL-K效果类似但以一种特殊的方式. 命令使用
+			'thesaurus'选项代替'dictionary'. 如果在同义词文件中找到
+			匹配项, 同一行的剩余单词都被被作为匹配项, 即便它们不会
+			补全这个单词. 因此当前要输入的单词可能会被完全替换. 
 
-	CTRL-T	or
-	CTRL-N		Search forward for next matching keyword.  This
-			keyword replaces the previous matching keyword.
+	CTRL-T	或
+	CTRL-N		向下搜索下一个匹配的关键字. 这个关键字会替换掉前一个
+			匹配的关键字.
 
-	CTRL-P		Search backwards for next matching keyword.  This
-			keyword replaces the previous matching keyword.
+	CTRL-P		向上搜索下一个匹配的关键字. 这个关键字会替换掉前一个
+			匹配的关键字.
 
-In the file used by the 'thesaurus' option each line in the file should
-contain words with similar meaning, separated by non-keyword characters (white
-space is preferred).  Maximum line length is 510 bytes.
+在被'thesaurus'选项指定的文件中每一行应该包含相同意思的单词并以非关键字符分隔
+(推荐使用空格). 每一行最大长度为510字节. 
 
-For an example, imagine the 'thesaurus' file has a line like this: >
+比如, 'thesaurus'选项指定了一个文件包如下行内容: >
 	angry furious mad enraged
-Placing the cursor after the letters "ang" and typing CTRL-X CTRL-T would
-complete the word "angry"; subsequent presses would change the word to
-"furious", "mad" etc.
+将光标放置在"ang"字母后面并键入CTRL-X CTRL-T将会补全单词"angry"; 继续键入按键则
+会将补全的单词改为"furious", "mad"等. 
 
-Other uses include translation between two languages, or grouping API
-functions by keyword.
+另一种用法是包含两种语言的翻译, 或通过关键字为函数API分组. 
 
-An English word list was added to this github issue:
+下面这个issue包含一个英语单词列表: 
 https://github.com/vim/vim/issues/629#issuecomment-443293282
-Unpack thesaurus_pkg.zip, put the thesaurus.txt file somewhere, e.g.
-~/.vim/thesaurus/english.txt, and the 'thesaurus' option to this file name.
+解压thesaurus_pkg.zip包, 将thesaurus.txt文件放到'thesaurus'选项指定的位置, 如: 
+~/.vim/thesaurus/english.txt.
 
 
-Completing keywords with 'thesaurusfunc'		*compl-thesaurusfunc*
+用'thesaurusfunc'补全关键字			*compl-thesaurusfunc*
 
+如果设置了'thesaurusfunc'选项, 则用户指定指定的函数会被用来
 If the 'thesaurusfunc' option is set, then the user specified function is
 invoked to get the list of completion matches and the 'thesaurus' option is
 not used. See |complete-functions| for an explanation of how the function is
